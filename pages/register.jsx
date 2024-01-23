@@ -63,7 +63,7 @@ export default function Home() {
         setisSubmitingLoader(false);
         toast.success("Registration Successfull");
         setTimeout(() => {
-          router.push("/Dashboard");
+          router.push("/");
         }, 1500);
       } else {
         setisSubmitingLoader(false);
