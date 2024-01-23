@@ -91,10 +91,10 @@ const Plan = () => {
       <section className={style.section1} >
 
         <div className="container" >
-          <div className="row align-items-center">
+          
             <Navbar />
             <h1 className="innerheading" >Plan</h1>
-          </div>
+          
         </div>
 
       </section>

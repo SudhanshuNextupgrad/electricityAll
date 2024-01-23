@@ -10,9 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "sonner";
-
 import { getData,postData } from "@/helpers/services";
-
 import { verifyIsLoggedIn } from "@/helpers/helper";
 export default function Home() {
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
@@ -57,7 +55,7 @@ export default function Home() {
         name: name,
         email: email,
         password: password,
-        user_type: Role[0].id,
+        user_type: "Customer",
       });
       console.log(" register result", result);
       if (result.status) {
