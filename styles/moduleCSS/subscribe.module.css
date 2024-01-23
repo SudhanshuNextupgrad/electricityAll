@@ -1,0 +1,93 @@
+.section8>div {
+  max-width: 1400px;
+  width: 100%;
+  text-align: center;
+
+  padding: 5% 0;
+}
+
+.section8 {
+
+  display: flex;
+  justify-content: center;
+  background-image: url("../../public/homepage/Rectangle_7.png");
+  background-size: cover;
+
+}
+
+.section8>div>h1 {
+
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: white;
+  padding:5px 10px;
+
+}
+
+.section8>div>p {
+
+  color: white;
+
+  padding: 0 20%;
+}
+
+
+.inputWithIcon>input {
+  width: 60%;
+  border: none;
+  border-radius: 30px;
+  margin: 8px 0;
+  outline: none;
+  padding: 17px;
+  box-sizing: border-box;
+  
+  margin-left: 10%;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.inputWithIcon button {
+  position: relative;
+  padding: 10px 22px;
+  right: 132px;
+  top: 0px;
+  transition: 0.3s;
+  border: none;
+  border-radius: 30px;
+  background-color: #fdef00;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.inputWithIcon button:hover {
+  transition: 500ms;
+  background-color: #FFC72C;
+  color: black;
+  /* font-weight: bold; */
+
+}
+.inputWithIcon>button>a{
+  text-decoration: none;
+  color:black;
+}
+
+@media only screen and (max-width:500px){
+  .inputWithIcon{
+    
+    display: grid;
+    place-items: center;
+    place-content:center;
+    width:100%;
+  }
+  .inputWithIcon>input{
+    width:300px;
+    text-align: center;
+    margin-left: 0;
+  }
+  .inputWithIcon>button{
+    top:0;
+    right:0;
+  }
+}

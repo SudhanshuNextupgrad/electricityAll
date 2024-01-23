@@ -1,0 +1,158 @@
+.section1 {
+ 
+    background-image: url("/checkout/Rectangle_1.png");
+    background-size: cover;
+
+}
+
+
+
+.section1>div>h1 {
+    color: white;
+    text-align: center;
+    padding: 78px;
+
+}
+
+.section2{
+
+    /* padding: 100px 0; */
+   
+    padding-top:50px;
+    padding-bottom:50px;
+}
+
+
+
+.helpbttn {
+
+    padding: 20px;
+   
+
+}
+
+.helpbttn>div {
+
+    margin: 10px;
+}
+
+.helpbttn>div>button {
+    width: 100%;
+    /* background-color:#ff9571; */
+    /* color:white; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    background-color: white;
+    font-weight: 600;
+}
+
+.helpbttn>div>button>svg {
+    color: white;
+}
+
+
+.content {
+    width: 100%;
+   
+}
+
+.photos {
+    width: 100%;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.thumbnails {
+   width:100%;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s;
+}
+
+.thumbnails img {
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: 15px;
+}
+
+.black {
+    text-align: center;
+    background: #ff9571;
+    background-blend-mode: multiply;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: .8;
+    border-radius: 15px;
+}
+
+.title {
+    color: #fff;
+    /* font-size: 2em; */
+    align-self: center;
+    position: absolute;
+    z-index: 10;
+    height:100%;
+    text-align: center;
+    padding:5px;
+}
+.title>svg{
+    font-size: 5rem;
+}
+.title>p{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom:0;
+}
+.title>span{
+    font-size: 15px;
+    font-weight: 500;
+}
+.title>div>a{
+   
+    padding:10px;
+    background-color: white;
+    color:#ff9571;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 5px;
+}
+.title>div>a:hover{
+    
+    transition-duration: 300ms;
+    color:black;
+    background-color: antiquewhite;
+    
+}
+.title>div{
+    padding:25px 0;
+   
+}
+
+.black,
+.title {
+    transition: opacity .3s;
+}
+
+
+
+.compont{
+   
+    padding-top:25px;
+    overflow: auto !important ;
+    
+    
+}
+/* .compont>.accordion>.accordion-item{
+    --bs-accordion-btn-icon:url{"/homepage/1.jpg"}
+} */

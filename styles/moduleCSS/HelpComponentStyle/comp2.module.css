@@ -1,0 +1,51 @@
+
+.comp2>p{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.comp2>form>select{
+    width:100%;
+    padding:10px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 5px;
+    border:1px solid lightgrey;
+    
+}
+.comp2>form>div>div>input{
+    width:100%;
+    border:1px solid lightgrey;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding:10px;
+    border-radius: 5px;
+    background-color: rgb(241, 241, 241);
+}
+.comp2>form>textarea{
+    padding:10px;
+    border-radius: 5px;
+    width:100%;
+    background-color: rgb(241, 241, 241);
+    border:1px solid lightgrey;
+}
+.comp2>form>div>button{
+    
+    background-color:yellow;
+    margin-top:15px;
+    padding: 7px 33px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    border:none;
+}
+.comp2>form>div>button:hover{
+    background-color: #FFC72C;
+    transition-duration: 300ms;
+    margin-right:5px;
+}
+.bttn{
+    
+    text-align: right;
+    
+}
+

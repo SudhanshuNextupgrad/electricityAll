@@ -1,0 +1,52 @@
+.comp3{
+  
+    display: grid;
+    /* overflow-y: scroll; */
+    max-height: 720px;
+    overflow-y: scroll;
+    
+}
+.comp3>div{
+    
+   
+    margin: 10px 0;
+    
+    
+}
+
+.comp3>div>div>h1{
+    font-size: 2rem;
+}
+.comp3>div>div>img{
+    border: 3px solid gray;
+    border-radius: 15px;
+    width:100%;
+    height:auto;
+}
+
+.text>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:8px 0;
+    
+    
+}
+.text_div1{
+    font-size: 20px;
+    font-weight: 500;
+}
+.text_div2>div>label,.text_div2>div>select,.text_div2>div>input{
+    font-size: 15px;
+    padding:10px ;
+    border-radius: 50px;
+    font-weight: 500;
+}
+.text_div2>div>label{
+    padding-left:0;
+}
+.text_div2>div>input{
+    text-align: center;
+    border:none;
+    border:1px solid black;
+}
