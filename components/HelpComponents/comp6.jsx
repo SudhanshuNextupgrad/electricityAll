@@ -50,7 +50,7 @@ const Comp6 = () => {
 
                 const resp = await getData(`/GetAllUser?id=${user_id}`)
                 console.log("get user resp", resp)
-                resp.msg === 'No Data Found' ? toast.error(resp.msg) : ""
+                resp.msg === 'No Data Found' ? toast.error(resp.msg) : toast.success(resp.msg)
                 setUserId(user_id)
                 setName(resp.data[0].name);
                 setEmail(resp.data[0].email);
@@ -78,7 +78,7 @@ const Comp6 = () => {
         e.preventDefault();
         setisSubmitingLoader(true)
 
-        console.log("update data", name,phone,profile_photo,locality,zip,city,state,country)
+        // console.log("update data", name,phone,profile_photo,locality,zip,city,state,country)
         try {
             if (typeof window !== 'undefined') {
                 // const user_id = localStorage.getItem("UserId[C]");
