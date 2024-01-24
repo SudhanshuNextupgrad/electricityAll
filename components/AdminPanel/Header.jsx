@@ -18,13 +18,13 @@ import Image from "next/image";
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { getData,postData } from "@/helpers/services";
+
+import { getData, postData } from "@/helpers/services";
+
 import axios from "axios";
 import { MdPassword } from "react-icons/md";
 import { toast } from "sonner";
-
 const Header = () => {
-
   const router = useRouter();
   const [sidebarClass, setsidebarClass] = useState("sidenav-toggled");
   const [userID, setUserID] = useState();
@@ -40,7 +40,7 @@ const Header = () => {
   const [userCity, setUserCity] = useState('');
   const [userState, setUserState] = useState('');
   const [userCountry, setUserCountry] = useState('');
-  const [refresh,setRefresh] = useState("");
+  const [refresh, setRefresh] = useState("");
   const [userUpdatedPhoto, setUserUpdatedPhoto] = useState('');
 
 
@@ -97,45 +97,45 @@ const Header = () => {
     }
   }
 
-  const UserUpdate = async() => {
+  const UserUpdate = async () => {
     setisSubmitingLoader(true)
     try {
-      if(userPhone.length==10 || userPhone.length==undefined && userZip.length==6 || userZip.length==undefined){
+      if (userPhone.length == 10 || userPhone.length == undefined && userZip.length == 6 || userZip.length == undefined) {
         const formData = new FormData();
-      // formData.append('updId', user_id);
-      // formData.append('name', name);
-      // formData.append('user_alt_phno', alt_phone);
-      // formData.append('user_locality', locality);
-      // formData.append('user_house_num', Hno);
-      // formData.append('user_landmark', lankmark);
-      // formData.append('user_zipcode', zip);
-      // formData.append('user_city', city);
-      // formData.append('user_state', state);
-      // formData.append('user_country', country);
-      // formData.append('user_profile_photo', profile_photo);
-      // console.log("form fields",userID)
+        // formData.append('updId', user_id);
+        // formData.append('name', name);
+        // formData.append('user_alt_phno', alt_phone);
+        // formData.append('user_locality', locality);
+        // formData.append('user_house_num', Hno);
+        // formData.append('user_landmark', lankmark);
+        // formData.append('user_zipcode', zip);
+        // formData.append('user_city', city);
+        // formData.append('user_state', state);
+        // formData.append('user_country', country);
+        // formData.append('user_profile_photo', profile_photo);
+        // console.log("form fields",userID)
 
-      
-      formData.append('updId', userID)
-      formData.append("name", username)
-      formData.append("email", email)
-      formData.append("user_phno", userPhone)
-      formData.append("user_city", userCity)
-      formData.append("user_locality", userAddress)
-      formData.append("user_state", userState)
-      formData.append("user_zipcode", userZip)
-      formData.append("user_profile_photo", userUpdatedPhoto)
-      formData.append("user_country", userCountry)
 
-      // console.log("formData", formData)
-      const resp = await axios.post(process.env.SITE_URL+"/UpdateUser", formData)
-      console.log("user update resp", resp)
-      resp.data.message==="User Updated Successfully"? toast.success(resp.data.message):toast.error(resp.data.message)
+        formData.append('updId', userID)
+        formData.append("name", username)
+        formData.append("email", email)
+        formData.append("user_phno", userPhone)
+        formData.append("user_city", userCity)
+        formData.append("user_locality", userAddress)
+        formData.append("user_state", userState)
+        formData.append("user_zipcode", userZip)
+        formData.append("user_profile_photo", userUpdatedPhoto)
+        formData.append("user_country", userCountry)
+
+        // console.log("formData", formData)
+        const resp = await axios.post(process.env.SITE_URL + "/UpdateUser", formData)
+        console.log("user update resp", resp)
+        resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
       }
-      else{
+      else {
         toast.error("Please check phone and zipcode.")
       }
-      
+
     } catch (error) {
       console.log("try-catch error", error)
     }
@@ -281,7 +281,7 @@ const Header = () => {
               data-toggle="sidebar"
               href="javascript:void(0)"
               onClick={toggleSidebar}
-              
+
             >
               <FaAlignJustify />
             </a>
@@ -464,7 +464,7 @@ const Header = () => {
                         </div>
                         <div>
                           <div>Your Admin launched</div>
-                          <div className="small text-muted">1 daya ago</div>
+                          <div className="small text-muted">1 day ago</div>
                         </div>
                       </div>
                     </div>

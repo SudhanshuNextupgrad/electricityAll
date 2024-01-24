@@ -115,10 +115,10 @@ const ACservices = () => {
             <Toaster position="top-center" richColors />
             <section className={`${style.section1} container-fluid`}  >
                 <div className="container">
-                    
+                    <div className="row align-items-center">
                         <Navbar />
                         <h1 className="innerheading">AC Services & Repair</h1>
-                    
+                    </div>
                 </div>
 
             </section>

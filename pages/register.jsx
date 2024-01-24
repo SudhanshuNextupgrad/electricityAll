@@ -10,7 +10,9 @@ import {
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "sonner";
+
 import { getData,postData } from "@/helpers/services";
+
 import { verifyIsLoggedIn } from "@/helpers/helper";
 export default function Home() {
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
@@ -55,7 +57,7 @@ export default function Home() {
         name: name,
         email: email,
         password: password,
-        user_type: "Customer",
+        user_type: Role[0].id,
       });
       console.log(" register result", result);
       if (result.status) {
@@ -63,7 +65,7 @@ export default function Home() {
         setisSubmitingLoader(false);
         toast.success("Registration Successfull");
         setTimeout(() => {
-          router.push("/");
+          router.push("/Dashboard");
         }, 1500);
       } else {
         setisSubmitingLoader(false);

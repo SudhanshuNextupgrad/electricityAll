@@ -274,10 +274,10 @@ const Checkout = () => {
             <Toaster position="top-center" richColors />
             <section className={style.section1}>
                 <div className="container">
-                    
+                    <div className="row align-items-center">
                         <Navbar />
                         <h1 className="innerheading">Checkout</h1>
-                    
+                    </div>
                 </div>
             </section>
             <section className={`${style.section2} container`} >
