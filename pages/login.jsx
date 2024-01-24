@@ -138,6 +138,13 @@ export default function Home() {
                           >
                             Forgot password?
                           </Link>
+                          <br/>
+                          <Link
+                            href="/"
+                            className="btn btn-link box-shadow-0 px-0"
+                          >
+                            Homepage
+                          </Link>
                           <p class=" mb-0">
                             Don't have account?
                             <Link href="/register" class="text-primary ml-1">

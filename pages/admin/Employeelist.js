@@ -1,23 +1,30 @@
 import Link from "next/link";
+import { FaTrashAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { verifyIsLoggedIn,getFormatedDate } from "@/helpers/helper";
+import { verifyIsLoggedIn, getFormatedDate } from "@/helpers/helper";
 
-import { getData } from "@/helpers/services";
+import { deleteData, getData, postData } from "@/helpers/services";
 import { Toaster, toast } from "sonner";
 import { AiFillStar } from "react-icons/ai";
 import AdminLayout from "@/layouts/AdminLayout";
 
 const Employeelist = () => {
+
   const [employeeList, setemployeeList] = useState([]);
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
+  const [NewEmployeeName, setNewEmployeeName] = useState('');
+  const [NewEmployeeEmail, setNewEmployeeEmail] = useState('');
+  const [NewEmployeePhone, setNewEmployeePhone] = useState();
+  const [NewEmployeePassword, setNewEmployeePassword] = useState('');
+  const [refresh, setRefresh] = useState('')
 
   const router = useRouter();
   useEffect(() => {
     verifyIsLoggedIn(router);
     getEmployeeList();
-  }, []);
+  }, [refresh]);
 
   //function to get the list of all employees
   async function getEmployeeList() {
@@ -25,7 +32,7 @@ const Employeelist = () => {
       setisSubmitingLoader(true);
       const result = await getData("/GetAllUser");
       if (result.status) {
-        console.log("Employee List", result);
+        // console.log("Employee List", result);
         setisSubmitingLoader(false);
         const employees = result.data.filter(
           (item) => item.user_type == "Employee"
@@ -40,84 +47,142 @@ const Employeelist = () => {
     }
   }
 
+  const RegisterEmployee = async () => {
+    setisSubmitingLoader(true)
+    try {
+      const NewEmployee = {
+        "name": NewEmployeeName,
+        "email": NewEmployeeEmail,
+        "password": NewEmployeePassword,
+        "user_phno": NewEmployeePhone,
+        "user_type": "Employee"
+      }
+
+      const resp = await postData("/register", NewEmployee)
+      // console.log("resp",resp)
+      resp.message == "User Created Successfully" ? toast.success(resp.message) : toast.error(resp.message);
+      setRefresh(Math.random)
+
+
+
+
+    } catch (error) {
+      console.log("try-catch error", error)
+    }
+    setisSubmitingLoader(false)
+  }
+  const deleteEmployee = async (id) => {
+    setisSubmitingLoader(true)
+    try {
+      const resp = await deleteData("/DeleteUser", { "delId": id })
+      // console.log("delete user",resp)
+      resp.message == "User Deleted Successfully" ? toast.success(resp.message) : toast.error(resp.messsage)
+      setRefresh(Math.random)
+    } catch (error) {
+      console.log("try-catch error", error)
+    }
+    setisSubmitingLoader(false)
+    // console.log("userid",id)
+  }
+
   return (
     <AdminLayout>
-    <>
-      {isSubmitingLoader ? (
-        <div className="overlay">
-          <div className="spinner-container">
-            <img className="animatingSpinnerSvg" src="/spinner.svg" alt="" />
-          </div>
-        </div>
-      ) : null}
-      <div className="app-content">
-        <div className="side-app leftmenu-icon">
-          <div className="page-header">
-            <div className="page-leftheader">
-              <h4 className="page-title">List of Employee</h4>
-              <ol className="breadcrumb pl-0">
-                <li className="breadcrumb-item">
-                  <a href="/Dashboard">Home</a>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  List of Employee
-                </li>
-              </ol>
-            </div>
-            <div className="page-rightheader">
-              <div className="ml-3 ml-auto d-flex">&nbsp;</div>
+      <>
+        {isSubmitingLoader ? (
+          <div className="overlay">
+            <div className="spinner-container">
+              <img className="animatingSpinnerSvg" src="/spinner.svg" alt="" />
             </div>
           </div>
+        ) : null}
+        <Toaster position="top-center" richColors />
+        <div className="app-content">
+          <div className="side-app leftmenu-icon">
+            <div className="page-header">
+              <div className="page-leftheader">
+                <h4 className="page-title">List of Employee</h4>
+                <ol className="breadcrumb pl-0">
+                  <li className="breadcrumb-item">
+                    <a href="/Dashboard">Home</a>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    List of Employee
+                  </li>
+                </ol>
+              </div>
+              <div className="page-rightheader">
+                <div className="ml-3 ml-auto d-flex">&nbsp;</div>
+              </div>
+            </div>
 
-          <div className="row">
-            <div className="col-xl-12 col-lg-12 col-md-12">
-              <div className="card">
-                <div className="card-body">
-                  <div className="form-group m-0">
-                    <div className="row gutters-xs">
-                      <div className="col-4">
-                        <input
-                          type="search"
-                          className="form-control header-search"
-                          placeholder="Search…"
-                          aria-label="Search"
-                          tabIndex={1}
-                        />
-                      </div>
-                      <div className="col-3">
-                        <input
-                          type="email"
-                          className="form-control header-search"
-                          placeholder="email ID"
-                        />
-                      </div>
-                      <div className="col-2">
-                        <select className="form-control custom-select">
+            <div className="row" >
+              <div className="col-xl-12 col-lg-12 col-md-12" >
+                <div className="card" >
+                  <div className="card-body" >
+                    <h5><b>Add Employee:</b></h5>
+                    <div className="form-group m-0" >
+                      <div className="row gutters-xs">
+                        <div className="col-3">
+                          <input
+                            type="search"
+                            className="form-control header-search"
+                            placeholder="Name.."
+                            aria-label="Search"
+                            tabIndex={1}
+                            value={NewEmployeeName}
+                            onChange={(e) => setNewEmployeeName(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-3">
+                          <input
+                            type="email"
+                            className="form-control header-search"
+                            placeholder="Email ID"
+                            value={NewEmployeeEmail}
+                            onChange={(e) => setNewEmployeeEmail(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-3">
+                          {/* <select className="form-control custom-select">
                           <option value="">Services</option>
                           <option value="Services1">Services 1</option>
                           <option value="Services2">Services 2</option>
-                        </select>
-                      </div>
-                      <div className="col-2">
-                        <select className="form-control custom-select">
+                        </select> */}
+                          <input
+                            type="number"
+                            className="form-control header-search"
+                            placeholder="Phone"
+                            value={NewEmployeePhone}
+                            onChange={(e) => setNewEmployeePhone(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-2">
+                          {/* <select className="form-control custom-select">
                           <option value="">Rating</option>
                           <option value="Rating1">Rating 1</option>
                           <option value="Rating2">Rating 2</option>
-                        </select>
-                      </div>
-                      <div className="col-1">
-                        <div className="text-end">
-                          <button type="submit" className="btn btn-primary">
-                            Submit
-                          </button>
+                        </select> */}
+                          <input
+                            type="password"
+                            className="form-control header-search"
+                            placeholder="Password"
+                            value={NewEmployeePassword}
+                            onChange={(e) => setNewEmployeePassword(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-1">
+                          <div className="text-end">
+                            <button type="submit" className="btn btn-primary" onClick={RegisterEmployee}>
+                              Create
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="card-body">
-                  <div className="table-responsive">
-                    {/* <table className="table table-bordered  border-top table-hover  mb-0 text-nowrap">
+                  <div className="card-body">
+                    <div className="table-responsive">
+                      {/* <table className="table table-bordered  border-top table-hover  mb-0 text-nowrap">
             <thead>
               <tr>
                 <th>#</th>
@@ -184,23 +249,25 @@ const Employeelist = () => {
               </tr>
             </tbody>
           </table> */}
-                    <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
-                      <thead className="bg-primary text-white">
-                        <tr>
-                          <th className="text-white">Employee Name</th>
-                          <th className="text-white">Email</th>
-                          <th className="text-white">Status</th>
-                          <th className="text-white">Phone</th>
-                          <th className="text-white">Rating</th>
-                          <th className="text-white">Country</th>
-                          <th className="text-white">Address</th>
-                          <th className="text-white">Zip</th>
-                          <th className="text-white"> Date Created</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {employeeList.length > 0
-                          ? employeeList.map((item, index) => (
+                      <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
+                        <thead className="bg-primary text-white">
+                          <tr>
+                            <th className="text-white">Employee Name</th>
+                            <th className="text-white">Email</th>
+                            <th className="text-white">Status</th>
+                            <th className="text-white">Phone</th>
+                            <th className="text-white">Rating</th>
+                            <th className="text-white">Country</th>
+                            <th className="text-white">Address</th>
+                            <th className="text-white">Zip</th>
+                            <th className="text-white"> Date Created</th>
+                            <th className="text-white"> Action</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {employeeList.length > 0
+                            ? employeeList.map((item, index) => (
                               <tr>
                                 <td>
                                   {/* <Link
@@ -244,19 +311,20 @@ const Employeelist = () => {
                                     "DD/MM/YYYY"
                                   )}
                                 </td>
+                                <td ><FaTrashAlt onClick={() => deleteEmployee(item.id)} /></td>
                               </tr>
                             ))
-                          : null}
-                      </tbody>
-                    </table>
+                            : null}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
     </AdminLayout>
   );
 };

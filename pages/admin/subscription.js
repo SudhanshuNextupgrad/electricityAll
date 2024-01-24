@@ -40,6 +40,7 @@ const Subscription = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
+
   const handleShow = (update_id) => {
 
     setShow(true);
@@ -206,9 +207,9 @@ const Subscription = () => {
           "subscription_amt": amount,
           "service_id_array": newPlanServicesId
         }
-        // console.log("updated plan",update_plan)
+        console.log("updated plan",update_plan)
         const resp = await putData("/UpdateSubscription", update_plan)
-        // console.log("update resp", resp)
+        console.log("update resp", resp)
         resp.message === "Subscription Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
 
         setNewPlanName('')

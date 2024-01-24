@@ -57,7 +57,7 @@ export default function Home() {
         name: name,
         email: email,
         password: password,
-        user_type: Role[0].id,
+        user_type: "Customer",
       });
       console.log(" register result", result);
       if (result.status) {
@@ -65,7 +65,7 @@ export default function Home() {
         setisSubmitingLoader(false);
         toast.success("Registration Successfull");
         setTimeout(() => {
-          router.push("/Dashboard");
+          router.push("/login");
         }, 1500);
       } else {
         setisSubmitingLoader(false);
@@ -156,7 +156,7 @@ export default function Home() {
                       <div className="row mb-0">
                         <div className="col-12">
                           <button className="btn btn-primary btn-block">
-                            Login
+                            Register
                           </button>
                         </div>
                         <div className="col-12 mb-0">
