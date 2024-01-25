@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { verifyIsLoggedIn } from "@/helpers/helper";
-import { postData,getData,deleteData,putData } from "@/helpers/services";
+import { postData, getData, deleteData, putData } from "@/helpers/services";
 import { Toaster, toast } from "sonner";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -202,12 +202,12 @@ const Subscription = () => {
         console.log("updatePlanId", updatePlanId)
         const update_plan = {
           "updId": updatePlanId,
-          "subscription_name": serviceName,
-          "subscription_description": serviceDescription,
-          "subscription_amt": amount,
+          "subscription_name": newPlanName,
+          "subscription_description": newDescription,
+          "subscription_amt": newAmmount,
           "service_id_array": newPlanServicesId
         }
-        console.log("updated plan",update_plan)
+        console.log("updated plan details", update_plan)
         const resp = await putData("/UpdateSubscription", update_plan)
         console.log("update resp", resp)
         resp.message === "Subscription Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
@@ -329,15 +329,15 @@ const Subscription = () => {
 
   return (
     <AdminLayout>
-    <>
-      {isSubmitingLoader ? (
-        <div className="overlay">
-          <div className="spinner-container">
-            <img className="animatingSpinnerSvg" src="/spinner.svg" alt="" />
+      <>
+        {isSubmitingLoader ? (
+          <div className="overlay">
+            <div className="spinner-container">
+              <img className="animatingSpinnerSvg" src="/spinner.svg" alt="" />
+            </div>
           </div>
-        </div>
-      ) : null}
-      {/* <>
+        ) : null}
+        {/* <>
         {trackBtn == "add" ? (
           <>
             <Modal show={show} onHide={handleClose}>
@@ -414,146 +414,151 @@ const Subscription = () => {
           </>
         )}
       </> */}
-      <Toaster position="top-center" richColors />
-      <div>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header>
-            <Modal.Title>Update Subscription</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3" controlId="formGroupEmail">
-                <Form.Label>Subscription Name</Form.Label>
-                <Form.Control type="text" value={newPlanName} required={true} onChange={(e) => setNewPlanName(e.target.value)} />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formGroupPassword">
-                <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" rows={2} value={newDescription} required={true} onChange={(e) => setNewDescription(e.target.value)} />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formGroupEmail">
-                <Form.Label>Subscription Ammount</Form.Label>
-                <Form.Control type="number" value={newAmmount} required={true} onChange={(e) => setNewAmmount(e.target.value)} />
-              </Form.Group>
-              <Form.Group className="mb-3" id="formGridCheckbox">
+        <Toaster position="top-center" richColors />
+        <div>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title>Update Subscription</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Label>Subscription Name</Form.Label>
+                  <Form.Control type="text" value={newPlanName} required={true} onChange={(e) => setNewPlanName(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupPassword">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={2} value={newDescription} required={true} onChange={(e) => setNewDescription(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Label>Subscription Ammount</Form.Label>
+                  <Form.Control type="number" value={newAmmount} required={true} onChange={(e) => setNewAmmount(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" id="formGridCheckbox">
 
-                {Services.map((item, index) => (
-                  <Form.Check type="checkbox" label={item.service_names} key={index} onChange={(e) => updateRadioButtons(item.service_names)} checked={newPlanServices.includes(item.service_names) ? true : false} />
-                ))}
+                  {Services.map((item, index) => (
+                    <Form.Check type="checkbox" label={item.service_names} key={index} onChange={(e) => updateRadioButtons(item.service_names)} checked={newPlanServices.includes(item.service_names) ? true : false} />
+                  ))}
 
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success" onClick={updatePlan}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-      <div className="app-content">
-        <div className="side-app leftmenu-icon">
-          <div className="page-header">
-            <div className="page-leftheader">
-              <h4 className="page-title">Subscription</h4>
-              <ol className="breadcrumb pl-0">
-                <li className="breadcrumb-item">
-                  <a href="/Dashboard">Home</a>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  Subscription
-                </li>
-              </ol>
-            </div>
-            <div className="page-rightheader">
-              <div className="ml-3 ml-auto d-flex">&nbsp;</div>
-            </div>
-          </div>
-          {/*custom form piyush start */}
-          <div className="container">
-            <div className="d-flex justify-content-center mt-4 mb-4">
-              <form >
-                <input
-                  value={serviceName}
-                  className="mx-4"
-                  type="text"
-                  placeholder="Name"
-                  onChange={(e) => setserviceName(e?.target?.value)}
-                  required={true}
-                />
-                <input
-                  value={serviceDescription}
-                  className="mx-4"
-                  type="text"
-                  placeholder="Description"
-                  onChange={(e) => setserviceDescription(e?.target?.value)}
-                  required={true}
-                />
-                <input
-                  value={amount}
-                  className="mx-4"
-                  type="number"
-                  placeholder="Amount"
-                  onChange={(e) => setamount(e?.target?.value)}
-                  required={true}
-                />
-                <button onClick={handleServiceSave}>Save</button>
-
-              </form>
-            </div>
-          </div>
-          <div className="subServicediv">
-            <h4>Select Service</h4>
-
-            {Services.length > 0 ? (
-              <Form className="locationsList">
-                {Services.map((location, index) => (
-                  <Form.Check
-                    key={index}
-                    type="checkbox"
-                    id={`locationCheckbox-${location.subscription_id}`}
-                    label={location.service_names}
-                    checked={selectedSubServices.includes(location)}
-                    onChange={() => handleSubServiceChange(location)}
-                  />
-
-                ))}
+                </Form.Group>
               </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="danger" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" onClick={updatePlan}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+        <div className="app-content">
+          <div className="side-app leftmenu-icon">
+            <div className="page-header">
+              <div className="page-leftheader">
+                <h4 className="page-title">Subscription</h4>
+                <ol className="breadcrumb pl-0">
+                  <li className="breadcrumb-item">
+                    <a href="/Dashboard">Home</a>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    Subscription
+                  </li>
+                </ol>
+              </div>
+              <div className="page-rightheader">
+                <div className="ml-3 ml-auto d-flex">&nbsp;</div>
+              </div>
+            </div>
+            {/*custom form piyush start */}
+            <div className="card">
+              <div className="card-body">
+                <h4>Create Plan :</h4>
+                <div className="container">
+                  <div className="d-flex  mt-2 mb-2">
+                    <form className="d-flex">
+                      <input
+                        value={serviceName}
+                        className="mx-1 form-control"
+                        type="text"
+                        placeholder="Name"
+                        onChange={(e) => setserviceName(e?.target?.value)}
+                        required={true}
+                      />
+                      <input
+                        value={serviceDescription}
+                        className="mx-1 form-control"
+                        type="text"
+                        placeholder="Description"
+                        onChange={(e) => setserviceDescription(e?.target?.value)}
+                        required={true}
+                      />
+                      <input
+                        value={amount}
+                        className="mx-1 form-control"
+                        type="number"
+                        placeholder="Amount"
+                        onChange={(e) => setamount(e?.target?.value)}
+                        required={true}
+                      />
+                      <button onClick={handleServiceSave} className="btn btn-primary w-25">Save</button>
 
-            ) : null}
-          </div>
+                    </form>
+                  </div>
+                </div>
+                <div className="subServicediv">
+                  <h4 className="mt-3">Select Service :</h4>
+
+                  {Services.length > 0 ? (
+                    <Form className="locationsList d-flex">
+                      {Services.map((location, index) => (
+                        <Form.Check
+                          key={index}
+                          type="checkbox"
+                          id={`locationCheckbox-${location.subscription_id}`}
+                          label={location.service_names}
+                          checked={selectedSubServices.includes(location)}
+                          onChange={() => handleSubServiceChange(location)}
+                        />
+
+                      ))}
+                    </Form>
+
+                  ) : null}
+                </div>
+              </div>
+            </div>
 
 
-          {allplans.length < 4 ? ('') : (<h1 className="text-danger"><b>* Please add only 3 Plans...</b></h1>)}
+            {allplans.length < 4 ? ('') : (<h4 className="text-danger mt-3"><b>* Please add only 3 Plans...</b></h4>)}
 
-          <div className="row">
+            <div className="row">
 
-            {allplans ?
-              allplans.map((item, index) => (
-                <div className="col-md-4 col-xl-3 col-lg-4 col-sm-6" key={index}>
-                  <div className="pricingTable2 green card">
-                    <div className="pricingTable2-header">
-                      <h3>{item.subscription_name}</h3>
-                      <span>{item.subscription_description}</span>
-                    </div>
-                    <div className="pricing-plans">
-                      <span className="price-value1">
-                        <i className="fa fa-usd" />
-                        <span>{item.subscription_amt}</span>
-                      </span>
-                      <span className="month">/month</span>
-                    </div>
-                    <div className="pricingContent2">
-                      <ul>
-                        {item.service_name.map((item2, index) => (
-                          <li key={index}>
-                            {item2}
-                          </li>
-                        ))}
+              {allplans ?
+                allplans.map((item, index) => (
+                  <div className="col-md-4 col-xl-3 col-lg-4 col-sm-6" key={index}>
+                    <div className="pricingTable2 info card"> 
+                      <div className="pricingTable2-header">
+                        <h3>{item.subscription_name}</h3>
+                        <span>{item.subscription_description}</span>
+                      </div>
+                      <div className="pricing-plans">
+                        <span className="price-value1">
+                          <i className="fa fa-usd" />
+                          <span>{item.subscription_amt}</span>
+                        </span>
+                        <span className="month">/month</span>
+                      </div>
+                      <div className="pricingContent2">
+                        <ul>
+                          {item.service_name.map((item2, index) => (
+                            <li key={index}>
+                              {item2}
+                            </li>
+                          ))}
 
-                        {/* <li>
+                          {/* <li>
                       <b>8</b> One-Click Apps
                     </li>
                     <li>
@@ -565,22 +570,22 @@ const Subscription = () => {
                     <li>
                       <b>24/7</b> Support
                     </li> */}
-                      </ul>
-                    </div>
+                        </ul>
+                      </div>
 
-                    <div className="pricingTable2-sign-up">
-                      <a href="#" className="btn btn-block btn-success" onClick={() => handleShow(item.id)}>
-                        Edit
-                      </a>
-                      <a href="#" className="btn btn-block btn-danger mt-4" onClick={() => deletePlan(item.id)}>
-                        Delete
-                      </a>
+                      <div className="pricingTable2-sign-up">
+                        <a href="#" className="btn btn-block btn-success" onClick={() => handleShow(item.id)}>
+                          Edit
+                        </a>
+                        <a href="#" className="btn btn-block btn-danger mt-4" onClick={() => deletePlan(item.id)}>
+                          Delete
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </div>)) :
-              null}
+                  </div>)) :
+                null}
 
-            {/* <div className="col-md-4 col-xl-3 col-lg-4 col-sm-6">
+              {/* <div className="col-md-4 col-xl-3 col-lg-4 col-sm-6">
               <div className="pricingTable2 info card">
                 <div className="pricingTable2-header">
                   <h3>Gold</h3>
@@ -660,8 +665,8 @@ const Subscription = () => {
                 </div>
               </div>
             </div> */}
-          </div>
-          {/* <div className="row">
+            </div>
+            {/* <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12">
               <div className="card">
                 <div className="card-body">
@@ -806,9 +811,9 @@ const Subscription = () => {
               </div>
             </div>
           </div> */}
+          </div>
         </div>
-      </div>
-    </>
+      </>
     </AdminLayout>
   );
 };

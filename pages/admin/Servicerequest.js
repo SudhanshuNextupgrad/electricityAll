@@ -1,6 +1,6 @@
 import Link from 'next/link';
-
-import { getData,putData } from '@/helpers/services';
+import { FaTrashAlt } from "react-icons/fa";
+import { deleteData, getData,putData } from '@/helpers/services';
 import { useEffect, useState } from 'react';
 import { Toaster, toast } from "sonner";
 
@@ -96,7 +96,19 @@ const Servicerequest = () => {
     setisSubmitingLoader(false)
   }
 
-
+ const deleteBookedService =async(id)=>{
+      
+      setisSubmitingLoader(true)
+      try {
+        const resp = await deleteData("/DeleteServiceBooking",{"delId":id})
+        
+        resp.message=="Service Deleted Successfully"? toast.success(resp.message):toast.error(resp.message)
+        setRefresh(Math.random)
+      } catch (error) {
+        console.log("try-catch error",error)
+      }
+      setisSubmitingLoader(false)
+ }
 
 
 
@@ -160,6 +172,7 @@ const Servicerequest = () => {
                           <th className="text-white">Assigned to</th>
                           <th className="text-white">Status</th>
                           <th className="text-white">Action</th>
+                          <th className="text-white">Delete</th>
                         </tr>
                       </thead>
                         
@@ -202,6 +215,7 @@ const Servicerequest = () => {
                                 </a>)}
                                 
                               </td>
+                              <td className="text-center"><FaTrashAlt onClick={()=>deleteBookedService(item.service_booking_id)} style={{cursor:"pointer"}}/></td>
 
                             </tr>
                           )) : ''

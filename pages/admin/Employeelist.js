@@ -103,7 +103,7 @@ const Employeelist = () => {
                 <h4 className="page-title">List of Employee</h4>
                 <ol className="breadcrumb pl-0">
                   <li className="breadcrumb-item">
-                    <a href="/Dashboard">Home</a>
+                    <a href="/admin">Home</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     List of Employee
@@ -311,7 +311,7 @@ const Employeelist = () => {
                                     "DD/MM/YYYY"
                                   )}
                                 </td>
-                                <td ><FaTrashAlt onClick={() => deleteEmployee(item.id)} /></td>
+                                <td className="text-center"><FaTrashAlt onClick={() => deleteEmployee(item.id)} style={{cursor:"pointer"}}/></td>
                               </tr>
                             ))
                             : null}

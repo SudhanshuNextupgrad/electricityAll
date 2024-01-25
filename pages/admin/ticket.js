@@ -1,6 +1,6 @@
 import Link from 'next/link';
-
-import { getData, putData } from '@/helpers/services';
+import { FaTrashAlt } from "react-icons/fa";
+import { deleteData, getData, putData } from '@/helpers/services';
 import { useEffect, useState } from 'react';
 import { Toaster, toast } from "sonner";
 
@@ -87,7 +87,20 @@ const Ticket = () => {
     }
     setisSubmitingLoader(false)
   }
-
+ 
+  const deleteTicket = async(id)=>{
+    // console.log("ticket id ",id)
+    setisSubmitingLoader(true)
+    try {
+      const resp = await deleteData("/DeleteSupportTicket",{"delId":id})
+      // console.log("resp",resp)
+      resp.message=="Ticket Deleted Successfully"? toast.success(resp.message):toast.error(toast.message)
+      setRefresh(Math.random)
+    } catch (error) {
+      console.log("try-catch error",error)
+    }
+    setisSubmitingLoader(false)
+  }
   return (
     <AdminLayout>
       <>
@@ -163,6 +176,7 @@ const Ticket = () => {
                                     <th className="text-white">Assigned to</th>
                                     <th className="text-white">Ticket Status</th>
                                     <th className="text-white">Action</th>
+                                    <th className="text-white">Delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -195,6 +209,7 @@ const Ticket = () => {
                                         {item.support_status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => handleAllotment(item.customer_id, item.id, item.support_status)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Ticket is completed!")}>Submit</Link>)}
 
                                       </td>
+                                      <td className="text-center"><FaTrashAlt onClick={()=>deleteTicket(item.id)} style={{cursor:"pointer"}}/></td>
                                     </tr>
                                   )) : null}
 
@@ -347,7 +362,7 @@ const Ticket = () => {
                               </table>
                             </div>
                           </div>
-                          <div className="tab-pane" id="tab2">
+                          {/* <div className="tab-pane" id="tab2">
                             <div className="table-responsive">
                               <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                                 <thead className="bg-primary text-white">
@@ -710,7 +725,7 @@ const Ticket = () => {
                                 </tbody>
                               </table>
                             </div>
-                          </div>
+                          </div> */}
 
                         </div>
                       </div>

@@ -340,7 +340,9 @@ const detailsservices = () => {
           <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12">
               <div className="card">
+                
                 <div className="card-body">
+                <h4>Create Service :</h4>
                   <div className="form-group m-0">
                     <form className="row gutters-xs" onSubmit={saveService}>
                       {/* <div className="col-3">
@@ -417,10 +419,10 @@ const detailsservices = () => {
                         ) : null}
                       </div> */}
                       <div className="sec2">
-                        <h4>Service Details</h4>
+                        <h4 className="mt-2">Select Sub-Service :</h4>
                         {SubServices.length > 0 ? (
                           <Form
-                            className="locationsList"
+                            className="locationsList d-flex"
                             onSubmit={handleSubserviceSubmit}
                           >
                             {SubServices.map((location, index) => (
