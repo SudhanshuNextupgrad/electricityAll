@@ -520,7 +520,7 @@ const Header = () => {
                   <a href="#" className="dropdown-item pt-3 pb-3">
                     <FaCircleQuestion /> FAQ{" "}
                   </a>
-                  <span className="dropdown-item pt-3 pb-3" onClick={logout}>
+                  <span className="dropdown-item pt-3 pb-3" onClick={logout} style={{cursor:"pointer"}}>
                     <FaArrowRightToBracket />
                     Sign Out{" "}
                   </span>
