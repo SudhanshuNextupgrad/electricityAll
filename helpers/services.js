@@ -1,7 +1,7 @@
 export async function verifyData() {
   const token = localStorage.getItem("token");
   try {
-    const data = await fetch(process.env.SITE_URL + "verify", {
+    const data = await fetch(process.env.NEXT_PUBLIC_SITE_URL + "verify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
