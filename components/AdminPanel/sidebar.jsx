@@ -15,10 +15,7 @@ const Sidebar = () => {
   const [username, setusername] = useState("");
   const [email, setemail] = useState("");
   useEffect(() => {
-    const user = localStorage.getItem("username");
-    const mail = localStorage.getItem("email");
-    setusername(user);
-    setemail(mail);
+   
   }, []);
   return (
     <>

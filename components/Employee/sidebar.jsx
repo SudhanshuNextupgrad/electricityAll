@@ -38,7 +38,7 @@ const Sidebar = () => {
           <div className="dropdown user-pro-body text-center">
             <div className="user-pic">
               <img
-                src={userPhoto == null ? "/dummy.jpg" : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
+                src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
                 alt="user-img"
                 className="avatar-xl rounded-circle mb-1"
               />

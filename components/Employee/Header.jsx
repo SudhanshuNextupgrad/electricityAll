@@ -161,7 +161,7 @@ const Header = () => {
             <div className="row">
               <div className="col-4 d-flex justify-content-center align-items-center">
                 <Row>
-                  <Image src={userPhoto == null ? "/dummy.jpg" : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
+                  <Image src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
                   {/* <img  src="/1.jpg"/> */}
                 </Row>
               </div>
@@ -472,7 +472,7 @@ const Header = () => {
                   </div>
                   <img
                     className="avatar avatar-md brround"
-                    src={userPhoto == null ? "/dummy.jpg" : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
+                    src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
                     alt="image"
                   />
                 </a>
@@ -481,7 +481,7 @@ const Header = () => {
                     <div className="user-image">
                       <img
                         className="user-images"
-                        src={userPhoto == null ? "/dummy.jpg" : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
+                        src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
                         alt="image"
                       />
                     </div>
