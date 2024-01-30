@@ -34,7 +34,7 @@ const Header = () => {
   const [userCountry, setUserCountry] = useState('')
   const [userUpdatedPhoto, setUserUpdatedPhoto] = useState('')
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
-  const [refresh,setRefresh] = useState('')
+  const [refresh, setRefresh] = useState('')
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -101,42 +101,42 @@ const Header = () => {
 
     setisSubmitingLoader(true)
     try {
-      
-      if(userPhone.length==10 || userPhone.length==undefined && userZip.length==6 || userZip.length==undefined){
+
+      if (userPhone.length == 10 || userPhone.length == undefined && userZip.length == 6 || userZip.length == undefined) {
 
         const formData = new FormData();
 
-      formData.append('updId', userId);
-      formData.append("name", username);
-      formData.append("email", userEmail);
-      formData.append("user_phno", userPhone);
-      formData.append("user_city", userCity);
-      formData.append("user_locality", userAddress);
-      formData.append("user_state", userState);
-      formData.append("user_zipcode", userZip);
-      formData.append("user_profile_photo", userUpdatedPhoto);
-      formData.append("user_country", userCountry);
+        formData.append('updId', userId);
+        formData.append("name", username);
+        formData.append("email", userEmail);
+        formData.append("user_phno", userPhone);
+        formData.append("user_city", userCity);
+        formData.append("user_locality", userAddress);
+        formData.append("user_state", userState);
+        formData.append("user_zipcode", userZip);
+        formData.append("user_profile_photo", userUpdatedPhoto);
+        formData.append("user_country", userCountry);
 
-      // console.log("formData", formData)
-      const resp = await axios.post("https://53c50cd527.nxcli.io/electricity/api/UpdateUser", formData)
-      console.log("user update resp", resp)
-      resp.data.message==="User Updated Successfully"? toast.success(resp.data.message):toast.error(resp.data.message)
+        // console.log("formData", formData)
+        const resp = await axios.post(process.env.NEXT_PUBLIC_SITE_URL + "/UpdateUser", formData)
+        console.log("user update resp", resp)
+        resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
 
-      setRefresh(Math.random)
-    setTimeout(()=>location.reload(),1500)
+        setRefresh(Math.random)
+        setTimeout(()=>location.reload(),1500)
 
       }
-      else{
+      else {
         toast.error("Please check Phone no and Zipcode.")
       }
 
-      
-      
+
+
 
     } catch (error) {
       console.log('try-catch error', error)
     }
-    
+
     setisSubmitingLoader(false)
 
   }
@@ -175,7 +175,7 @@ const Header = () => {
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridEmail" >
                       <Form.Label>Email</Form.Label>
-                      <Form.Control type="email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} disabled/>
+                      <Form.Control type="email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} disabled />
                     </Form.Group>
 
 

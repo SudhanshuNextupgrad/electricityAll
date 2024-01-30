@@ -69,7 +69,7 @@ const Header = () => {
       const userId = localStorage.getItem("UserId[A]")
       setUserID(userId)
       const resp = await getData(`/GetAllUser?id=${userId}`)
-      console.log("user update", resp)
+      
       setusername(resp.data[0].name)
       setUserPhoto(resp.data[0].user_profile_photo)
       setemail(resp.data[0].email)
@@ -128,7 +128,7 @@ const Header = () => {
         formData.append("user_country", userCountry)
 
         // console.log("formData", formData)
-        const resp = await axios.post(process.env.SITE_URL + "/UpdateUser", formData)
+        const resp = await axios.post(process.env.NEXT_PUBLIC_SITE_URL + "/UpdateUser", formData)
         console.log("user update resp", resp)
         resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
       }

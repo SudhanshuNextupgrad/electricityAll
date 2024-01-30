@@ -24,8 +24,20 @@ export default function Home() {
   const [pass, setPass] = useState("");
 
   useEffect(() => {
-    verifyIsLoggedIn(router);
+    // verifyIsLoggedIn(router);
+
+    defaultLogin();
+
   }, []);
+
+  const defaultLogin = () => {
+    if (localStorage.getItem("Etoken[E]")) { router.push("/employee") }
+    if (localStorage.getItem("Etoken[A]")) { router.push("/admin") }
+  }
+
+
+
+
 
   //function to manage login form
   async function handleSubmit(event) {
@@ -34,27 +46,27 @@ export default function Home() {
     if (email == "" || pass == "") {
       toast.error("Please fill out all the fields.");
     } else {
-      
+
       const result = await postData("/login", { email: email, password: pass });
       console.log("result", result);
-      if (result?.data?.name?.user_type=="Customer") {
+      if (result?.data?.name?.user_type == "Customer") {
         localStorage.setItem("Etoken[C]", result.data.token);
-        localStorage.setItem("UserId[C]",result.data.name.id);
-       
+        localStorage.setItem("UserId[C]", result.data.name.id);
+
         toast.success("Login Successfull");
         router.push("/");
-      } else if(result?.data?.name?.user_type=="Admin") {
+      } else if (result?.data?.name?.user_type == "Admin") {
         localStorage.setItem("Etoken[A]", result.data.token);
-        localStorage.setItem("UserId[A]",result.data.name.id);
+        localStorage.setItem("UserId[A]", result.data.name.id);
         router.push("/admin/")
-       
+
       }
-      else if(result?.data?.name?.user_type=="Employee"){
+      else if (result?.data?.name?.user_type == "Employee") {
         localStorage.setItem("Etoken[E]", result.data.token);
-        localStorage.setItem("UserId[E]",result.data.name.id);
+        localStorage.setItem("UserId[E]", result.data.name.id);
         router.push("/employee/")
       }
-      else{
+      else {
         toast.error("Login Failed [Unauthorised]");
       }
     }
@@ -138,7 +150,7 @@ export default function Home() {
                           >
                             Forgot password?
                           </Link>
-                          <br/>
+                          <br />
                           <Link
                             href="/"
                             className="btn btn-link box-shadow-0 px-0"

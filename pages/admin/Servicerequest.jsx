@@ -182,7 +182,7 @@ const Servicerequest = () => {
                             
                             <tr key={index}>
                               <th scope="row">{item.unique_service_id ? item.unique_service_id : <span></span>}</th>
-                              {/* {console.log("item",item)} */}
+                              
                               <td>{item.service_name}</td>
                               <td>${item.service_cost * item.qty}</td>
                               <td>{item.qty}</td>

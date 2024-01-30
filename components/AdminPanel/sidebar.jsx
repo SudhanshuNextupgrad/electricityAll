@@ -110,7 +110,7 @@ const Sidebar = () => {
           <li className="slide">
             <Link className="side-menu__item" data-toggle="slide" href="/admin/Role">
               <FaBookBookmark />
-              <span className="side-menu__label">Role</span>
+              <span className="side-menu__label">News Letter</span>
             </Link>
           </li>
           <li className="slide">

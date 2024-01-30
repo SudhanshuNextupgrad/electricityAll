@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { FaTrashAlt } from "react-icons/fa";
 import { verifyIsLoggedIn } from "@/helpers/helper";
 import { postData, getData, deleteData, putData } from "@/helpers/services";
 import { Toaster, toast } from "sonner";
@@ -33,6 +33,8 @@ const Subscription = () => {
   const [newDescription, setNewDescription] = useState('')
   const [newAmmount, setNewAmmount] = useState('')
   const [newPlanServices, setNewPlanServices] = useState([])
+  const [Plans_Subcribed, setPlans_Subscribed] = useState([])
+  const [AllUsers,setAllUsers] = useState([]);
   const [refresh, setRefresh] = useState('')
   //bootstrap modal states------
 
@@ -44,7 +46,7 @@ const Subscription = () => {
   const handleShow = (update_id) => {
 
     setShow(true);
-    // console.log("id", update_id);
+
     console.log("all plans", allplans);
     const selectedPlan = allplans.filter((item) => item.id == update_id)
     console.log("selectedPlan", selectedPlan);
@@ -55,28 +57,16 @@ const Subscription = () => {
     setUpdatePlanId(selectedPlan[0].id)
 
   }
-  // const handleClose = () => {
-  //   settrackBtn("");
-  //   settrackId("");
-  //   setsubService("");
-  //   setsubServiceDesc("");
-  //   setsubserviceAmount("");
-  //   setShow(false);
-  // };
 
-  // const handleShow = (buttonText, id) => {
-  //   settrackId(id);
-  //   settrackBtn(buttonText);
-  //   setShow(true);
-  // };
   useEffect(() => {
     verifyIsLoggedIn(router);
     getPlans();
-    getService()
+    getService();
+    Subscribed_Plans();
+    getAllUsers();
   }, [refresh]);
 
-  //function to post service
-  async function handleServiceSave(event) {
+  const handleServiceSave = async (event) => {
     event.preventDefault();
     try {
       if (serviceName != "" && serviceDescription != "" && amount != "") {
@@ -116,12 +106,9 @@ const Subscription = () => {
       console.log(err);
     }
   }
-
-  //api to get the subscription data
-  async function getPlans() {
+  const getPlans = async () => {
     try {
       const result = await getData("/GetSubscription");
-      console.log("get plans", result)
       setAllPlans(result.data ? result.data : [])
       // if (result?.status) {
       //   setservices(result?.data);
@@ -132,32 +119,6 @@ const Subscription = () => {
       console.log("try-catch error", err);
     }
   }
-
-  //function to delete service
-  // async function deleteService() {
-  //   // handleClose();
-
-  //   try {
-  //     setisSubmitingLoader(true);
-  //     const result = await deleteData("/DeleteSubscription", {
-  //       delId: trackId,
-  //     });
-  //     if (result.status) {
-  //       getPlans();
-  //       setisSubmitingLoader(false);
-  //       toast.success("Plan Deleted");
-
-  //       settrackId("");
-  //       settrackBtn("");
-  //     } else {
-  //       setisSubmitingLoader(false);
-  //       toast.success("Plan Not Deleted");
-  //     }
-  //   } catch (err) {
-  //     toast.error(err);
-  //   }
-  // }
-
   const deletePlan = async (e) => {
     setisSubmitingLoader(true)
     const resp = await deleteData("/DeleteSubscription", { "delId": e })
@@ -166,24 +127,6 @@ const Subscription = () => {
     setRefresh(Math.random())
     setisSubmitingLoader(false)
   }
-  // const showPlanValues_update = (update_id) => {
-  //   setisSubmitingLoader(true)
-  //   try {
-
-  //     const singleplan = allplans.filter((item) => item.id == update_id)
-  //     console.log("singleplan", singleplan)
-  //     setserviceName(singleplan[0].subscription_name)
-  //     setserviceDescription(singleplan[0].subscription_description)
-  //     setamount(singleplan[0].subscription_amt)
-  //     setUpdatePlanId(singleplan[0].id)
-
-  //   } catch (error) {
-  //     console.log("try-catch error", error)
-  //   }
-
-
-  //   setisSubmitingLoader(false)
-  // }
   const updatePlan = async () => {
     setisSubmitingLoader(true)
     try {
@@ -227,8 +170,7 @@ const Subscription = () => {
     setisSubmitingLoader(false)
     setShow(false)
   }
-  //function to save sub service
-  async function saveSubService() {
+  const saveSubService = async () => {
     // handleClose();
     try {
       setisSubmitingLoader(true);
@@ -254,9 +196,7 @@ const Subscription = () => {
       toast.error(err);
     }
   }
-
-  // function to get subService
-  async function getService() {
+  const getService = async () => {
     try {
       const result = await getData("/GetService");
 
@@ -279,23 +219,6 @@ const Subscription = () => {
       console.log(err);
     }
   }
-  // async function getServices() {
-  //   try {
-  //     setisSubmitingLoader(true);
-  //     const result = await getData("/GetService");
-  //     if (result.status) {
-  //       console.log("===>", result);
-  //       setisSubmitingLoader(false);
-  //       setSubServices(result.data);
-  //     } else {
-  //       setisSubmitingLoader(false);
-  //       toast.error("Faied to load Services");
-  //     }
-  //   } catch (err) {
-  //     setisSubmitingLoader(false);
-  //     toast.error(err);
-  //   }
-  // }
   const handleSubServiceChange = (service) => {
     const isSelected = selectedSubServices.includes(service);
 
@@ -326,7 +249,35 @@ const Subscription = () => {
     // console.log("updated services list", newPlanServices)
     setRefresh(Math.random())
   }
+  const Subscribed_Plans = async () => {
+    try {
+      const resp = await getData("/GetSubscriber")
+      setPlans_Subscribed(resp.data)
+    } catch (error) {
+      console.log("try-catch error", error)
+    }
+  }
+  const getAllUsers = async()=>{
+    try {
+      const resp = await getData("/GetAllUser")
+      setAllUsers(resp.data)
 
+    } catch (error) {
+      console.log("try-catch error",error)
+    }
+  }
+  const delete_subscribed_plan = async(id)=>{
+    setisSubmitingLoader(true)
+    try {
+      const resp = await deleteData("/DeleteSubscriber",{"delId":id})
+      console.log("delete resp",resp)
+      resp.message=="Plan Deleted Successfully"? toast.success("Plan subscription deleted"):toast.error(resp.message)
+      setRefresh(Math.random)
+    } catch (error) {
+      console.log("try-catch error",error)
+    }
+    setisSubmitingLoader(false)
+  }
   return (
     <AdminLayout>
       <>
@@ -538,7 +489,7 @@ const Subscription = () => {
               {allplans ?
                 allplans.map((item, index) => (
                   <div className="col-md-4 col-xl-3 col-lg-4 col-sm-6" key={index}>
-                    <div className="pricingTable2 info card"> 
+                    <div className="pricingTable2 info card">
                       <div className="pricingTable2-header">
                         <h3>{item.subscription_name}</h3>
                         <span>{item.subscription_description}</span>
@@ -666,151 +617,69 @@ const Subscription = () => {
               </div>
             </div> */}
             </div>
-            {/* <div className="row">
-            <div className="col-xl-12 col-lg-12 col-md-12">
-              <div className="card">
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
-                      <thead className="bg-primary text-white">
-                        <tr>
-                          <th className="text-white">Project Name</th>
-                          <th className="text-white">Date</th>
-                          <th className="text-white">Status</th>
-                          <th className="text-white">Price</th>
-                          <th className="text-white">Project Name</th>
-                          <th className="text-white">Date</th>
-                          <th className="text-white">Status</th>
-                          <th className="text-white">Price</th>
-                          <th className="text-white">Status</th>
-                          <th className="text-white">Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <Link
-                              href="/employee-detail"
-                              className="text-inherit"
-                            >
-                              Untrammelled prevents{" "}
-                            </Link>
-                          </td>
-                          <td>28 May 2018</td>
-                          <td>
-                            <span className="status-icon bg-success" />{" "}
-                            Completed
-                          </td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <a href="#" className="text-inherit">
-                              Untrammelled prevents{" "}
-                            </a>
-                          </td>
-                          <td>28 May 2018</td>
-                          <td>
-                            <span className="status-icon bg-success" />{" "}
-                            Completed
-                          </td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                        </tr>{" "}
-                        <tr>
-                          <td>
-                            <a href="#" className="text-inherit">
-                              Untrammelled prevents{" "}
-                            </a>
-                          </td>
-                          <td>28 May 2018</td>
-                          <td>
-                            <span className="status-icon bg-success" />{" "}
-                            Completed
-                          </td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                        </tr>{" "}
-                        <tr>
-                          <td>
-                            <a href="#" className="text-inherit">
-                              Untrammelled prevents{" "}
-                            </a>
-                          </td>
-                          <td>28 May 2018</td>
-                          <td>
-                            <span className="status-icon bg-success" />{" "}
-                            Completed
-                          </td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                        </tr>{" "}
-                        <tr>
-                          <td>
-                            <a href="#" className="text-inherit">
-                              Untrammelled prevents{" "}
-                            </a>
-                          </td>
-                          <td>28 May 2018</td>
-                          <td>
-                            <span className="status-icon bg-success" />{" "}
-                            Completed
-                          </td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                        </tr>{" "}
-                        <tr>
-                          <td>
-                            <a href="#" className="text-inherit">
-                              Untrammelled prevents{" "}
-                            </a>
-                          </td>
-                          <td>28 May 2018</td>
-                          <td>
-                            <span className="status-icon bg-success" />{" "}
-                            Completed
-                          </td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                          <td>$56,908</td>
-                        </tr>
-                      </tbody>
-                    </table>
+
+
+            <div className="row">
+              <div className="col-xl-12 col-lg-12 col-md-12">
+                <div className="card">
+                  <div className="card-body">
+                    <div className="table-responsive">
+                      <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
+                        <thead className="bg-primary text-white">
+                          <tr>
+                            <th className="text-white">Sr. No.</th>
+                            <th className="text-white">Subscription ID</th>
+                            <th className="text-white">Plan Name</th>
+                            <th className="text-white"> Start Date</th>
+                            <th className="text-white">Expiry Date</th>
+                            <th className="text-white">Customer Name</th>
+                            <th className="text-white">Customer ID</th>
+                            <th className="text-white">Action</th>
+
+                            {/* <th className="text-white">Price</th>
+                            <th className="text-white">Status</th>
+                            <th className="text-white">Price</th> */}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Plans_Subcribed.map((item, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>{item.id}</td>
+                              <td>{allplans.map((i) =>i.id == item.subscription_id ? i.subscription_name : '')}</td>
+                              <td>{item.start_date}</td>
+                              <td>{item.end_date}</td>
+                              <td>{AllUsers?.map((i)=>i.id==item.customer_id?i.name:"")}</td>
+                              <td>{item.customer_id}</td>
+                              <td><FaTrashAlt onClick={()=>delete_subscribed_plan(item.id)} style={{cursor:"pointer"}}/></td>
+                            </tr>))}
+                          {/* <tr>
+                            <td>
+                              <a href="#" className="text-inherit">
+                                Untrammelled prevents{" "}
+                              </a>
+                            </td>
+                            <td>28 May 2018</td>
+                            <td>
+                              <span className="status-icon bg-success" />{" "}
+                              Completed
+                            </td>
+                            <td>$56,908</td>
+                            <td>$56,908</td>
+                            <td>$56,908</td>
+                            <td>$56,908</td>
+                            <td>$56,908</td>
+                            <td>$56,908</td>
+                            <td>$56,908</td>
+                          </tr>{" "} */}
+
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div> */}
           </div>
         </div>
       </>

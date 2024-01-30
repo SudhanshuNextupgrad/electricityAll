@@ -522,7 +522,7 @@ const Checkout = () => {
                         </div>
                         <div className={style.payment}>
 
-                            <Link href="/services" >Book other services</Link>
+                            <Link href="/service" >Book other services</Link>
                         </div>
 
                         {/* <div className={style.seasonoffer}>
