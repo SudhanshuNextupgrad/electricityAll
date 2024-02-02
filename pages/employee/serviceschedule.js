@@ -1,7 +1,8 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getData, putData } from '@/helpers/services';
+import { FaTrashAlt } from "react-icons/fa";
+import { deleteData, getData, putData } from '@/helpers/services';
 import { Toaster, toast } from "sonner";
 import EmployeeLayout from '@/layouts/EmployeeLayout';
 import { getFormatedDate } from '@/helpers/helper';
@@ -10,11 +11,12 @@ import { getFormatedDate } from '@/helpers/helper';
 const Serviceschedule = () => {
 
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
-  const [PreviousServices, setPreviousServices] = useState([])
-  const [TodayServices, setTodayServices] = useState([])
-  const [upcomingServices, setUpcomingServices] = useState([])
-  const [AllUsers, setAllUsers] = useState([])
-  const [refresh, setRefresh] = useState('')
+  // const [PreviousServices, setPreviousServices] = useState([]);
+  // const [TodayServices, setTodayServices] = useState([]);
+  // const [upcomingServices, setUpcomingServices] = useState([]);
+  const [BookedServices, setBookedServices] = useState([])
+  const [AllUsers, setAllUsers] = useState([]);
+  const [refresh, setRefresh] = useState('');
   // const [EmpId, setEmpId] = useState()
 
   useEffect(() => {
@@ -37,39 +39,40 @@ const Serviceschedule = () => {
     try {
       if (typeof window !== 'undefined') {
         const EmpId = localStorage.getItem("UserId[E]")
-        // console.log("EmpId", EmpId)
         const resp = await getData("/GetServiceBooking")
-        // console.log("all booked services resp", resp)
+        console.log("all booked services",resp)
         const EmpServices = resp.data.filter((item) => item.emp_id == EmpId)
-
-        const date = new Date();
-        const today = getFormatedDate(date, "DD-MM-YYYY")
+        console.log("EmpServices",EmpServices)
+        setBookedServices(EmpServices)
+        // const date = new Date();
+        // const today = getFormatedDate(date, "DD-MM-YYYY")
         // console.log("today", today)
-        const todayServics = [];
-        const upcomingServices = []
-        const pastServices = [];
-        EmpServices.map((item) => {
+        // const todayServics = [];
+        // const upcomingServices = []
+        // const pastServices = [];
+        // EmpServices.map((item) => {
 
-          if (getFormatedDate(item.service_avail_date, "DD-MM-YYYY") == today) {
 
-            todayServics.push(item)
-          }
-          else if (getFormatedDate(item.service_avail_date, "DD-MM-YYYY") > today) {
+        //   if (getFormatedDate(item.service_avail_date, "DD-MM-YYYY") == today) {
 
-            upcomingServices.push(item)
-          }
-          else {
+        //     todayServics.push(item)
+        //   }
+        //   else if (getFormatedDate(item.service_avail_date, "DD-MM-YYYY") > today) {
 
-            pastServices.push(item)
-          }
-          setPreviousServices(pastServices)
-          setTodayServices(todayServics)
-          setUpcomingServices(upcomingServices)
-          console.log("pastServices",pastServices)
-          console.log("todayServics",todayServics)
-          console.log("upcomingServices",upcomingServices)
-        }
-        )
+        //     upcomingServices.push(item)
+        //   }
+        //   else {
+
+        //     pastServices.push(item)
+        //   }
+        //   setPreviousServices(pastServices)
+        //   setTodayServices(todayServics)
+        //   setUpcomingServices(upcomingServices)
+        //   console.log("pastServices",pastServices)
+        //   console.log("todayServics",todayServics)
+        //   console.log("upcomingServices",upcomingServices)
+        // }
+        // )
       }
     } catch (error) {
       console.log("try-catch error", error)
@@ -95,7 +98,21 @@ const Serviceschedule = () => {
     setisSubmitingLoader(false)
   }
 
-
+const delete_booked_service = async(id)=>{
+  console.log("delete id",id)
+  // /DeleteServiceBooking
+  setisSubmitingLoader(true)
+  try {
+    const resp = await deleteData("/DeleteServiceBooking",{ "delId":id})
+    console.log("delete resp",resp)
+    resp.message=="Service Deleted Successfully"? toast.success(resp.message):toast.error(resp.message)
+    setRefresh(Math.random)
+    
+  } catch (error) {
+    console.log("try-catch error",error)
+  }
+  setisSubmitingLoader(false)
+}
 
 
   return (
@@ -131,7 +148,7 @@ const Serviceschedule = () => {
               <div className="col-md-12"><div className="tab-menu-heading">
                 <div className="tabs-menu ">
 
-                  <ul className="nav panel-tabs">
+                  {/* <ul className="nav panel-tabs">
                     <li className="">
                       <a href="#tab1" className="active" data-toggle="tab">
                         Previous Services
@@ -148,7 +165,7 @@ const Serviceschedule = () => {
                       </a>
                     </li>
 
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
                 <div className="card">
@@ -162,7 +179,8 @@ const Serviceschedule = () => {
                               <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                                 <thead className="bg-primary text-white">
                                   <tr>
-                                    <th className="text-white">Unique Service ID 1</th>
+                                    <th className="text-white">Sr.No. </th>
+                                    <th className="text-white">Unique Service ID </th>
                                     <th className="text-white">Service Name</th>
                                     <th className="text-white">Service ID</th>
                                     <th className="text-white">Service Avail Date</th>
@@ -174,12 +192,13 @@ const Serviceschedule = () => {
                                     <th className="text-white">Service Book Date</th>
                                     <th className="text-white">Status</th>
                                     <th className="text-white">Action</th>
+                                    <th className="text-white">delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {PreviousServices.map((item, index) => (
+                                  {BookedServices?.map((item, index) => (
                                     <tr key={index}>
-                                      
+                                      <td>{index+1}</td>
                                       <th scope="row">{item.unique_service_id}</th>
                                       <td>{item.service_name}</td>
                                       <td>{item.service_id}</td>
@@ -198,6 +217,7 @@ const Serviceschedule = () => {
                                         {item.status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Service is completed.")} >Submit</Link>)}
 
                                       </td>
+                                      <td><FaTrashAlt onClick={()=>delete_booked_service(item.id)}/></td>
                                     </tr>))}
                                   {/* <tr>
                                   <th scope="row">Ser123</th>
@@ -331,12 +351,13 @@ const Serviceschedule = () => {
                               </table>
                             </div>
                           </div>
-                          <div className="tab-pane" id="tab2">
+                          {/* <div className="tab-pane" id="tab2">
                             <div className="table-responsive">
                               <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                                 <thead className="bg-primary text-white">
                                   <tr>
-                                    <th className="text-white">Unique Service ID 2</th>
+                                  <th className="text-white">Sr.No. </th>
+                                    <th className="text-white">Unique Service ID </th>
                                     <th className="text-white">Service Name</th>
                                     <th className="text-white">Service ID</th>
                                     <th className="text-white">Service Avail Date</th>
@@ -348,11 +369,13 @@ const Serviceschedule = () => {
                                     <th className="text-white">Service Book Date</th>
                                     <th className="text-white">Status</th>
                                     <th className="text-white">Action</th>
+                                    <th className="text-white">Delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   {TodayServices ? TodayServices.map((item, index) => (
                                     <tr key={index}>
+                                      <td>{index+1}</td>
                                       <th scope="row">{item.unique_service_id}</th>
                                       <td>{item.service_name}</td>
                                       <td>{item.service_id}</td>
@@ -370,8 +393,9 @@ const Serviceschedule = () => {
                                         {item.status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Service is completed.")} >Submit</Link>)}
 
                                       </td>
+                                      <td><FaTrashAlt/></td>
                                     </tr>)) : <>No Services</>}
-                                  {/* <tr>
+                                  <tr>
                                   <th scope="row">Ser123</th>
                                   <td>Joan Powell</td>
                                   <td>AC Repair</td>
@@ -526,7 +550,7 @@ const Serviceschedule = () => {
                                   <td>
                                     <Link className="actionsubmit" href="#">Submit</Link>
                                   </td>
-                                </tr> */}
+                                </tr>
                                 </tbody>
                               </table>
                             </div>
@@ -536,7 +560,8 @@ const Serviceschedule = () => {
                               <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                                 <thead className="bg-primary text-white">
                                   <tr>
-                                    <th className="text-white">Unique Service ID 3</th>
+                                  <th className="text-white">Sr.No.</th>
+                                    <th className="text-white">Unique Service ID</th>
                                     <th className="text-white">Service Name</th>
                                     <th className="text-white">Service ID</th>
                                     <th className="text-white">Service Avail Date</th>
@@ -548,11 +573,13 @@ const Serviceschedule = () => {
                                     <th className="text-white">Service Book Date</th>
                                     <th className="text-white">Status</th>
                                     <th className="text-white">Action</th>
+                                    <th className="text-white">Delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   {upcomingServices ? upcomingServices.map((item, index) => (
                                     <tr key={index}>
+                                      <td>{index + 1}</td>
                                       <th scope="row">{item.unique_service_id}</th>
                                       <td>{item.service_name}</td>
                                       <td>{item.service_id}</td>
@@ -570,8 +597,9 @@ const Serviceschedule = () => {
                                         {item.status == 0 ? (<Link className="actionsubmit" href="#" onClick={() => ServiceComplete(item.id)}>Submit</Link>) : (<Link className="actionsubmit" href="#" onClick={() => toast.error("Service is completed.")} >Submit</Link>)}
 
                                       </td>
+                                      <td><FaTrashAlt/></td>
                                     </tr>)) : <>No Services</>}
-                                  {/* <tr>
+                                  <tr>
                                   <th scope="row">Ser123</th>
                                   <td>Joan Powell</td>
                                   <td>AC Repair</td>
@@ -588,8 +616,8 @@ const Serviceschedule = () => {
                                   <td>
                                     <Link className="actionsubmit" href="#">Submit</Link>
                                   </td>
-                                </tr> */}
-                                  {/* <tr>
+                                </tr>
+                                  <tr>
                                   <th scope="row">Ser123</th>
                                   <td>Joan Powell</td>
                                   <td>AC Repair</td>
@@ -744,11 +772,11 @@ const Serviceschedule = () => {
                                   <td>
                                     <Link className="actionsubmit" href="#">Submit</Link>
                                   </td>
-                                </tr> */}
+                                </tr>
                                 </tbody>
                               </table>
                             </div>
-                          </div>
+                          </div> */}
 
                         </div>
                       </div>

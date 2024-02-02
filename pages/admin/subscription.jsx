@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaTrashAlt } from "react-icons/fa";
-import { verifyIsLoggedIn } from "@/helpers/helper";
+import { getFormatedDate, verifyIsLoggedIn } from "@/helpers/helper";
 import { postData, getData, deleteData, putData } from "@/helpers/services";
 import { Toaster, toast } from "sonner";
 import Button from "react-bootstrap/Button";
@@ -82,6 +82,7 @@ const Subscription = () => {
             subscription_description: serviceDescription,
             subscription_amt: amount,
             service_id_array: arrayofId,
+            subscription_status:"1"
           });
           console.log("post plan object",)
           if (result.status) {
@@ -109,7 +110,8 @@ const Subscription = () => {
   const getPlans = async () => {
     try {
       const result = await getData("/GetSubscription");
-      setAllPlans(result.data ? result.data : [])
+      const filterdPlans = result.data.filter((item)=>item.subscription_status==1)
+      setAllPlans(filterdPlans ? filterdPlans : [])
       // if (result?.status) {
       //   setservices(result?.data);
       // } else {
@@ -251,10 +253,11 @@ const Subscription = () => {
   }
   const Subscribed_Plans = async () => {
     try {
-      const resp = await getData("/GetSubscriber")
-      setPlans_Subscribed(resp.data)
+      const resp = await getData("/GetSubscriber");
+      const filteredSubscribedPlans = resp?.data?.filter((item)=>item?.subscription_status==1);
+      setPlans_Subscribed(filteredSubscribedPlans);
     } catch (error) {
-      console.log("try-catch error", error)
+      console.log("try-catch error", error);
     }
   }
   const getAllUsers = async()=>{
@@ -278,6 +281,8 @@ const Subscription = () => {
     }
     setisSubmitingLoader(false)
   }
+
+  
   return (
     <AdminLayout>
       <>
@@ -343,7 +348,7 @@ const Subscription = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
-          </>
+          </> 
         ) : (
           <>
             <Modal show={show} onHide={handleClose}>
@@ -426,7 +431,7 @@ const Subscription = () => {
             <div className="card">
               <div className="card-body">
                 <h4>Create Plan :</h4>
-                <div className="container">
+                <div className="container p-0">
                   <div className="d-flex  mt-2 mb-2">
                     <form className="d-flex">
                       <input
@@ -461,7 +466,7 @@ const Subscription = () => {
                 <div className="subServicediv">
                   <h4 className="mt-3">Select Service :</h4>
 
-                  {Services.length > 0 ? (
+                  {Services?.length > 0 ? (
                     <Form className="locationsList d-flex">
                       {Services.map((location, index) => (
                         <Form.Check
@@ -482,7 +487,7 @@ const Subscription = () => {
             </div>
 
 
-            {allplans.length < 4 ? ('') : (<h4 className="text-danger mt-3"><b>* Please add only 3 Plans...</b></h4>)}
+            {allplans?.length < 4 ? ('') : (<h4 className="text-danger mt-3"><b>* Please add only 3 Plans...</b></h4>)}
 
             <div className="row">
 
@@ -525,6 +530,20 @@ const Subscription = () => {
                       </div>
 
                       <div className="pricingTable2-sign-up">
+                        {/* <p>
+                        {item.subscription_status == "1" ? (
+                                    <>
+                                      <span className="status-icon bg-success" />
+                                      Active
+                                    </>
+                                  ) : (
+                                    <>
+                                      {" "}
+                                      <span className="status-icon bg-danger" />
+                                      Inactive
+                                    </>
+                                  )}
+                        </p> */}
                         <a href="#" className="btn btn-block btn-success" onClick={() => handleShow(item.id)}>
                           Edit
                         </a>
@@ -647,8 +666,8 @@ const Subscription = () => {
                               <td>{index + 1}</td>
                               <td>{item.id}</td>
                               <td>{allplans.map((i) =>i.id == item.subscription_id ? i.subscription_name : '')}</td>
-                              <td>{item.start_date}</td>
-                              <td>{item.end_date}</td>
+                              <td>{getFormatedDate(item.start_date,"DD-MM-YYYY")}</td>
+                              <td>{getFormatedDate(item.end_date,"DD-MM-YYYY")}</td>
                               <td>{AllUsers?.map((i)=>i.id==item.customer_id?i.name:"")}</td>
                               <td>{item.customer_id}</td>
                               <td><FaTrashAlt onClick={()=>delete_subscribed_plan(item.id)} style={{cursor:"pointer"}}/></td>

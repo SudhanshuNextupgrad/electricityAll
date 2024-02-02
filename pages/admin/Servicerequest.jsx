@@ -14,8 +14,8 @@ const Servicerequest = () => {
   const [employee, setEmployee] = useState([]);
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
   const [AllotedEmployeeId, setAllotedEmployeeId] = useState();
-  const [selectedEmployee, setSelectedEmployee] = useState('')
-  const [Refresh, setRefresh] = useState('')
+  const [selectedEmployee, setSelectedEmployee] = useState('');
+  const [Refresh, setRefresh] = useState('');
 
 
 
@@ -28,7 +28,7 @@ const Servicerequest = () => {
   const getServiceData = async () => {
     setisSubmitingLoader(true)
     const resp1 = await getData("/GetServiceBooking");
-    // console.log("service booked resp", resp1.data);
+    console.log("service booked resp", resp1.data);
     const serviceId_array = [];
     resp1.data.map((item) => {
       // const items = {
@@ -155,6 +155,7 @@ const Servicerequest = () => {
                     <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                       <thead className="bg-primary text-white">
                         <tr>
+                        <th className="text-white">sr.no.</th>
                           <th className="text-white">Service Booking ID</th>
                           <th className="text-white">Service Name</th>
                           <th className="text-white">Service Cost</th>
@@ -181,6 +182,7 @@ const Servicerequest = () => {
                           ServiceBooked ? ServiceBooked.map((item, index) => (
                             
                             <tr key={index}>
+                              <td>{index+1}</td>
                               <th scope="row">{item.unique_service_id ? item.unique_service_id : <span></span>}</th>
                               
                               <td>{item.service_name}</td>
@@ -215,7 +217,7 @@ const Servicerequest = () => {
                                 </a>)}
                                 
                               </td>
-                              <td className="text-center"><FaTrashAlt onClick={()=>deleteBookedService(item.service_booking_id)} style={{cursor:"pointer"}}/></td>
+                              <td className="text-center"><FaTrashAlt onClick={()=>deleteBookedService(item.id)} style={{cursor:"pointer"}}/></td>
 
                             </tr>
                           )) : ''

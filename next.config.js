@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["53c50cd527.nxcli.io"]
+    domains: ["nextupgrad.us"]
   }
 }
 

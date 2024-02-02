@@ -212,7 +212,7 @@ const Navbar = () => {
         // setUserName(JSON.parse(localStorage.getItem("userName")))
       }
       const resp = await getData(`/GetAllUser?id=${JSON.parse(localStorage.getItem("UserId[C]"))}`)
-      console.log("user details", resp)
+      
       setUser_photo(resp.data[0].user_profile_photo)
       setUserName(resp.data[0].name)
       setEmail(resp.data[0].email)
@@ -239,7 +239,7 @@ const Navbar = () => {
         const resp = await getData("/GetServiceLocation")
         let value = 0
         resp.data.map((item) => {
-          console.log("item", item)
+         
 
           if (item.location_name == locationSearchBox || item.zip_code == locationSearchBox) {
             value = 1
@@ -300,7 +300,7 @@ const Navbar = () => {
               <Link href="/cart" >
                 <FaShoppingCart />
               </Link>
-              {console.log("userid", userId)}
+             
               {userId ? (<Link href="#" onClick={() => setSmShow(true)} className="me-2">
                 <FaUser />
               </Link>) : (<Link href="/login" className="me-2">
@@ -503,7 +503,7 @@ const Navbar = () => {
 
                 {/* <Image src={user_photo === null ? '/dummy.jpg' : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} alt="img" /> */}
                 
-                <img src={user_photo === null ? '/dummy.jpg' : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} />
+                <img src={user_photo === null ? '/dummy.jpg' : `https://nextupgrad.us/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} />
                 {/* <Image src='/dummy.jpg' height={50} width={50} alt="img" /> */}
               </div>
               <Table >

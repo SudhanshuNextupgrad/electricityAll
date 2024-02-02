@@ -46,25 +46,24 @@ const Header = () => {
   const getUser = async () => {
     try {
       if (typeof window !== 'undefined') {
-        const EmpId = localStorage.getItem("UserId[E]")
-        setUserId(EmpId)
-        !EmpId ? route.push("/employee") : ''
-        console.log("EmpId", EmpId)
+        const EmpId = localStorage.getItem("UserId[E]");
+        setUserId(EmpId);
+        // !EmpId ? route.push("/employee") : ''
+        console.log("EmpId", EmpId);
         const resp = await getData(`/GetAllUser?id=${EmpId}`)
-        console.log("resp", resp)
-
-        setUserName(resp.data[0].name)
-        // setUserRole(resp.data[0].user_type)
-        setUserEmail(resp.data[0].email)
-        setUserPhoto(resp.data[0].user_profile_photo)
-        setUserPhone(resp.data[0].user_phno)
-        setUserNewPassword()
-        setUserNewPasswordConfirm()
-        setUserAddress(resp.data[0].user_locality)
-        setUserZip(resp.data[0].user_zipcode)
-        setUserCity(resp.data[0].user_city)
-        setUserState(resp.data[0].user_state)
-        setUserCountry(resp.data[0].user_country)
+        console.log("resp", resp);
+        setUserName(resp.data[0].name);
+        // setUserRole(resp.data[0].user_type);
+        setUserEmail(resp.data[0].email);
+        setUserPhoto(resp.data[0].user_profile_photo);
+        setUserPhone(resp.data[0].user_phno);
+        setUserNewPassword();
+        setUserNewPasswordConfirm();
+        setUserAddress(resp.data[0].user_locality);
+        setUserZip(resp.data[0].user_zipcode);
+        setUserCity(resp.data[0].user_city);
+        setUserState(resp.data[0].user_state);
+        setUserCountry(resp.data[0].user_country);
 
 
 
@@ -102,10 +101,51 @@ const Header = () => {
     setisSubmitingLoader(true)
     try {
 
-      if (userPhone.length == 10 || userPhone.length == undefined && userZip.length == 6 || userZip.length == undefined) {
 
+      console.log("username", username)
+      console.log("useremail", userEmail)
+      console.log("profile photo", userPhoto)
+      console.log("user phone", userPhone)
+      console.log("user address", userAddress)
+      console.log("user zip", userZip)
+      console.log("user city", userCity)
+      console.log("user state", userState)
+      console.log("user country", userCountry)
+
+      // if (userPhone.length == 10 || userPhone.length == undefined && userZip.length == 6 || userZip.length == undefined) {
+
+        
+      
+
+      // }
+      // else {
+      //   toast.error("Please check Phone no and Zipcode.")
+      // }
+
+      if (userPhone?.toString()?.length != 10) {
+        toast.error("Phone number should be of 10 digits !")
+      }
+      else if (userZip == null) {
+        toast.error("Zip code is required !")
+      }
+      else if (userZip?.toString()?.length != 6) {
+        toast.error("Zip code should be of 6 digits !")
+      }
+      else if (userAddress == null) {
+        toast.error("Address is required !")
+      }
+      else if (userCity == null) {
+        toast.error("City is required !")
+      }
+      else if (userState == null) {
+        toast.error("State is required !")
+      }
+      else if (userCountry == null) {
+        toast.error("Country is required !")
+      }
+      else{
+      
         const formData = new FormData();
-
         formData.append('updId', userId);
         formData.append("name", username);
         formData.append("email", userEmail);
@@ -122,14 +162,9 @@ const Header = () => {
         console.log("user update resp", resp)
         resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
 
-        setRefresh(Math.random)
-        setTimeout(()=>location.reload(),1500)
-
+        
+        setTimeout(() => location.reload(), 1500)
       }
-      else {
-        toast.error("Please check Phone no and Zipcode.")
-      }
-
 
 
 
@@ -153,7 +188,7 @@ const Header = () => {
       <Toaster position="top-center" richColors />
       {/* model start */}
       <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title><Image src="/logo.png" height={50} width={200} alt="img" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -161,7 +196,7 @@ const Header = () => {
             <div className="row">
               <div className="col-4 d-flex justify-content-center align-items-center">
                 <Row>
-                  <Image src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
+                  <Image src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
                   {/* <img  src="/1.jpg"/> */}
                 </Row>
               </div>
@@ -472,7 +507,7 @@ const Header = () => {
                   </div>
                   <img
                     className="avatar avatar-md brround"
-                    src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
+                    src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
                     alt="image"
                   />
                 </a>
@@ -481,7 +516,7 @@ const Header = () => {
                     <div className="user-image">
                       <img
                         className="user-images"
-                        src={userPhoto == null ? "/dummy.jpg" : `http://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${userPhoto}`}
+                        src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
                         alt="image"
                       />
                     </div>

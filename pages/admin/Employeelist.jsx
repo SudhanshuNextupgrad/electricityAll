@@ -49,7 +49,8 @@ const Employeelist = () => {
 
   const RegisterEmployee = async () => {
     setisSubmitingLoader(true)
-    try {
+    if(NewEmployeePhone.toString().length==10)
+    { try {
       const NewEmployee = {
         "name": NewEmployeeName,
         "email": NewEmployeeEmail,
@@ -62,13 +63,15 @@ const Employeelist = () => {
       // console.log("resp",resp)
       resp.message == "User Created Successfully" ? toast.success(resp.message) : toast.error(resp.message);
       setRefresh(Math.random)
-
-
-
-
     } catch (error) {
       console.log("try-catch error", error)
     }
+   
+  }
+  else{
+    toast.error("Phone no must be of 10 digits !")
+  }
+   
     setisSubmitingLoader(false)
   }
   const deleteEmployee = async (id) => {
@@ -152,6 +155,7 @@ const Employeelist = () => {
                             type="number"
                             className="form-control header-search"
                             placeholder="Phone"
+                            pattern="[0-9]{10}"
                             value={NewEmployeePhone}
                             onChange={(e) => setNewEmployeePhone(e.target.value)}
                           />
@@ -252,23 +256,24 @@ const Employeelist = () => {
                       <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                         <thead className="bg-primary text-white">
                           <tr>
+                          <th className="text-white">Sr.No.</th>
                             <th className="text-white">Employee Name</th>
                             <th className="text-white">Email</th>
                             <th className="text-white">Status</th>
                             <th className="text-white">Phone</th>
-                            <th className="text-white">Rating</th>
+                            {/* <th className="text-white">Rating</th> */}
                             <th className="text-white">Country</th>
                             <th className="text-white">Address</th>
                             <th className="text-white">Zip</th>
                             <th className="text-white"> Date Created</th>
                             <th className="text-white"> Action</th>
-
                           </tr>
                         </thead>
                         <tbody>
                           {employeeList.length > 0
                             ? employeeList.map((item, index) => (
-                              <tr>
+                              <tr key={index}>
+                                <td>{index+1}</td>
                                 <td>
                                   {/* <Link
                                     href="/employee-detail"
@@ -294,21 +299,21 @@ const Employeelist = () => {
                                   )}
                                 </td>
                                 <td>{item.user_phno}</td>
-                                <td>
+                                {/* <td>
                                   {item.user_rating ? (
                                     <>
                                       {item.user_rating} <span> </span>
                                       <AiFillStar className="star" />{" "}
                                     </>
                                   ) : null}
-                                </td>
+                                </td> */}
                                 <td>{item.user_country}</td>
                                 <td>{item.user_city}</td>
                                 <td>{item.user_zipcode}</td>
                                 <td>
                                   {getFormatedDate(
                                     item.created_at,
-                                    "DD/MM/YYYY"
+                                    "DD-MM-YYYY"
                                   )}
                                 </td>
                                 <td className="text-center"><FaTrashAlt onClick={() => deleteEmployee(item.id)} style={{cursor:"pointer"}}/></td>

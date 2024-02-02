@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "sonner";
 
-import { getData,postData } from "@/helpers/services";
+import { getData, postData } from "@/helpers/services";
 
 import { verifyIsLoggedIn } from "@/helpers/helper";
 export default function Home() {
@@ -53,24 +53,28 @@ export default function Home() {
       toast.error("Please fill out all the fields.");
     } else {
       setisSubmitingLoader(true);
-      const result = await postData("/register", {
+      const resp = await postData("/register", {
         name: name,
         email: email,
         password: password,
         user_type: "Customer",
       });
-      console.log(" register result", result);
-      if (result.status) {
-        localStorage.setItem("Etoken", result.token);
-        setisSubmitingLoader(false);
-        toast.success("Registration Successfull");
+      console.log(" register result", resp);
+
+      if (resp.message == "User Created Successfully") {
+        toast.success(resp?.message)
+        localStorage.setItem("Etoken[C]", resp.token)
+        localStorage.setItem("UserId[C]", resp.id)
         setTimeout(() => {
-          router.push("/login");
+          router.push("/");
         }, 1500);
-      } else {
-        setisSubmitingLoader(false);
-        toast.error("Registration Failed");
       }
+      else {
+        toast.error(resp?.errors?.email)
+      }
+
+
+      setisSubmitingLoader(false)
     }
   }
 

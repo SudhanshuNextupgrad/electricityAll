@@ -20,10 +20,10 @@ const Listustomers = () => {
   const getCustomer = async () => {
     setisSubmitingLoader(true)
     const resp = await getData("/GetAllUser")
-    // console.log("resp", resp.data)
+    console.log("total users", resp.data)
 
-    const filterCustomer = resp.data.filter((e) => e.user_type == "Customer")
-    console.log("filterCustomer",filterCustomer)
+    const filterCustomer = resp.data.filter((e) => e.user_type == "Customer" )
+    console.log("filterCustomer", filterCustomer)
     setTotalCustomers(filterCustomer)
     setisSubmitingLoader(false)
   }
@@ -84,6 +84,7 @@ const Listustomers = () => {
                       <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                         <thead className="bg-primary text-white">
                           <tr>
+                            <th className="text-white">Sr.no.</th>
                             <th className="text-white">User ID</th>
                             <th className="text-white">User Name</th>
                             <th className="text-white">Location</th>
@@ -91,8 +92,8 @@ const Listustomers = () => {
                             <th className="text-white">Email ID</th>
                             <th className="text-white">Contact No.</th>
                             <th className="text-white">User Type</th>
-                            <th className="text-white">Payment</th>
-                            <th className="text-white">Rating</th>
+                            <th className="text-white">user status</th>
+                            {/* <th className="text-white">Rating</th> */}
                             <th className="text-white">Action</th>
 
                           </tr>
@@ -101,6 +102,7 @@ const Listustomers = () => {
                           {
                             totalCustomers ? totalCustomers.map((item, index) => (
                               <tr key={index}>
+                                <td>{index + 1}</td>
                                 <th scope="row">{item.id}</th>
                                 {/* {console.log("itemm",item)} */}
                                 <td>{item.name}</td>
@@ -113,18 +115,23 @@ const Listustomers = () => {
                                 <td>{item.user_phno ? item.user_phno : <span></span>}</td>
                                 <td>{item.user_type}</td>
                                 <td>
-                                  <span className="unpaid">{item.user_status == 1 ? <>paid</> : <>unpaid</>}</span>
+                                {item.user_status == "1" ? (
+                                    <>
+                                      <span className="status-icon bg-success" />
+                                      Active
+                                    </>
+                                  ) : (
+                                    <>
+                                      {" "}
+                                      <span className="status-icon bg-danger" />
+                                      Inactive
+                                    </>
+                                  )}
                                 </td>
-                                <td>
-
-
-                                  {/* {
-                                (item.user_rating)
-                              } */}
-
+                                {/* <td>
                                   <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
-                                </td>
-                                <td className="text-center"><FaTrashAlt onClick={() => deleteCustomer(item.id)} style={{cursor:"pointer"}}/></td>
+                                </td> */}
+                                <td className="text-center"><FaTrashAlt onClick={() => deleteCustomer(item.id)} style={{ cursor: "pointer" }} /></td>
                               </tr>
                             )
 

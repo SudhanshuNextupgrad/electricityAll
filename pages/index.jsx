@@ -56,7 +56,7 @@ export default function Home() {
 
   const getServices = async () => {
     const resp = await getData("/GetService")    
-    console.log("getServices", resp);
+   
     setSliderServices(resp.data)
 
     try {
@@ -66,7 +66,7 @@ export default function Home() {
         setUserId(userId)
         // setUser_name(JSON.parse(localStorage.getItem("userName")))
         let data = await getData(`/GetAllUser?id=${userId}`)
-        console.log("user details", data)
+      
         setUser_photo(data.data[0]?.user_profile_photo)
         setUser_name(data.data[0]?.name)
         setEmail(data.data[0]?.email)
@@ -200,7 +200,7 @@ export default function Home() {
       try {
         const resp = await getData("/GetServiceLocation")
         let value=0
-        resp.data.map((item) => {
+        resp?.data?.map((item) => {
          
           
           if (item.location_name == locationSearchBox || item.zip_code == locationSearchBox) {
@@ -256,7 +256,7 @@ export default function Home() {
                     <Link href="/cart">
                       <FaShoppingCart />
                     </Link>
-                    {console.log("userId",userId)}
+                   
                     {userId ? (<Link href="#" onClick={() => setSmShow(true)} className="me-2">
                       <FaUser />
                     </Link>) : (<Link href="/login" className="me-2">
@@ -452,7 +452,7 @@ export default function Home() {
                         <div className={style.userPhoto}>
                           {/* <Image src={user_photo === null ? '/dummy.jpg' : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} alt="img" /> */}
 
-                          <img src={user_photo === null ? '/dummy.jpg' : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} />
+                          <img src={user_photo === null ? '/dummy.jpg' : `https://nextupgrad.us/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} />
                         </div>
                         <Table >
 

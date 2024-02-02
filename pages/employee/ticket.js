@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getData, putData } from '@/helpers/services';
+import { FaTrashAlt } from "react-icons/fa";
+import { deleteData, getData, putData } from '@/helpers/services';
 import { Toaster, toast } from "sonner";
 import { getFormatedDate } from '@/helpers/helper';
 import EmployeeLayout from '@/layouts/EmployeeLayout';
@@ -32,10 +33,10 @@ const Ticket = () => {
     setisSubmitingLoader(true)
     try {
       if (typeof window !== 'undefined') {
-        const EmpId = localStorage.getItem("EmpID")
+        const EmpId = localStorage.getItem("UserId[E]")
         // console.log("EmpId",EmpId)
         const resp = await getData("/GetSupportTicket")
-        // console.log("get ticket resp", resp)
+        console.log("get ticket resp", resp)
         const filtered_tickets = resp.data.filter((item) => item.emp_id == EmpId)
         console.log("filtered_tickets", filtered_tickets)
         setAllTickets(filtered_tickets)
@@ -74,6 +75,20 @@ const Ticket = () => {
       setRefresh(Math.random())
     } catch (error) {
       console.log("try-catch error", error)
+    }
+    setisSubmitingLoader(false)
+  }
+
+  const deleteTicket = async(id)=>{
+    setisSubmitingLoader(true)
+    try {
+      console.log("id",id)
+      const resp  = await deleteData("/DeleteSupportTicket",{"delId":id})
+      console.log("delete resp",resp)
+      resp.message=="Ticket Deleted Successfully"? toast.success(resp.message) : toast.error(resp.message)
+      setRefresh(Math.random)
+    } catch (error) {
+      console.log("try-catch error",error)
     }
     setisSubmitingLoader(false)
   }
@@ -141,6 +156,7 @@ const Ticket = () => {
                               <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                                 <thead className="bg-primary text-white">
                                   <tr>
+                                    <th className="text-white">Sr.No.</th>
                                     <th className="text-white">Ticket ID</th>
                                     <th className="text-white">Ticket Date</th>
                                     <th className="text-white">Unique ID</th>
@@ -151,11 +167,13 @@ const Ticket = () => {
                                     <th className="text-white">Customer Address</th>
                                     <th className="text-white">Status</th>
                                     <th className="text-white">Action</th>
+                                    <th className="text-white">Delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   {allTickets ? allTickets.map((item, index) => (
                                     <tr key={index}>
+                                      <td>{index +1}</td>
                                       <th scope="row">{item.id}</th>
                                       <td>{getFormatedDate(item.created_at, "DD-MM-YYYY")}</td>
                                       <td>{item.unique_service_id}</td>
@@ -172,6 +190,7 @@ const Ticket = () => {
 
 
                                       </td>
+                                      <td><FaTrashAlt onClick={()=>deleteTicket(item.id)}/></td>
                                     </tr>)) : <>No Services</>}
 
                                   {/* <tr>

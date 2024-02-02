@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { FaEdit } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
+import { FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
 
 
@@ -76,6 +77,7 @@ const Location = () => {
       if (result.status) {
         getLocation();
         toast.success("Location Saved");
+        setFormData({locationName:"",locationZip:""})
       } else {
         toast.error("Location not Saved");
       }
@@ -236,7 +238,7 @@ const Location = () => {
         subsc_status: newStatus == true ? "1" : "0",
         subsc_amt: newAmount,
       });
-      console.log("update sub service resp",result)
+      console.log("update sub service resp", result)
       if (result.status) {
         setisSubmitingLoader(false);
         toast.success("Record Updated");
@@ -262,18 +264,18 @@ const Location = () => {
         </div>
       ) : null}
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Location Update</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form
-            className="locationUpdateForm"
-            onSubmit={updateLocationSingleRecord}
+            className="locationUpdateForm d-flex"
+            
           >
             <label className="lableWidth">
               Location:
               <input
-                className="full-width-input"
+                className="full-width-input mt-1 mb-1 p-1 "
                 value={locationUpdate}
                 type="text"
                 required
@@ -283,7 +285,7 @@ const Location = () => {
             <label>
               Zip Code:
               <input
-                className="full-width-input"
+                className="full-width-input mt-1 mb-1 p-1 "
                 value={zipUpdate}
                 type="text"
                 placeholder="Enter Zip Code"
@@ -295,31 +297,36 @@ const Location = () => {
             <label>
               Active:
               <input
-                className="full-width-input"
+                className="full-width-input mt-1 mb-1 p-1"
                 checked={activeUpdate}
                 type="checkbox"
                 onChange={(e) => setactiveUpdate(e?.target?.checked)}
               />
             </label>
-            <button type="submit">Update</button>
+           
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        
+          <Button variant="danger" onClick={handleClose}>
             Close
+          </Button>
+          <Button variant="success" onClick={updateLocationSingleRecord}>
+            Update
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Modal show={showNew} onHide={handleCloseNew}>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Update Service</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className="locationUpdateForm" onSubmit={updateSubService}>
+          <Form className="locationUpdateForm d-flex" >
             <label className="lableWidth">
               Service Name:
               <input
-                className="full-width-input"
+                className="full-width-input mt-1 mb-1 p-1"
                 value={newServiceName}
                 type="text"
                 required
@@ -329,7 +336,7 @@ const Location = () => {
             <label>
               Service Price:
               <input
-                className="full-width-input"
+                className="full-width-input mt-1 mb-1 p-1"
                 value={newAmount}
                 type="number"
                 placeholder="Enter Amount"
@@ -340,18 +347,21 @@ const Location = () => {
             <label>
               Active:
               <input
-                className="full-width-input"
+                className="full-width-input mt-1 mb-1 p-1"
                 checked={newStatus}
                 type="checkbox"
                 onChange={(e) => setnewStatus(e?.target?.checked)}
               />
             </label>
-            <button type="submit">Update</button>
+            {/* <button type="submit">Update</button> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseNew}>
+          <Button variant="danger" onClick={handleCloseNew}>
             Close
+          </Button>
+          <Button variant="success"  onClick={updateSubService}>
+            Update
           </Button>
         </Modal.Footer>
       </Modal>
@@ -428,6 +438,7 @@ const Location = () => {
           <table className="table card-table table-bordered table-vcenter text-nowrap table-primary my-4 mx-4">
             <thead className="bg-primary text-white">
               <tr>
+              <th className="text-white actionTable">Sr.no.</th>
                 <th className="text-white actionTable">Location Name</th>
                 <th className="text-white actionTable">Location Zip</th>
                 <th className="text-white actionTable">Status</th>
@@ -438,6 +449,7 @@ const Location = () => {
               {locations.length > 0
                 ? locations.map((item, index) => (
                   <tr key={index}>
+                    <td className="actionTable">{index+1}</td>
                     <td className="actionTable">{item.location_name}</td>
                     <td className="actionTable">{item.zip_code}</td>
                     <td className="actionTable">
@@ -448,18 +460,18 @@ const Location = () => {
                         </>
                       ) : (
                         <>
-                          <span className="status-icon bg-warning" />
+                          <span className="status-icon bg-danger" />
                           Inactive
                         </>
                       )}
                     </td>
                     <td className="actionTable">
                       <span className="actionInner">
-                        <span onClick={() => toggleLocationRecord(item.id)}>
+                        <span onClick={() => toggleLocationRecord(item.id)} className="EditDeleteBttn">
                           <FaEdit className="tableIcons" />
                         </span>
-                        <span onClick={() => deleteLocation(item.id)}>
-                          <AiFillDelete className="tableIcons" />
+                        <span onClick={() => deleteLocation(item.id)} className="EditDeleteBttn">
+                          <FaTrashAlt className="tableIcons" />
                         </span>
                       </span>
                     </td>
@@ -539,6 +551,7 @@ const Location = () => {
           <table className="table card-table table-bordered table-vcenter text-nowrap table-primary my-4 mx-4">
             <thead className="bg-primary text-white">
               <tr>
+              <th className="text-white actionTable">Sr.no.</th>
                 <th className="text-white actionTable">Service Name</th>
                 <th className="text-white actionTable">Price</th>
                 <th className="text-white actionTable">Status</th>
@@ -549,6 +562,7 @@ const Location = () => {
               {subService.length > 0
                 ? subService.map((item, index) => (
                   <tr key={index}>
+                    <td className="actionTable">{index+1}</td>
                     <td className="actionTable">{item.subsc_list}</td>
                     <td className="actionTable">{item.subsc_amt}</td>
                     <td className="actionTable">
@@ -559,13 +573,13 @@ const Location = () => {
                         </>
                       ) : (
                         <>
-                          <span className="status-icon bg-warning" />
+                          <span className="status-icon bg-danger" />
                           Inactive
                         </>
                       )}
                     </td>
                     <td className="actionTable">
-                      <span className="actionInner">
+                      <span className="actionInner EditDeleteBttn">
                         <span>
                           <FaEdit
                             className="tableIcons"
@@ -573,7 +587,7 @@ const Location = () => {
                           />
                         </span>
                         <span onClick={() => deleteService(item.id)}>
-                          <AiFillDelete className="tableIcons" />
+                          <FaTrashAlt className="tableIcons EditDeleteBttn" />
                         </span>
                       </span>
                     </td>
