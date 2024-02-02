@@ -28,16 +28,16 @@ const Ticket = () => {
     try {
       const resp = await getData("/GetSupportTicket")
       // console.log("ticket details", resp)
-      setTickedList(resp.data);
+      setTickedList(resp?.data);
 
       const resp2 = await getData("/GetService")
       // console.log("All Services", resp2)
-      setAllServices(resp2.data)
+      setAllServices(resp2?.data)
 
       const resp3 = await getData("/GetAllUser")
       // console.log("All User", resp3)
-      setAllUser(resp3.data)
-      const allEmp = resp3.data.filter((e) => e.user_type == "Employee")
+      setAllUser(resp3?.data)
+      const allEmp = resp3?.data?.filter((e) => e.user_type == "Employee")
       setAllEmployee(allEmp)
       // console.log("allEmp", allEmp)
 
@@ -67,7 +67,7 @@ const Ticket = () => {
 
         const resp = await putData("/UpdateSupportTicket", updateTicketDetails)
         console.log('resp', resp)
-        resp.message === "Ticket Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+        resp?.message === "Ticket Updated Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
 
 
 
@@ -94,7 +94,7 @@ const Ticket = () => {
     try {
       const resp = await deleteData("/DeleteSupportTicket",{"delId":id})
       // console.log("resp",resp)
-      resp.message=="Ticket Deleted Successfully"? toast.success(resp.message):toast.error(toast.message)
+      resp?.message=="Ticket Deleted Successfully"? toast.success(resp?.message):toast.error(resp?.message)
       setRefresh(Math.random)
     } catch (error) {
       console.log("try-catch error",error)

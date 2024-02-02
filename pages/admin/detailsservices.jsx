@@ -112,10 +112,10 @@ const detailsservices = () => {
     try {
       setisSubmitingLoader(true);
       const result = await getData("/GetService");
-      if (result.status) {
+      if (result?.status) {
         // console.log("===>", result);
         setisSubmitingLoader(false);
-        const filteredServices = result.data.filter((item)=>item.service_status==1)
+        const filteredServices = result?.data?.filter((item)=>item.service_status==1)
         setServices(filteredServices);
       } else {
         setisSubmitingLoader(false);
@@ -130,10 +130,10 @@ const detailsservices = () => {
   async function getLocation() {
     try {
       const result = await getData("/GetServiceLocation");
-      if (result.status) {
+      if (result?.status) {
         // console.log("==>", result);
         const collator = new Intl.Collator(undefined, { sensitivity: "base" });
-        const sortedList = [...result.data].sort((a, b) =>
+        const sortedList = [...result?.data].sort((a, b) =>
           collator.compare(a.location_name, b.location_name)
         );
 
@@ -182,10 +182,10 @@ const detailsservices = () => {
   async function getSubService() {
     try {
       const result = await getData("/GetSubscriptionDetails");
-      if (result.status) {
+      if (result?.status) {
 
         const collator = new Intl.Collator(undefined, { sensitivity: "base" });
-        let sortedList = [...result.data].sort((a, b) =>
+        let sortedList = [...result?.data].sort((a, b) =>
           collator.compare(a.subsc_list, b.subsc_list)
         );
 
@@ -217,7 +217,7 @@ const detailsservices = () => {
     const resp = await getData("/GetSubscriptionDetails")
     // console.log("Sub service list",resp.data)
     // const sub_service_update_id = [];
-    resp.data.map((item) => {
+    resp?.data?.map((item) => {
       if (sub_service_update.includes(item.subsc_list)) {
         if (!sub_service_update_id.includes(item.id)) {
           sub_service_update_id.push(item.id)
@@ -241,7 +241,7 @@ const detailsservices = () => {
       console.log("updated data", updated_data)
       const resp = await putData("/UpdateService", updated_data)
 
-      resp.message === "Service Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+      resp?.message === "Service Updated Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
       setRefresh(Math.random())
     } catch (error) {
       console.log("try-catch error", error)
@@ -255,7 +255,7 @@ const detailsservices = () => {
     // console.log("item",item)
     const resp = await deleteData("/DeleteService", { "delId": item })
     // console.log("delete resp", resp)
-    resp.message === "Service Deleted Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+    resp?.message === "Service Deleted Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
     setisSubmitingLoader(false)
     // location.reload();
     setRefresh(Math.random())

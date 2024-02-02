@@ -68,18 +68,17 @@ const Checkout = () => {
 
     }
     const handleDelete = (t) => {
-        console.log("t", t)
+     
         if (typeof window !== 'undefined') {
             const Cart = JSON.parse(localStorage.getItem("Cart"))
             console.log("Cart", Cart)
             const updated_cart = []
-            Cart.map((e) => {
+            Cart?.map((e) => {
                 console.log("e", e)
                 if (e.service_id === t.service_id && e.service_quantity === t.service_quantity) {
                     toast.success("item deleted successfully!")
                 }
                 else {
-
                     updated_cart.push(e)
                 }
 
@@ -112,7 +111,7 @@ const Checkout = () => {
                 //checking user address and phone no[start]
                 const userDetails = await getData(`/GetAllUser?id=${userID}`)
                 console.log("userDetails", userDetails)
-                if (userDetails.data[0].user_locality != null && userDetails.data[0].user_phno != null) {
+                if (userDetails?.data[0]?.user_locality != null && userDetails?.data[0]?.user_phno != null) {
                     if (cartList.length > 0) {
                         const services_object = [];
                         cartList.filter((e) => {
@@ -134,8 +133,8 @@ const Checkout = () => {
                         console.log("final_object", final_object)
                         const resp = await postData("/StoreServiceBooking", final_object)
                         console.log("resp", resp)
-                        if (resp.message === "Service Created Successfully") {
-                            toast.success(resp.message)
+                        if (resp?.message === "Service Created Successfully") {
+                            toast.success(resp?.message)
                             localStorage.removeItem("Cart");
                             // setTimeout(() => location.reload(), 2000)
                             setCartTotol(0)
@@ -143,7 +142,7 @@ const Checkout = () => {
                             setRefresh(Math.random)
                         }
                         else {
-                            toast.error(resp.message)
+                            toast.error(resp?.message)
                         }
 
                     }

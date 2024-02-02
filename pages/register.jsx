@@ -31,9 +31,9 @@ export default function Home() {
   async function getRoles() {
     try {
       const result = await getData("/GetRole");
-      if (result.status) {
+      if (result?.status) {
         // console.log("Roles", result);
-        const Employeerole = result?.data.filter(
+        const Employeerole = result?.data?.filter(
           (item) => item?.role_name == "Employee"
         );
         // console.log("Emp role", Employeerole);
@@ -61,10 +61,10 @@ export default function Home() {
       });
       console.log(" register result", resp);
 
-      if (resp.message == "User Created Successfully") {
+      if (resp?.message == "User Created Successfully") {
         toast.success(resp?.message)
-        localStorage.setItem("Etoken[C]", resp.token)
-        localStorage.setItem("UserId[C]", resp.id)
+        localStorage.setItem("Etoken[C]", resp?.token)
+        localStorage.setItem("UserId[C]", resp?.id)
         setTimeout(() => {
           router.push("/");
         }, 1500);

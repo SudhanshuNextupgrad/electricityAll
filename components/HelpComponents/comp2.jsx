@@ -55,7 +55,7 @@ const Comp2 = () => {
         // console.log("final data", ticketDetails)
         const resp = await (postData("/StoreSupportTicket", ticketDetails))
         // console.log("resp from server", resp)
-        resp.message === "Ticket Created Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+        resp?.message === "Ticket Created Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
         
         setTimeout(()=>{location.reload()},2000)
         
@@ -69,7 +69,7 @@ const Comp2 = () => {
         setisSubmitingLoader(true)
         // console.log("uniqueid", uniqueid)
         setUnique_service_id(uniqueid)
-        service_list.map((item) => {
+        service_list?.map((item) => {
             if (item.unique_service_id == uniqueid) {
                 setQuantity(item.qty)
                 setServiceName(item.service_name)

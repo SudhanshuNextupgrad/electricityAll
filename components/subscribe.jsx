@@ -1,12 +1,12 @@
 
-import style from "@/styles/moduleCSS/subscribe.module.css"
+import style from "@/styles/moduleCSS/subscribe.module.css";
 import Link from "next/link";
 import { useState } from "react";
 
 import { postData } from "@/helpers/services";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from 'sonner';
 
 const Subescribe = () => {
     const [email, setEmail] = useState('')
@@ -15,13 +15,8 @@ const Subescribe = () => {
         setisSubmitingLoader(true);
 
         try {
-            const subscribeEmail = {
-                "email": email
-            }
-            
-            const resp = await postData("/StoreNewsLetter", subscribeEmail)
-            // console.log("resp", resp)
-            resp.message === "News Letter Subscribed" ? toast.success(resp.message) : toast.error(resp.message)
+            const resp = await postData("/StoreNewsLetter", {"email": email})
+            resp?.message === "News Letter Subscribed" ? toast.success(resp?.message) : toast.error(resp?.message)
             setEmail('')
         } catch (error) {
             console.log("try-catch error", error)
@@ -47,7 +42,6 @@ const Subescribe = () => {
 
 
                 <div className={style.inputWithIcon} >
-
                     <input type="text" placeholder="Enter Your Email" value={email} onChange={(e) => { setEmail(e.target.value); console.log(e.target.value) }} />
                     <button aria-hidden="true" onClick={handleSubscribe}>SUBSCRIBE</button>
                 </div>

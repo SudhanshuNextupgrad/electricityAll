@@ -1,4 +1,4 @@
-"use client"
+
 import style from "@/styles/moduleCSS/services.module.css"
 import { FaSearch, FaUser, FaBars } from "react-icons/fa"
 import Image from "next/image";
@@ -34,7 +34,7 @@ const Services = () => {
         const resp = await getData("/GetService")
         console.log("get_services", resp)
         // return resp;
-        setGetService(resp.data);
+        setGetService(resp?.data);
         console.log("GetService", getService)
     }
 

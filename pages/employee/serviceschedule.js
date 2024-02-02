@@ -28,7 +28,7 @@ const Serviceschedule = () => {
     try {
       const resp = await getData("/GetAllUser")
       console.log("all user resp", resp)
-      setAllUsers(resp.data)
+      setAllUsers(resp?.data)
     } catch (error) {
       console.log("try-catch error", error)
     }
@@ -41,7 +41,7 @@ const Serviceschedule = () => {
         const EmpId = localStorage.getItem("UserId[E]")
         const resp = await getData("/GetServiceBooking")
         console.log("all booked services",resp)
-        const EmpServices = resp.data.filter((item) => item.emp_id == EmpId)
+        const EmpServices = resp?.data?.filter((item) => item.emp_id == EmpId)
         console.log("EmpServices",EmpServices)
         setBookedServices(EmpServices)
         // const date = new Date();
@@ -105,7 +105,7 @@ const delete_booked_service = async(id)=>{
   try {
     const resp = await deleteData("/DeleteServiceBooking",{ "delId":id})
     console.log("delete resp",resp)
-    resp.message=="Service Deleted Successfully"? toast.success(resp.message):toast.error(resp.message)
+    resp?.message=="Service Deleted Successfully"? toast.success(resp?.message):toast.error(resp?.message)
     setRefresh(Math.random)
     
   } catch (error) {

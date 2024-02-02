@@ -74,7 +74,7 @@ const Location = () => {
       });
 
       setisSubmitingLoader(false);
-      if (result.status) {
+      if (result?.status) {
         getLocation();
         toast.success("Location Saved");
         setFormData({locationName:"",locationZip:""})
@@ -91,9 +91,9 @@ const Location = () => {
   async function getLocation() {
     try {
       const result = await getData("/GetServiceLocation");
-      if (result.status) {
+      if (result?.status) {
         console.log("==>", result);
-        setlocations(result.data);
+        setlocations(result?.data);
       } else {
         toast.error("Failed to get Locations");
       }
@@ -111,7 +111,7 @@ const Location = () => {
         subsc_amt: subServiceAmt,
       });
       // console.log("==>", result);
-      if (result.status) {
+      if (result?.status) {
         setisSubmitingLoader(false);
         getSubService();
         toast.success("Service Saved");
@@ -130,9 +130,8 @@ const Location = () => {
   async function getSubService() {
     try {
       const result = await getData("/GetSubscriptionDetails");
-      if (result.status) {
-        // console.log("==>", result);
-        setsubService(result.data);
+      if (result?.status) {
+        setsubService(result?.data);
       } else {
         toast.error("Failed to get Sub-services");
       }
@@ -146,7 +145,7 @@ const Location = () => {
     try {
       setisSubmitingLoader(true);
       const result = await deleteData("/DeleteServiceLocation", { delId: id });
-      if (result.status) {
+      if (result?.status) {
         toast.success("Location Deleted");
         getLocation();
         setisSubmitingLoader(false);
@@ -166,7 +165,7 @@ const Location = () => {
       const result = await deleteData("/DeleteSubscriptionDetails", {
         delId: id,
       });
-      if (result.status) {
+      if (result?.status) {
         toast.success("Service Deleted");
         getSubService();
         setisSubmitingLoader(false);
@@ -213,7 +212,7 @@ const Location = () => {
         zip_code: zipUpdate,
       });
 
-      if (result.status) {
+      if (result?.status) {
         setisSubmitingLoader(false);
         toast.success("Record Updated");
         getLocation();
@@ -239,7 +238,7 @@ const Location = () => {
         subsc_amt: newAmount,
       });
       console.log("update sub service resp", result)
-      if (result.status) {
+      if (result?.status) {
         setisSubmitingLoader(false);
         toast.success("Record Updated");
         getSubService();

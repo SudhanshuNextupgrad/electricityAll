@@ -69,16 +69,16 @@ const Header = () => {
       const userId = localStorage.getItem("UserId[A]")
       setUserID(userId)
       const resp = await getData(`/GetAllUser?id=${userId}`)
-      
-      setusername(resp.data[0].name)
-      setUserPhoto(resp.data[0].user_profile_photo)
-      setemail(resp.data[0].email)
-      setUserPhone(resp.data[0].user_phno)
-      setUserAddress(resp.data[0].user_locality)
-      setUserZip(resp.data[0].user_zipcode)
-      setUserCity(resp.data[0].user_city)
-      setUserState(resp.data[0].user_state)
-      setUserCountry(resp.data[0].user_country)
+
+      setusername(resp?.data[0]?.name)
+      setUserPhoto(resp?.data[0]?.user_profile_photo)
+      setemail(resp?.data[0]?.email)
+      setUserPhone(resp?.data[0]?.user_phno)
+      setUserAddress(resp?.data[0]?.user_locality)
+      setUserZip(resp?.data[0].user_zipcode)
+      setUserCity(resp?.data[0]?.user_city)
+      setUserState(resp?.data[0]?.user_state)
+      setUserCountry(resp?.data[0]?.user_country)
     } catch (error) {
       console.log("try-catch error", error)
     }
@@ -86,6 +86,7 @@ const Header = () => {
 
   }
   function toggleSidebar() {
+    alert("hello")
     if (sidebarClass == "sidenav-toggled") {
       setsidebarClass("");
       const body = document.querySelector("body");
@@ -99,46 +100,33 @@ const Header = () => {
 
   const UserUpdate = async () => {
     setisSubmitingLoader(true)
-    try {
-      if (userPhone.length == 10 || userPhone.length == undefined && userZip.length == 6 || userZip.length == undefined) {
+
+    if (userPhone.toString().length == 10 && userZip.toString().length == 6) {
+      try {
         const formData = new FormData();
-        // formData.append('updId', user_id);
-        // formData.append('name', name);
-        // formData.append('user_alt_phno', alt_phone);
-        // formData.append('user_locality', locality);
-        // formData.append('user_house_num', Hno);
-        // formData.append('user_landmark', lankmark);
-        // formData.append('user_zipcode', zip);
-        // formData.append('user_city', city);
-        // formData.append('user_state', state);
-        // formData.append('user_country', country);
-        // formData.append('user_profile_photo', profile_photo);
-        // console.log("form fields",userID)
-
-
-        formData.append('updId', userID)
-        formData.append("name", username)
-        formData.append("email", email)
-        formData.append("user_phno", userPhone)
-        formData.append("user_city", userCity)
-        formData.append("user_locality", userAddress)
-        formData.append("user_state", userState)
-        formData.append("user_zipcode", userZip)
-        formData.append("user_profile_photo", userUpdatedPhoto)
-        formData.append("user_country", userCountry)
-
-        // console.log("formData", formData)
+        formData.append('updId', userID);
+        formData.append("name", username);
+        formData.append("email", email);
+        formData.append("user_phno", userPhone);
+        formData.append("user_city", userCity);
+        formData.append("user_locality", userAddress);
+        formData.append("user_state", userState);
+        formData.append("user_zipcode", userZip);
+        formData.append("user_profile_photo", userUpdatedPhoto);
+        formData.append("user_country", userCountry);
         const resp = await axios.post(process.env.NEXT_PUBLIC_SITE_URL + "/UpdateUser", formData)
         console.log("user update resp", resp)
-        resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
+        resp?.data?.message === "User Updated Successfully" ? toast.success(resp?.data?.message) : toast.error(resp?.data?.message)
       }
-      else {
-        toast.error("Please check phone and zipcode.")
+      catch (error) {
+        console.log("try-catch error", error)
       }
-
-    } catch (error) {
-      console.log("try-catch error", error)
     }
+    else {
+      toast.error("Please check Phone and Zip code !")
+    }
+
+
     setRefresh(Math.random())
     setisSubmitingLoader(false)
 
@@ -169,7 +157,7 @@ const Header = () => {
             <div className="row">
               <div className="col-4 d-flex justify-content-center align-items-center">
                 <Row>
-                  <Image src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
+                  <Image src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
                 </Row>
               </div>
               <div className="col-8">
@@ -239,19 +227,10 @@ const Header = () => {
                       <Form.Label>Country</Form.Label>
                       <Form.Control type="text" value={userCountry} onChange={(e) => setUserCountry(e.target.value)} />
                     </Form.Group>
-
-
-
-
                   </Row>
-
-
-
-
                 </Form>
               </div>
             </div>
-
           </div>
 
         </Modal.Body>
@@ -277,9 +256,9 @@ const Header = () => {
             </a>
             <a
               aria-label="Hide Sidebar"
-              className={`app-sidebar__toggle`}
+              className={`app-sidebar__toggle sidenav-toggled`}
               data-toggle="sidebar"
-              href="javascript:void(0)"
+              // href="javascript:void(0)"
               onClick={toggleSidebar}
 
             >
@@ -491,7 +470,7 @@ const Header = () => {
                   </div>
                   <Image
                     className="avatar avatar-md brround"
-                    src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
+                    src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`}
                     alt="image"
                     width={50}
                     height={50}
@@ -500,7 +479,7 @@ const Header = () => {
                 <div className="dropdown-menu dropdown-menu-right dropdown-menu-arrow w-250" >
                   <div className="user-profile border-bottom p-3">
                     <div className="user-image">
-                      <img className="user-images" style={{mixHeight:"65"}}src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`} alt="image" />
+                      <img className="user-images" style={{ mixHeight: "65" }} src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`} alt="image" />
                     </div>
                     <div className="user-details">
                       <h4>{username}</h4>
@@ -520,7 +499,7 @@ const Header = () => {
                   <a href="#" className="dropdown-item pt-3 pb-3">
                     <FaCircleQuestion /> FAQ{" "}
                   </a>
-                  <span className="dropdown-item pt-3 pb-3" onClick={logout} style={{cursor:"pointer"}}>
+                  <span className="dropdown-item pt-3 pb-3" onClick={logout} style={{ cursor: "pointer" }}>
                     <FaArrowRightToBracket />
                     Sign Out{" "}
                   </span>

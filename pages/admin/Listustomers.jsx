@@ -20,9 +20,9 @@ const Listustomers = () => {
   const getCustomer = async () => {
     setisSubmitingLoader(true)
     const resp = await getData("/GetAllUser")
-    console.log("total users", resp.data)
+    console.log("total users", resp?.data)
 
-    const filterCustomer = resp.data.filter((e) => e.user_type == "Customer" )
+    const filterCustomer = resp?.data?.filter((e) => e.user_type == "Customer" )
     console.log("filterCustomer", filterCustomer)
     setTotalCustomers(filterCustomer)
     setisSubmitingLoader(false)
@@ -34,7 +34,7 @@ const Listustomers = () => {
     try {
       const resp = await deleteData("/DeleteUser", { "delId": id })
       console.log("delete resp", resp)
-      resp.message == "User Deleted Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+      resp?.message == "User Deleted Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
       setRefresh(Math.random)
 
     } catch (error) {

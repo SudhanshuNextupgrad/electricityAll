@@ -85,7 +85,7 @@ const Subscription = () => {
             subscription_status:"1"
           });
           console.log("post plan object",)
-          if (result.status) {
+          if (result?.status) {
             getPlans();
             setisSubmitingLoader(false);
             toast.success("Subscription Added");
@@ -110,7 +110,7 @@ const Subscription = () => {
   const getPlans = async () => {
     try {
       const result = await getData("/GetSubscription");
-      const filterdPlans = result.data.filter((item)=>item.subscription_status==1)
+      const filterdPlans = result?.data?.filter((item)=>item.subscription_status==1)
       setAllPlans(filterdPlans ? filterdPlans : [])
       // if (result?.status) {
       //   setservices(result?.data);
@@ -125,7 +125,7 @@ const Subscription = () => {
     setisSubmitingLoader(true)
     const resp = await deleteData("/DeleteSubscription", { "delId": e })
     console.log("delete resp", resp)
-    resp.message === "Subscription Deleted Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+    resp?.message === "Subscription Deleted Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
     setRefresh(Math.random())
     setisSubmitingLoader(false)
   }
@@ -139,7 +139,7 @@ const Subscription = () => {
         const resp2 = await getData("/GetService")
         // console.log("all services",resp2.data)
         const newPlanServicesId = [];
-        resp2.data.map((item) => {
+        resp2?.data?.map((item) => {
           if (newPlanServices.includes(item.service_names)) {
             newPlanServicesId.push(item.subscription_id)
           }
@@ -155,7 +155,7 @@ const Subscription = () => {
         console.log("updated plan details", update_plan)
         const resp = await putData("/UpdateSubscription", update_plan)
         console.log("update resp", resp)
-        resp.message === "Subscription Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+        resp?.message === "Subscription Updated Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
 
         setNewPlanName('')
         setNewDescription('')
@@ -202,8 +202,8 @@ const Subscription = () => {
     try {
       const result = await getData("/GetService");
 
-      setServices(result.data)
-      if (result.status) {
+      setServices(result?.data)
+      if (result?.status) {
         // console.log("==>", result);
         // const collator = new Intl.Collator(undefined, { sensitivity: "base" });
         // const sortedList = [...result.data].sort((a, b) =>
@@ -263,7 +263,7 @@ const Subscription = () => {
   const getAllUsers = async()=>{
     try {
       const resp = await getData("/GetAllUser")
-      setAllUsers(resp.data)
+      setAllUsers(resp?.data)
 
     } catch (error) {
       console.log("try-catch error",error)
@@ -274,7 +274,7 @@ const Subscription = () => {
     try {
       const resp = await deleteData("/DeleteSubscriber",{"delId":id})
       console.log("delete resp",resp)
-      resp.message=="Plan Deleted Successfully"? toast.success("Plan subscription deleted"):toast.error(resp.message)
+      resp?.message=="Plan Deleted Successfully"? toast.success("Plan subscription deleted"):toast.error(resp?.message)
       setRefresh(Math.random)
     } catch (error) {
       console.log("try-catch error",error)

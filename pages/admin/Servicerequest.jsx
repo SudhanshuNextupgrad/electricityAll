@@ -28,9 +28,9 @@ const Servicerequest = () => {
   const getServiceData = async () => {
     setisSubmitingLoader(true)
     const resp1 = await getData("/GetServiceBooking");
-    console.log("service booked resp", resp1.data);
+    console.log("service booked resp", resp1?.data);
     const serviceId_array = [];
-    resp1.data.map((item) => {
+    resp1?.data?.map((item) => {
       // const items = {
       //   "unique_service_id": item.unique_service_id,
       //   "service_name": item.service_name,
@@ -50,7 +50,7 @@ const Servicerequest = () => {
     // console.log("all user resp", resp2.data);
     const filter_user = [];
     const filter_employee = []
-    resp2.data.filter((item) => {
+    resp2?.data?.filter((item) => {
       if (serviceId_array.includes(item.id)) {
         filter_user.push(item)
       }
@@ -63,7 +63,7 @@ const Servicerequest = () => {
     console.log("filter_user", filter_user)
     // console.log("final_data",finalData)
 
-    resp1.data.map((item) => {
+    resp1?.data?.map((item) => {
       filter_user.map((item2) => {
         if (item.customer_id == item2.id) {
           item["customer_name"] = item2.name;
@@ -87,7 +87,7 @@ const Servicerequest = () => {
       console.log("updateDetails", updateDetails);
       const resp = await putData("/UpdateServiceBooking", updateDetails)
       console.log("resp", resp)
-      resp.message === "Service Updated Successfully" ? toast.success(resp.message) : toast.error(resp.message)
+      resp?.message === "Service Updated Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
       setAllotedEmployeeId();
     } catch (error) {
       console.log("try-catch error", error)
@@ -102,7 +102,7 @@ const Servicerequest = () => {
       try {
         const resp = await deleteData("/DeleteServiceBooking",{"delId":id})
         
-        resp.message=="Service Deleted Successfully"? toast.success(resp.message):toast.error(resp.message)
+        resp?.message=="Service Deleted Successfully"? toast.success(resp?.message):toast.error(resp?.message)
         setRefresh(Math.random)
       } catch (error) {
         console.log("try-catch error",error)

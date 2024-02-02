@@ -26,7 +26,7 @@ const Comp7 = () => {
                 const resp = await getData(`/GetServiceBooking?id=${localUserId}`)
                 console.log("GetServiceBooking", resp)
                 let completedServices = []
-                resp.data.map((t) => {
+                resp?.data?.map((t) => {
                     t.status === "1" ? (completedServices.push(t)) : ("")
                 })
                 console.log("completedServices", completedServices)

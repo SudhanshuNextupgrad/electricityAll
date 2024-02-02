@@ -61,7 +61,7 @@ const Employeelist = () => {
 
       const resp = await postData("/register", NewEmployee)
       // console.log("resp",resp)
-      resp.message == "User Created Successfully" ? toast.success(resp.message) : toast.error(resp.message);
+      resp?.message == "User Created Successfully" ? toast.success(resp?.message) : toast.error(resp?.message);
       setRefresh(Math.random)
     } catch (error) {
       console.log("try-catch error", error)
@@ -79,7 +79,7 @@ const Employeelist = () => {
     try {
       const resp = await deleteData("/DeleteUser", { "delId": id })
       // console.log("delete user",resp)
-      resp.message == "User Deleted Successfully" ? toast.success(resp.message) : toast.error(resp.messsage)
+      resp?.message == "User Deleted Successfully" ? toast.success(resp?.message) : toast.error(resp?.messsage)
       setRefresh(Math.random)
     } catch (error) {
       console.log("try-catch error", error)

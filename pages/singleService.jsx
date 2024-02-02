@@ -24,7 +24,7 @@ const ACservices = () => {
     const [quantity, setQuantity] = useState('');
     const [serv_date, setServ_date] = useState('')
     const [serv_name, setServ_name] = useState('')
-    const[serv_cost,setServ_cost] = useState('')
+    const [serv_cost, setServ_cost] = useState('')
 
     const route = useRouter();
     const searchParams = useSearchParams();
@@ -49,7 +49,7 @@ const ACservices = () => {
             :
             setServ_name("Service Name");
 
-            setServ_cost(getServiceResp?.data[0]?.service_cost)
+        setServ_cost(getServiceResp?.data[0]?.service_cost)
     }
     const handleCart = (e) => {
         e.preventDefault();
@@ -61,8 +61,8 @@ const ACservices = () => {
                         "service_id": id_in_url,
                         "service_date": serv_date,
                         "service_quantity": quantity,
-                        "service_name":serv_name,
-                        "service_cost":serv_cost
+                        "service_name": serv_name,
+                        "service_cost": serv_cost
                     }
                     console.log("NewServ", NewServ)
                     if (localStorage.getItem("Cart") === null) {
@@ -72,8 +72,8 @@ const ACservices = () => {
                     existingCart.push(NewServ)
                     localStorage.setItem("Cart", JSON.stringify(existingCart))
                     toast.success("Service added to Cart")
-                    
-                    setTimeout(()=>{route.push("/service")},2000)
+
+                    setTimeout(() => { route.push("/service") }, 1500)
                     // else {
 
                     //     const existingCart = JSON.parse(localStorage.getItem("Cart"))
@@ -97,12 +97,12 @@ const ACservices = () => {
         const day = String(now.getDate()).padStart(2, '0');
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-    
+
         return `${year}-${month}-${day}T${hours}:${minutes}`;
-      };
+    };
 
 
-    
+
     return (
         <div >
             {isSubmitingLoader ? (
@@ -131,7 +131,7 @@ const ACservices = () => {
                         <span>30 DAYS WARRENTY</span>
                         <h1>{serv_name}</h1>
                         <div>
-                            <span>$ {quantity>0 ? serv_cost*quantity :0}</span>
+                            <span>$ {quantity > 0 ? serv_cost * quantity : 0}</span>
                             <span>45 mins</span>
                         </div>
                         <ul className="text-start">
@@ -154,7 +154,7 @@ const ACservices = () => {
                             </div>
                             <div>
                                 <label>Date</label>{" "}
-                                <input type="datetime-local" onChange={(e) => setServ_date(e.target.value)} min={getCurrentDateTime()}/>
+                                <input type="datetime-local" onChange={(e) => setServ_date(e.target.value)} min={getCurrentDateTime()} />
                             </div>
                             {/* min='2023-12-24T07:37' */}
                         </div>

@@ -20,10 +20,10 @@ const Sidebar = () => {
       if (typeof window !== 'undefined') {
         const EmpId = localStorage.getItem("UserId[E]")
         const resp = await getData(`/GetAllUser?id=${EmpId}`)
-        console.log("resp", resp)
-        setUserName(resp.data[0].name)
-        setUserRole(resp.data[0].user_type)
-        setUserPhoto(resp.data[0].user_profile_photo)
+        console.log(" All users", resp)
+        setUserName(resp?.data[0]?.name)
+        setUserRole(resp?.data[0]?.user_type)
+        setUserPhoto(resp?.data[0]?.user_profile_photo)
 
       }
     } catch (error) {
@@ -38,7 +38,7 @@ const Sidebar = () => {
           <div className="dropdown user-pro-body text-center">
             <div className="user-pic">
               <img
-                src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
+                src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
                 alt="user-img"
                 className="avatar-xl rounded-circle mb-1"
               />

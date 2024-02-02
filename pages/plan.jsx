@@ -38,9 +38,9 @@ const Plan = () => {
       // geting plans
       const resp = await getData("/GetSubscription");
       console.log("plan resp", resp);
-      resp.data[0] !== undefined ? setPlan1(resp.data[0]) : setEmpty_plan1("d-none");
-      resp.data[1] !== undefined ? setPlan2(resp.data[1]) : setEmpty_plan2("d-none");
-      resp.data[2] !== undefined ? setPlan3(resp.data[2]) : setEmpty_plan3("d-none");
+      resp?.data[0] !== undefined ? setPlan1(resp?.data[0]) : setEmpty_plan1("d-none");
+      resp?.data[1] !== undefined ? setPlan2(resp?.data[1]) : setEmpty_plan2("d-none");
+      resp?.data[2] !== undefined ? setPlan3(resp?.data[2]) : setEmpty_plan3("d-none");
     
     } catch (error) {
       console.log("try-catch error", error);
@@ -61,7 +61,7 @@ const Plan = () => {
       const resp = await postData("/StoreSubscriber", purchaseDetails)
 
       // console.log("purchase resp",resp)
-      toast.success(resp.message)
+      toast.success(resp?.message)
     } catch (error) {
       console.log("try-catch error", error)
     }

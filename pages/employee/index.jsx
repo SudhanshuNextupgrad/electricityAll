@@ -1,9 +1,13 @@
 import EmployeeLayout from "@/layouts/EmployeeLayout";
 import {FaStar } from "react-icons/fa6";
+import Head from 'next/head';
 
 const EmployeeHomepage = () => {
   return (
     <EmployeeLayout>
+      <Head>
+        <title>Electricity - Employee</title>
+      </Head>
       <>
         <div className="app-content">
           <div className="side-app leftmenu-icon">

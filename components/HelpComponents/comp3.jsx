@@ -28,7 +28,7 @@ const Comp3 = () => {
                 const resp = await getData(`/GetServiceBooking?id=${user_id}`)
                 console.log("GetServiceBooking", resp)
                 let activeServices = [];
-                resp.data.map((t) => {
+                resp?.data?.map((t) => {
                     if (t.status == "0") {
                         activeServices.push(t)
                     }

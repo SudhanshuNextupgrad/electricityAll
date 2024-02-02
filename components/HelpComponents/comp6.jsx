@@ -49,19 +49,19 @@ const Comp6 = () => {
                 // resp.msg === 'No Data Found' ? toast.error("No user found..") : toast.success("Data Found..")
                 console.log("user data", resp);
                 setUserId(user_id);
-                setName(resp.data[0].name);
-                setEmail(resp.data[0].email);
-                setPhone(resp.data[0].user_phno);
+                setName(resp?.data[0]?.name);
+                setEmail(resp?.data[0]?.email);
+                setPhone(resp?.data[0]?.user_phno);
                 // setAlt_phone(resp.data[0].user_alt_phno);
-                setCity(resp.data[0].user_city);
-                setCountry(resp.data[0].user_country);
+                setCity(resp?.data[0]?.user_city);
+                setCountry(resp?.data[0]?.user_country);
                 // setLandmark(resp.data[0].user_landmark );
-                setLocality(resp.data[0].user_locality);
-                setZip(resp.data[0].user_zipcode);
-                setState(resp.data[0].user_state);
+                setLocality(resp?.data[0]?.user_locality);
+                setZip(resp?.data[0]?.user_zipcode);
+                setState(resp?.data[0]?.user_state);
                 // setHno(resp.data[0].user_house_num);
-                setUserType(resp.data[0].user_type);
-                setCurrent_photo(resp.data[0].user_profile_photo);
+                setUserType(resp?.data[0]?.user_type);
+                setCurrent_photo(resp?.data[0]?.user_profile_photo);
 
 
             }
@@ -147,7 +147,7 @@ const Comp6 = () => {
 
                     console.log("update user resp", resp)
 
-                    resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
+                    resp?.data?.message === "User Updated Successfully" ? toast.success(resp?.data?.message) : toast.error(resp.data.message)
 
                     setRefresh(Math.random)
                 }
@@ -195,7 +195,7 @@ const Comp6 = () => {
 
 
             <div className={style.profilepic} >
-                <Image src={current_photo === null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${current_photo}`} height={200} width={200} alt='img' />
+                <Image src={current_photo === null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${current_photo}`} height={200} width={200} alt='img' />
             </div>
             <Form>
                 <Row className="mb-3">

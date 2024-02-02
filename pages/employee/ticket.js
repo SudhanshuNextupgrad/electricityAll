@@ -85,7 +85,7 @@ const Ticket = () => {
       console.log("id",id)
       const resp  = await deleteData("/DeleteSupportTicket",{"delId":id})
       console.log("delete resp",resp)
-      resp.message=="Ticket Deleted Successfully"? toast.success(resp.message) : toast.error(resp.message)
+      resp?.message=="Ticket Deleted Successfully"? toast.success(resp?.message) : toast.error(resp?.message)
       setRefresh(Math.random)
     } catch (error) {
       console.log("try-catch error",error)

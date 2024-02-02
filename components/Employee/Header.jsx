@@ -48,22 +48,22 @@ const Header = () => {
       if (typeof window !== 'undefined') {
         const EmpId = localStorage.getItem("UserId[E]");
         setUserId(EmpId);
-        // !EmpId ? route.push("/employee") : ''
+       
         console.log("EmpId", EmpId);
         const resp = await getData(`/GetAllUser?id=${EmpId}`)
-        console.log("resp", resp);
-        setUserName(resp.data[0].name);
+        console.log("All users", resp);
+        setUserName(resp?.data[0]?.name);
         // setUserRole(resp.data[0].user_type);
-        setUserEmail(resp.data[0].email);
-        setUserPhoto(resp.data[0].user_profile_photo);
-        setUserPhone(resp.data[0].user_phno);
+        setUserEmail(resp?.data[0]?.email);
+        setUserPhoto(resp?.data[0]?.user_profile_photo);
+        setUserPhone(resp?.data[0]?.user_phno);
         setUserNewPassword();
         setUserNewPasswordConfirm();
-        setUserAddress(resp.data[0].user_locality);
-        setUserZip(resp.data[0].user_zipcode);
-        setUserCity(resp.data[0].user_city);
-        setUserState(resp.data[0].user_state);
-        setUserCountry(resp.data[0].user_country);
+        setUserAddress(resp?.data[0]?.user_locality);
+        setUserZip(resp?.data[0]?.user_zipcode);
+        setUserCity(resp?.data[0]?.user_city);
+        setUserState(resp?.data[0]?.user_state);
+        setUserCountry(resp?.data[0]?.user_country);
 
 
 
@@ -160,7 +160,7 @@ const Header = () => {
         // console.log("formData", formData)
         const resp = await axios.post(process.env.NEXT_PUBLIC_SITE_URL + "/UpdateUser", formData)
         console.log("user update resp", resp)
-        resp.data.message === "User Updated Successfully" ? toast.success(resp.data.message) : toast.error(resp.data.message)
+        resp?.data?.message === "User Updated Successfully" ? toast.success(resp?.data?.message) : toast.error(resp?.data?.message)
 
         
         setTimeout(() => location.reload(), 1500)
@@ -196,7 +196,7 @@ const Header = () => {
             <div className="row">
               <div className="col-4 d-flex justify-content-center align-items-center">
                 <Row>
-                  <Image src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
+                  <Image src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
                   {/* <img  src="/1.jpg"/> */}
                 </Row>
               </div>
@@ -507,7 +507,7 @@ const Header = () => {
                   </div>
                   <img
                     className="avatar avatar-md brround"
-                    src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
+                    src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
                     alt="image"
                   />
                 </a>
@@ -516,7 +516,7 @@ const Header = () => {
                     <div className="user-image">
                       <img
                         className="user-images"
-                        src={userPhoto == null ? "/dummy.jpg" : `https://nextupgrad.us/electricity/public/images/profile_photo/${userPhoto}`}
+                        src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
                         alt="image"
                       />
                     </div>

@@ -56,11 +56,7 @@ const Navbar = () => {
 
 
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
-  // const [login, setLogin] = useState(localStorage.getItem(JSON.parse("token")));
-  const login = 1;
-
   const route = useRouter();
-
   useEffect(() => {
     def_data();
   }, []);
@@ -213,9 +209,9 @@ const Navbar = () => {
       }
       const resp = await getData(`/GetAllUser?id=${JSON.parse(localStorage.getItem("UserId[C]"))}`)
       
-      setUser_photo(resp.data[0].user_profile_photo)
-      setUserName(resp.data[0].name)
-      setEmail(resp.data[0].email)
+      setUser_photo(resp?.data[0]?.user_profile_photo)
+      setUserName(resp?.data[0]?.name)
+      setEmail(resp?.data[0]?.email)
 
     } catch (error) {
       console.log("try-catch error", error)
@@ -238,7 +234,7 @@ const Navbar = () => {
       try {
         const resp = await getData("/GetServiceLocation")
         let value = 0
-        resp.data.map((item) => {
+        resp?.data?.map((item) => {
          
 
           if (item.location_name == locationSearchBox || item.zip_code == locationSearchBox) {
