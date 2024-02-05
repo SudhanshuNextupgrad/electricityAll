@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from 'next/head';
 
 
 import { postData,getData,deleteData,putData } from "@/helpers/services";
@@ -254,6 +255,9 @@ const Location = () => {
   }
   return (
     <AdminLayout>
+      <Head>
+        <title>Locations</title>
+      </Head>
     <>
       {isSubmitingLoader ? (
         <div className="overlay">

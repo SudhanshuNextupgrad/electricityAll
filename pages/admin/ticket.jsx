@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import { FaTrashAlt } from "react-icons/fa";
 import { deleteData, getData, putData } from '@/helpers/services';
 import { useEffect, useState } from 'react';
@@ -103,6 +104,9 @@ const Ticket = () => {
   }
   return (
     <AdminLayout>
+      <Head>
+        <title>Tickets</title>
+      </Head>
       <>
         {isSubmitingLoader ? (
           <div className="overlay">

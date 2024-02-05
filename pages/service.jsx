@@ -1,4 +1,4 @@
-
+import Head from 'next/head';
 import style from "@/styles/moduleCSS/services.module.css"
 import { FaSearch, FaUser, FaBars } from "react-icons/fa"
 import Image from "next/image";
@@ -43,6 +43,9 @@ const Services = () => {
 
     return (
         <div >
+            <Head>
+                <title>Services</title>
+            </Head>
             {isSubmitingLoader ? (
                 <div className="overlay">
                     <div className="spinner-container">

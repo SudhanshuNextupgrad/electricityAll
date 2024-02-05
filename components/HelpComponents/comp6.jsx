@@ -62,6 +62,7 @@ const Comp6 = () => {
                 // setHno(resp.data[0].user_house_num);
                 setUserType(resp?.data[0]?.user_type);
                 setCurrent_photo(resp?.data[0]?.user_profile_photo);
+                console.log("resp?.data[0]?.user_profile_photo", resp?.data[0]?.user_profile_photo)
 
 
             }
@@ -101,13 +102,13 @@ const Comp6 = () => {
         if (phone == null) {
             toast.error("Phone number is required !")
         }
-        else if (phone?.toString()?.length != 10){
+        else if (phone?.toString()?.length != 10) {
             toast.error("Phone number should be of 10 digits !")
         }
-        else if (zip == null ) {
+        else if (zip == null) {
             toast.error("Zip code is required !")
         }
-        else if (zip?.toString()?.length != 6){
+        else if (zip?.toString()?.length != 6) {
             toast.error("Zip code should be of 6 digits !")
         }
         else if (locality == null) {
@@ -195,7 +196,7 @@ const Comp6 = () => {
 
 
             <div className={style.profilepic} >
-                <Image src={current_photo === null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${current_photo}`} height={200} width={200} alt='img' />
+                <Image src={current_photo === null || current_photo == undefined ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${current_photo}`} height={200} width={200} alt='img' />
             </div>
             <Form>
                 <Row className="mb-3">

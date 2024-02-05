@@ -24,7 +24,9 @@ import { getData, postData } from "@/helpers/services";
 import axios from "axios";
 import { MdPassword } from "react-icons/md";
 import { toast } from "sonner";
-const Header = () => {
+
+const Header = ({setData}) => {
+
   const router = useRouter();
   const [sidebarClass, setsidebarClass] = useState("sidenav-toggled");
   const [userID, setUserID] = useState();
@@ -42,19 +44,13 @@ const Header = () => {
   const [userCountry, setUserCountry] = useState('');
   const [refresh, setRefresh] = useState("");
   const [userUpdatedPhoto, setUserUpdatedPhoto] = useState('');
-
-
-
-
-
-
-
-
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
+  
+  // props.data = false;
   useEffect(() => {
     // const user = localStorage.getItem("username");
     // const mail = localStorage.getItem("email");
@@ -86,7 +82,6 @@ const Header = () => {
 
   }
   function toggleSidebar() {
-    alert("hello")
     if (sidebarClass == "sidenav-toggled") {
       setsidebarClass("");
       const body = document.querySelector("body");
@@ -470,7 +465,7 @@ const Header = () => {
                   </div>
                   <Image
                     className="avatar avatar-md brround"
-                    src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`}
+                    src={userPhoto == null || userPhoto==undefined ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`}
                     alt="image"
                     width={50}
                     height={50}
@@ -479,7 +474,7 @@ const Header = () => {
                 <div className="dropdown-menu dropdown-menu-right dropdown-menu-arrow w-250" >
                   <div className="user-profile border-bottom p-3">
                     <div className="user-image">
-                      <img className="user-images" style={{ mixHeight: "65" }} src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`} alt="image" />
+                      <img className="user-images" style={{ mixHeight: "65" }} src={userPhoto == null ||userPhoto==undefined? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`} alt="image" />
                     </div>
                     <div className="user-details">
                       <h4>{username}</h4>

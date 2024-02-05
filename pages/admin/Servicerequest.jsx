@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import { FaTrashAlt } from "react-icons/fa";
 import { deleteData, getData,putData } from '@/helpers/services';
 import { useEffect, useState } from 'react';
@@ -115,6 +116,9 @@ const Servicerequest = () => {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Booked Services</title>
+      </Head>
     <>
       {isSubmitingLoader ? (
         <div className="overlay">

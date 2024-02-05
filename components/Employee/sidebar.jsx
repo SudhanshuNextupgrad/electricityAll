@@ -38,7 +38,7 @@ const Sidebar = () => {
           <div className="dropdown user-pro-body text-center">
             <div className="user-pic">
               <img
-                src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
+                src={userPhoto == null ||userPhoto==undefined? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
                 alt="user-img"
                 className="avatar-xl rounded-circle mb-1"
               />

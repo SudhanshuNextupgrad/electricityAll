@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body>
+      <body className='app sidebar-mini'>
         <Main />
         <NextScript />
         <script src="js/jquery-3.4.0.min.js"></script>

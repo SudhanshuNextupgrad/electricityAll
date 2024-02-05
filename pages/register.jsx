@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head';
 import {
   FaCircleUser,
   FaLock,
@@ -80,6 +81,9 @@ export default function Home() {
 
   return (
     <>
+    <Head>
+                <title>Register</title>
+            </Head>
       {isSubmitingLoader ? (
         <div className="overlay">
           <div className="spinner-container">

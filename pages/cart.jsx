@@ -1,4 +1,4 @@
-'use client'
+
 import { AiOutlineSearch, AiOutlineDribbble } from "react-icons/ai";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { FiCheck } from "react-icons/fi";
@@ -15,6 +15,7 @@ import { postData, getData } from "@/helpers/services";
 import { getFormatedDate } from "@/helpers/helper";
 import { Toaster, toast } from 'sonner';
 import { useRouter } from "next/navigation";
+import Head from 'next/head';
 
 
 
@@ -68,7 +69,7 @@ const Checkout = () => {
 
     }
     const handleDelete = (t) => {
-     
+
         if (typeof window !== 'undefined') {
             const Cart = JSON.parse(localStorage.getItem("Cart"))
             console.log("Cart", Cart)
@@ -263,6 +264,9 @@ const Checkout = () => {
 
     return (
         <div >
+            <Head>
+                <title>Cart</title>
+            </Head>
             {isSubmitingLoader ? (
                 <div className="overlay">
                     <div className="spinner-container">

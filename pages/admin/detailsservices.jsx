@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head';
 import { TbAirConditioningDisabled, TbWood } from "react-icons/tb";
 import { FaAnglesRight } from "react-icons/fa6";
 import { MdPlumbing, MdElectricalServices } from "react-icons/md";
@@ -263,6 +264,9 @@ const detailsservices = () => {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Services</title>
+      </Head>
       <>
 
         {isSubmitingLoader ? (

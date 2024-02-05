@@ -1,5 +1,5 @@
 
-"use client"
+import Head from 'next/head';
 import { HiChatAlt2 } from "react-icons/hi";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -39,6 +39,9 @@ const Help = () => {
 
     return (
         < div >
+            <Head>
+                <title>Help</title>
+            </Head>
             {isSubmitingLoader ? (
                 <div className="overlay">
                     <div className="spinner-container">

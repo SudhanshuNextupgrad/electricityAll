@@ -1,9 +1,13 @@
 import Link from "next/link"
+import Head from 'next/head';
 import { FaEnvelope } from "react-icons/fa6";
 export default function Home() {
   
     return (
       <>
+      <Head>
+        <title>Forgot Password</title>
+      </Head>
         <div className="page">
   <div className="page-single construction-body">
     <div className="container text-center single-page single-pageimage  ">

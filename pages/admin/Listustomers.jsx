@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 import { FaStar } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
 
@@ -45,6 +46,9 @@ const Listustomers = () => {
   return (
     <AdminLayout>
       <>
+      <Head>
+        <title>Customer's List</title>
+      </Head>
         {isSubmitingLoader ? (
           <div className="overlay">
             <div className="spinner-container">

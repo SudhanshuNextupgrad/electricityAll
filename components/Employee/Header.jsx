@@ -48,7 +48,7 @@ const Header = () => {
       if (typeof window !== 'undefined') {
         const EmpId = localStorage.getItem("UserId[E]");
         setUserId(EmpId);
-       
+
         console.log("EmpId", EmpId);
         const resp = await getData(`/GetAllUser?id=${EmpId}`)
         console.log("All users", resp);
@@ -114,8 +114,8 @@ const Header = () => {
 
       // if (userPhone.length == 10 || userPhone.length == undefined && userZip.length == 6 || userZip.length == undefined) {
 
-        
-      
+
+
 
       // }
       // else {
@@ -143,8 +143,8 @@ const Header = () => {
       else if (userCountry == null) {
         toast.error("Country is required !")
       }
-      else{
-      
+      else {
+
         const formData = new FormData();
         formData.append('updId', userId);
         formData.append("name", username);
@@ -162,7 +162,7 @@ const Header = () => {
         console.log("user update resp", resp)
         resp?.data?.message === "User Updated Successfully" ? toast.success(resp?.data?.message) : toast.error(resp?.data?.message)
 
-        
+
         setTimeout(() => location.reload(), 1500)
       }
 
@@ -196,7 +196,7 @@ const Header = () => {
             <div className="row">
               <div className="col-4 d-flex justify-content-center align-items-center">
                 <Row>
-                  <Image src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
+                  <Image src={userPhoto == null || userPhoto == undefined ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`} height={200} width={200} alt="img" className="rounded-circle" />
                   {/* <img  src="/1.jpg"/> */}
                 </Row>
               </div>
@@ -507,7 +507,7 @@ const Header = () => {
                   </div>
                   <img
                     className="avatar avatar-md brround"
-                    src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
+                    src={userPhoto == null || userPhoto == undefined ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`}
                     alt="image"
                   />
                 </a>
@@ -516,7 +516,7 @@ const Header = () => {
                     <div className="user-image">
                       <img
                         className="user-images"
-                        src={userPhoto == null ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL+`${userPhoto}`}
+                        src={userPhoto == null || userPhoto == undefined ? "/dummy.jpg" : process.env.NEXT_PUBLIC_IMAGE_URL + `${userPhoto}`}
                         alt="image"
                       />
                     </div>

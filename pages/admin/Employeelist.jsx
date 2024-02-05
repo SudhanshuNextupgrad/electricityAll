@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head';
 import { FaTrashAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -50,7 +51,8 @@ const Employeelist = () => {
   const RegisterEmployee = async () => {
     setisSubmitingLoader(true)
     if(NewEmployeePhone.toString().length==10)
-    { try {
+    { 
+      try {
       const NewEmployee = {
         "name": NewEmployeeName,
         "email": NewEmployeeEmail,
@@ -90,6 +92,9 @@ const Employeelist = () => {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>Employee's List</title>
+      </Head>
       <>
         {isSubmitingLoader ? (
           <div className="overlay">

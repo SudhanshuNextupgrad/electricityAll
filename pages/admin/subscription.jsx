@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaTrashAlt } from "react-icons/fa";
@@ -34,7 +35,7 @@ const Subscription = () => {
   const [newAmmount, setNewAmmount] = useState('')
   const [newPlanServices, setNewPlanServices] = useState([])
   const [Plans_Subcribed, setPlans_Subscribed] = useState([])
-  const [AllUsers,setAllUsers] = useState([]);
+  const [AllUsers, setAllUsers] = useState([]);
   const [refresh, setRefresh] = useState('')
   //bootstrap modal states------
 
@@ -82,7 +83,7 @@ const Subscription = () => {
             subscription_description: serviceDescription,
             subscription_amt: amount,
             service_id_array: arrayofId,
-            subscription_status:"1"
+            subscription_status: "1"
           });
           console.log("post plan object",)
           if (result?.status) {
@@ -110,7 +111,7 @@ const Subscription = () => {
   const getPlans = async () => {
     try {
       const result = await getData("/GetSubscription");
-      const filterdPlans = result?.data?.filter((item)=>item.subscription_status==1)
+      const filterdPlans = result?.data?.filter((item) => item.subscription_status == 1)
       setAllPlans(filterdPlans ? filterdPlans : [])
       // if (result?.status) {
       //   setservices(result?.data);
@@ -156,14 +157,9 @@ const Subscription = () => {
         const resp = await putData("/UpdateSubscription", update_plan)
         console.log("update resp", resp)
         resp?.message === "Subscription Updated Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
-
         setNewPlanName('')
         setNewDescription('')
         setNewAmmount('')
-
-
-
-
         setRefresh(Math.random())
       }
     } catch (error) {
@@ -201,7 +197,6 @@ const Subscription = () => {
   const getService = async () => {
     try {
       const result = await getData("/GetService");
-
       setServices(result?.data)
       if (result?.status) {
         // console.log("==>", result);
@@ -211,7 +206,6 @@ const Subscription = () => {
         // );
         setisSubmitingLoader(false);
         // setSubServices(result.data);
-
         // Assuming setSubServices is a state update function
         // setSubServices(sortedList);
       } else {
@@ -254,37 +248,40 @@ const Subscription = () => {
   const Subscribed_Plans = async () => {
     try {
       const resp = await getData("/GetSubscriber");
-      const filteredSubscribedPlans = resp?.data?.filter((item)=>item?.subscription_status==1);
+      const filteredSubscribedPlans = resp?.data?.filter((item) => item?.subscription_status == 1);
       setPlans_Subscribed(filteredSubscribedPlans);
     } catch (error) {
       console.log("try-catch error", error);
     }
   }
-  const getAllUsers = async()=>{
+  const getAllUsers = async () => {
     try {
       const resp = await getData("/GetAllUser")
       setAllUsers(resp?.data)
 
     } catch (error) {
-      console.log("try-catch error",error)
+      console.log("try-catch error", error)
     }
   }
-  const delete_subscribed_plan = async(id)=>{
+  const delete_subscribed_plan = async (id) => {
     setisSubmitingLoader(true)
     try {
-      const resp = await deleteData("/DeleteSubscriber",{"delId":id})
-      console.log("delete resp",resp)
-      resp?.message=="Plan Deleted Successfully"? toast.success("Plan subscription deleted"):toast.error(resp?.message)
+      const resp = await deleteData("/DeleteSubscriber", { "delId": id })
+      console.log("delete resp", resp)
+      resp?.message == "Plan Deleted Successfully" ? toast.success("Plan subscription deleted") : toast.error(resp?.message)
       setRefresh(Math.random)
     } catch (error) {
-      console.log("try-catch error",error)
+      console.log("try-catch error", error)
     }
     setisSubmitingLoader(false)
   }
 
-  
+
   return (
     <AdminLayout>
+      <Head>
+        <title>Plans</title>
+      </Head>
       <>
         {isSubmitingLoader ? (
           <div className="overlay">
@@ -649,7 +646,7 @@ const Subscription = () => {
                             <th className="text-white">Sr. No.</th>
                             <th className="text-white">Subscription ID</th>
                             <th className="text-white">Plan Name</th>
-                            <th className="text-white"> Start Date</th>
+                            <th className="text-white">Start Date</th>
                             <th className="text-white">Expiry Date</th>
                             <th className="text-white">Customer Name</th>
                             <th className="text-white">Customer ID</th>
@@ -665,12 +662,12 @@ const Subscription = () => {
                             <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{item.id}</td>
-                              <td>{allplans.map((i) =>i.id == item.subscription_id ? i.subscription_name : '')}</td>
-                              <td>{getFormatedDate(item.start_date,"DD-MM-YYYY")}</td>
-                              <td>{getFormatedDate(item.end_date,"DD-MM-YYYY")}</td>
-                              <td>{AllUsers?.map((i)=>i.id==item.customer_id?i.name:"")}</td>
+                              <td>{allplans.map((i) => i.id == item.subscription_id ? i.subscription_name : '')}</td>
+                              <td>{getFormatedDate(item.start_date, "DD-MM-YYYY")}</td>
+                              <td>{getFormatedDate(item.end_date, "DD-MM-YYYY")}</td>
+                              <td>{AllUsers?.map((i) => i.id == item.customer_id ? i.name : "")}</td>
                               <td>{item.customer_id}</td>
-                              <td><FaTrashAlt onClick={()=>delete_subscribed_plan(item.id)} style={{cursor:"pointer"}}/></td>
+                              <td><FaTrashAlt onClick={() => delete_subscribed_plan(item.id)} style={{ cursor: "pointer" }} /></td>
                             </tr>))}
                           {/* <tr>
                             <td>

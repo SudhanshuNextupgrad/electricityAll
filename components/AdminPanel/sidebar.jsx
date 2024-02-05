@@ -11,9 +11,10 @@ import {
   FaBookBookmark,
   FaTicket,
 } from "react-icons/fa6";
-const Sidebar = () => {
-  const [username, setusername] = useState("");
-  const [email, setemail] = useState("");
+const Sidebar = (props) => {
+ 
+  console.log("Props",props)
+
   useEffect(() => {
    
   }, []);

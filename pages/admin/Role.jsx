@@ -1,5 +1,6 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import Link from 'next/link';
+import Head from 'next/head';
 import { deleteData, getData } from '@/helpers/services';
 import { FaTrashAlt } from "react-icons/fa";
 import { useState, useEffect } from 'react';
@@ -44,6 +45,9 @@ const Role = () => {
 
   return (
     <AdminLayout>
+      <Head>
+        <title>News Letter</title>
+      </Head>
       <>
         {isSubmitingLoader ? (
           <div className="overlay">

@@ -1,5 +1,5 @@
 
-
+import Head from 'next/head';
 import { FaSearch, FaUser, FaBars, FaRegWindowClose, FaFacebookF, FaGooglePlusG, FaSkype, FaShoppingCart, FaTwitter, FaChevronRight } from "react-icons/fa"
 import { AiOutlineSearch, AiOutlineDribbble } from "react-icons/ai"
 import { MdLocationPin } from "react-icons/md";
@@ -12,11 +12,11 @@ import { useState, useEffect } from "react";
 import style from "@/styles/moduleCSS/plan.module.css"
 import { FiCheck } from 'react-icons/fi';
 
-import { getData,postData } from "@/helpers/services";
+import { getData, postData } from "@/helpers/services";
 import { Toaster, toast } from 'sonner'
 
 const Plan = () => {
-    
+
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
   const [plan1, setPlan1] = useState('');
   const [plan2, setPlan2] = useState('');
@@ -32,7 +32,7 @@ const Plan = () => {
     setisSubmitingLoader(true)
     try {
       if (typeof window !== 'undefined') {
-        
+
         setUserID(localStorage.getItem("UserId[C]"))
       }
       // geting plans
@@ -41,7 +41,7 @@ const Plan = () => {
       resp?.data[0] !== undefined ? setPlan1(resp?.data[0]) : setEmpty_plan1("d-none");
       resp?.data[1] !== undefined ? setPlan2(resp?.data[1]) : setEmpty_plan2("d-none");
       resp?.data[2] !== undefined ? setPlan3(resp?.data[2]) : setEmpty_plan3("d-none");
-    
+
     } catch (error) {
       console.log("try-catch error", error);
     }
@@ -77,9 +77,12 @@ const Plan = () => {
   // console.log("plan2",plan2)
   // console.log("plan3",plan3)
 
-  
+
   return (
     <div >
+      <Head>
+        <title>Plan</title>
+      </Head>
       {isSubmitingLoader ? (
         <div className="overlay">
           <div className="spinner-container">
@@ -131,7 +134,7 @@ const Plan = () => {
 
 
                 </ul>
-                {console.log("userid",userID)}
+                {console.log("userid", userID)}
                 {userID ? (<><Link href="#" onClick={() => PlanPurchase(plan2.id)}>Start Now <FaChevronRight /></Link></>) : (<><Link href="/login">Login<FaChevronRight /></Link></>)}
               </div>
             </div>

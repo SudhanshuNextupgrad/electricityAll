@@ -1,8 +1,12 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import Link from 'next/link';
+import Head from 'next/head';
 const Serviceschedule = () => {
   return (
     <AdminLayout>
+      <Head>
+        <title>Booked Services</title>
+      </Head>
     <>
 
       <div className="app-content">

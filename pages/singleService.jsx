@@ -1,5 +1,6 @@
-"use client"
+
 import Image from "next/image";
+import Head from 'next/head';
 import { GoDotFill } from "react-icons/go";
 import { PiNumberCircleOneFill, PiNumberCircleTwoFill, PiNumberCircleThreeFill, PiNumberCircleFourFill, PiNumberCircleFiveFill } from "react-icons/pi";
 import { FaStar } from "react-icons/fa";
@@ -105,6 +106,9 @@ const ACservices = () => {
 
     return (
         <div >
+            <Head>
+                <title>Select Service</title>
+            </Head>
             {isSubmitingLoader ? (
                 <div className="overlay">
                     <div className="spinner-container">

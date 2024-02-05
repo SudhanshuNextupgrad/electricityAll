@@ -1,6 +1,10 @@
+import Head from 'next/head';
 const Employeedetail = () => {
     return ( 
         <>
+        <Head>
+        <title>Employee details</title>
+      </Head>
         <div className="app-content">
   <div className="side-app leftmenu-icon">
   <div className="page-header">
