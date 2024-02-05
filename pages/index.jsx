@@ -56,8 +56,8 @@ export default function Home() {
 
   const getServices = async () => {
     const resp = await getData("/GetService")
-
-    setSliderServices(resp?.data)
+    const filteredServices = resp ?. data.filter((item) => item.service_status == 1)
+    setSliderServices(filteredServices)
 
     try {
       if (typeof window !== 'undefined') {

@@ -116,7 +116,7 @@ const detailsservices = () => {
       if (result?.status) {
         // console.log("===>", result);
         setisSubmitingLoader(false);
-        const filteredServices = result?.data?.filter((item)=>item.service_status==1)
+        const filteredServices = result?.data?.filter((item) => item.service_status == 1)
         setServices(filteredServices);
       } else {
         setisSubmitingLoader(false);
@@ -183,6 +183,7 @@ const detailsservices = () => {
   async function getSubService() {
     try {
       const result = await getData("/GetSubscriptionDetails");
+     
       if (result?.status) {
 
         const collator = new Intl.Collator(undefined, { sensitivity: "base" });
@@ -200,7 +201,7 @@ const detailsservices = () => {
       console.log(err);
     }
   }
-  const SubServiceUpdate = async (update) => {
+  const SubServiceUpdate = async (update) => {  
     // console.log("update", update)
     // console.log("existing list", sub_service_update)
 
@@ -237,7 +238,7 @@ const detailsservices = () => {
         "service_name": service_name_update,
         "service_cost": parseInt(service_cost_update),
         "service_des": service_des_update,
-        "service_des_id": sub_service_update_id//array of id will submited
+        "service_des_id": sub_service_update_id//array of id will submitted
       }
       console.log("updated data", updated_data)
       const resp = await putData("/UpdateService", updated_data)

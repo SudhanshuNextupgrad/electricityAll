@@ -37,6 +37,7 @@ const Subscription = () => {
   const [Plans_Subcribed, setPlans_Subscribed] = useState([])
   const [AllUsers, setAllUsers] = useState([]);
   const [refresh, setRefresh] = useState('')
+  const [filterdPlans, setFilterdPlans] = useState([])
   //bootstrap modal states------
 
 
@@ -68,51 +69,65 @@ const Subscription = () => {
   }, [refresh]);
 
   const handleServiceSave = async (event) => {
-    event.preventDefault();
-    try {
-      if (serviceName != "" && serviceDescription != "" && amount != "") {
-        if (selectedSubServices.length > 0) {
-          const arrayofId = [];
-          selectedSubServices.forEach((item) =>
-            arrayofId.push(item.subscription_id)
-          );
 
-          setisSubmitingLoader(true);
-          const result = await postData("/StoreSubscription", {
-            subscription_name: serviceName,
-            subscription_description: serviceDescription,
-            subscription_amt: amount,
-            service_id_array: arrayofId,
-            subscription_status: "1"
-          });
-          console.log("post plan object",)
-          if (result?.status) {
-            getPlans();
+    event.preventDefault();
+
+    const filteredPlanNames = allplans.map((item) => item.subscription_name)
+    // console.log("filteredPlanNames",filteredPlanNames)
+    if (filteredPlanNames.includes(serviceName)) {
+      toast.error("Name already in database. Please choose different name !")
+    }
+    else {
+
+      try {
+        if (serviceName != "" && serviceDescription != "" && amount != "") {
+          if (selectedSubServices.length > 0) {
+            const arrayofId = [];
+            selectedSubServices.forEach((item) =>
+              arrayofId.push(item.subscription_id)
+            );
+
+            setisSubmitingLoader(true);
+            const result = await postData("/StoreSubscription", {
+              subscription_name: serviceName,
+              subscription_description: serviceDescription,
+              subscription_amt: amount,
+              service_id_array: arrayofId,
+              subscription_status: "1"
+            });
+            console.log("post plan object",)
+            if (result?.status) {
+              getPlans();
+              setisSubmitingLoader(false);
+              toast.success("Subscription Added");
+              setserviceDescription("");
+              setserviceName("");
+              setamount("");
+              setselectedSubServices('')
+            }
+          } else {
             setisSubmitingLoader(false);
-            toast.success("Subscription Added");
-            setserviceDescription("");
-            setserviceName("");
-            setamount("");
-            setselectedSubServices('')
+            toast.error("Please select atleast one service");
           }
         } else {
           setisSubmitingLoader(false);
-          toast.error("Please select atleast one service");
+          toast.warning("All the fields are required.");
         }
-      } else {
+      } catch (err) {
         setisSubmitingLoader(false);
-        toast.warning("All the fields are required.");
+        console.log(err);
       }
-    } catch (err) {
-      setisSubmitingLoader(false);
-      console.log(err);
     }
+
+
   }
   const getPlans = async () => {
     try {
       const result = await getData("/GetSubscription");
+      setAllPlans(result?.data)
+      console.log("all plans", result?.data)
       const filterdPlans = result?.data?.filter((item) => item.subscription_status == 1)
-      setAllPlans(filterdPlans ? filterdPlans : [])
+      setFilterdPlans(filterdPlans)
       // if (result?.status) {
       //   setservices(result?.data);
       // } else {
@@ -125,7 +140,7 @@ const Subscription = () => {
   const deletePlan = async (e) => {
     setisSubmitingLoader(true)
     const resp = await deleteData("/DeleteSubscription", { "delId": e })
-    console.log("delete resp", resp)
+    // console.log("delete resp", resp)
     resp?.message === "Subscription Deleted Successfully" ? toast.success(resp?.message) : toast.error(resp?.message)
     setRefresh(Math.random())
     setisSubmitingLoader(false)
@@ -197,7 +212,10 @@ const Subscription = () => {
   const getService = async () => {
     try {
       const result = await getData("/GetService");
-      setServices(result?.data)
+      console.log("Services", result.data)
+      const filterdServices = result?.data.filter((item) => item.service_status == 1)
+
+      setServices(filterdServices)
       if (result?.status) {
         // console.log("==>", result);
         // const collator = new Intl.Collator(undefined, { sensitivity: "base" });
@@ -465,7 +483,7 @@ const Subscription = () => {
 
                   {Services?.length > 0 ? (
                     <Form className="locationsList d-flex">
-                      {Services.map((location, index) => (
+                      {Services?.map((location, index) => (
                         <Form.Check
                           key={index}
                           type="checkbox"
@@ -484,12 +502,12 @@ const Subscription = () => {
             </div>
 
 
-            {allplans?.length < 4 ? ('') : (<h4 className="text-danger mt-3"><b>* Please add only 3 Plans...</b></h4>)}
+            {filterdPlans?.length < 4 ? ('') : (<h4 className="text-danger mt-3"><b>* Please add only 3 Plans...</b></h4>)}
 
             <div className="row">
 
-              {allplans ?
-                allplans.map((item, index) => (
+              {filterdPlans ?
+                filterdPlans?.map((item, index) => (
                   <div className="col-md-4 col-xl-3 col-lg-4 col-sm-6" key={index}>
                     <div className="pricingTable2 info card">
                       <div className="pricingTable2-header">
@@ -505,7 +523,7 @@ const Subscription = () => {
                       </div>
                       <div className="pricingContent2">
                         <ul>
-                          {item.service_name.map((item2, index) => (
+                          {item.service_name?.map((item2, index) => (
                             <li key={index}>
                               {item2}
                             </li>
@@ -658,7 +676,7 @@ const Subscription = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {Plans_Subcribed.map((item, index) => (
+                          {Plans_Subcribed?.map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{item.id}</td>

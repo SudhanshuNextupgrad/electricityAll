@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/router'
 import {
   FaLaptop,
   FaUserLarge,
@@ -11,13 +12,16 @@ import {
   FaBookBookmark,
   FaTicket,
 } from "react-icons/fa6";
-const Sidebar = (props) => {
- 
-  console.log("Props",props)
 
+const Sidebar = () => {
+
+  const [heightLight, setHeightlight] = useState('')
+  const route = useRouter()
+  
   useEffect(() => {
-   
+    setHeightlight(route.pathname)
   }, []);
+
   return (
     <>
       <aside className="app-sidebar ps ps--active-y">
@@ -39,9 +43,9 @@ const Sidebar = (props) => {
           </div>
         </div> */}
         <ul className="side-menu">
-          <li className="slide is-expanded">
+          <li className="slide is-expanded" >
             <Link
-              className="side-menu__item active"
+              className={`side-menu__item ${heightLight == "/admin" ? " active" : ''}`}
               href="/admin"
               data-toggle="slide"
             >
@@ -49,9 +53,9 @@ const Sidebar = (props) => {
               <span className="side-menu__label">Dashboard</span>
             </Link>
           </li>
-          <li className="slide">
+          <li className="slide" >
             <Link
-              className="side-menu__item "
+              className={`side-menu__item ${heightLight == "/admin/Employeelist" ? " active" : ''}`}
               href="/admin/Employeelist"
               data-toggle="slide"
             >
@@ -69,9 +73,9 @@ const Sidebar = (props) => {
               <span className="side-menu__label">Scheduled Services</span>
             </Link>
           </li> */}
-          <li className="slide">
+          <li className="slide" >
             <Link
-              className="side-menu__item"
+              className={`side-menu__item ${heightLight == "/admin/Listustomers" ? " active " : ''}`}
               data-toggle="slide"
               href="/admin/Listustomers"
             >
@@ -79,9 +83,9 @@ const Sidebar = (props) => {
               <span className="side-menu__label">List of Customers</span>
             </Link>
           </li>
-          <li className="slide">
+          <li className="slide" >
             <Link
-              className="side-menu__item"
+              className={`side-menu__item ${heightLight == "/admin/Servicerequest" ? " active" : ''}`}
               data-toggle="slide"
               href="/admin/Servicerequest"
             >
@@ -89,15 +93,15 @@ const Sidebar = (props) => {
               <span className="side-menu__label">Scheduled Services</span>
             </Link>
           </li>
-          <li>
-            <Link className="side-menu__item" href="/admin/detailsservices">
+          <li className="slide" >
+            <Link className={`side-menu__item ${heightLight == "/admin/detailsservices" ? " active" : ''}`} href="/admin/detailsservices">
               <FaRectangleList />
               <span className="side-menu__label">Services</span>
             </Link>
           </li>
-          <li className="slide">
+          <li className="slide" >
             <Link
-              className="side-menu__item"
+              className={`side-menu__item ${heightLight == "/admin/subscription" ? " active" : ''}`}
               data-toggle="slide"
               href="/admin/subscription"
             >
@@ -105,15 +109,15 @@ const Sidebar = (props) => {
               <span className="side-menu__label">Subscription</span>
             </Link>
           </li>
-          <li className="slide">
-            <Link className="side-menu__item" data-toggle="slide" href="/admin/Role">
+          <li className="slide" >
+            <Link className={`side-menu__item ${heightLight == "/admin/Role" ? " active" : ''}`} data-toggle="slide" href="/admin/Role">
               <FaBookBookmark />
               <span className="side-menu__label">News Letter</span>
             </Link>
           </li>
-          <li className="slide">
+          <li className="slide" >
             <Link
-              className="side-menu__item"
+              className={`side-menu__item ${heightLight == "/admin/Locations" ? " active" : ''}`}
               data-toggle="slide"
               href="/admin/Locations"
             >
@@ -121,9 +125,9 @@ const Sidebar = (props) => {
               <span className="side-menu__label">Locations</span>
             </Link>
           </li>
-          <li className="slide">
+          <li className="slide" >
             <Link
-              className="side-menu__item"
+              className={`side-menu__item ${heightLight == "/admin/ticket" ? " active" : ''}`}
               data-toggle="slide"
               href="/admin/ticket"
             >
