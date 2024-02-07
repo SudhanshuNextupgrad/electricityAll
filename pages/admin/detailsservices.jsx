@@ -352,7 +352,7 @@ const detailsservices = () => {
                           tabIndex={1}
                         />
                       </div> */}
-                        <div className="col-3">
+                        <div className="col-sm-3 mt-1">
                           <input
                             type="text"
                             value={serviceName}
@@ -362,7 +362,7 @@ const detailsservices = () => {
                             onChange={(e) => setServiceName(e?.target?.value)}
                           />
                         </div>
-                        <div className="col-2">
+                        <div className="col-sm-3 mt-1">
                           <input
                             type="text"
                             value={serviceDetail}
@@ -372,7 +372,7 @@ const detailsservices = () => {
                             onChange={(e) => setServiceDetail(e?.target?.value)}
                           />
                         </div>
-                        <div className="col-2">
+                        <div className="col-sm-3 mt-1">
                           <input
                             type="text"
                             className="form-control header-search"
@@ -381,9 +381,9 @@ const detailsservices = () => {
                             value={Service_cost}
                           />
                         </div>
-                        <div className="col-2">
-                          <div className="text-end row searchsexction">
-                            <button type="submit" className="btn btn-primary">
+                        <div className="col-sm-2 mt-1">
+                          <div className="text-end  searchsexction">
+                            <button type="submit" className="btn btn-primary" style={{width:"100%"}}>
                               Submit
                             </button>
 
@@ -420,7 +420,7 @@ const detailsservices = () => {
                           <h4 className="mt-2">Select Sub-Service :</h4>
                           {SubServices.length > 0 ? (
                             <Form
-                              className="locationsList d-flex"
+                              className="locationsList d-flex row"
                               onSubmit={handleSubserviceSubmit}
                             >
                               {SubServices.map((location, index) => (

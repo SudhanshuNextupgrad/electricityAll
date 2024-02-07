@@ -130,7 +130,7 @@ const Employeelist = () => {
                     <h5><b>Add Employee:</b></h5>
                     <div className="form-group m-0" >
                       <div className="row gutters-xs">
-                        <div className="col-3">
+                        <div className="col-12 col-sm-6 col-lg-3 mt-1">
                           <input
                             type="search"
                             className="form-control header-search"
@@ -141,7 +141,7 @@ const Employeelist = () => {
                             onChange={(e) => setNewEmployeeName(e.target.value)}
                           />
                         </div>
-                        <div className="col-3">
+                        <div className="col-12 col-sm-6 col-lg-3 mt-1">
                           <input
                             type="email"
                             className="form-control header-search"
@@ -150,7 +150,7 @@ const Employeelist = () => {
                             onChange={(e) => setNewEmployeeEmail(e.target.value)}
                           />
                         </div>
-                        <div className="col-3">
+                        <div className="col-12 col-sm-4 mt-sm-1 col-lg-3 mt-1">
                           {/* <select className="form-control custom-select">
                           <option value="">Services</option>
                           <option value="Services1">Services 1</option>
@@ -165,7 +165,7 @@ const Employeelist = () => {
                             onChange={(e) => setNewEmployeePhone(e.target.value)}
                           />
                         </div>
-                        <div className="col-2">
+                        <div className="col-12 col-sm-4 mt-sm-1 col-lg-2 mt-1">
                           {/* <select className="form-control custom-select">
                           <option value="">Rating</option>
                           <option value="Rating1">Rating 1</option>
@@ -179,7 +179,7 @@ const Employeelist = () => {
                             onChange={(e) => setNewEmployeePassword(e.target.value)}
                           />
                         </div>
-                        <div className="col-1">
+                        <div className="col-1 col-sm-4 mt-sm-1 col-lg-1 mt-1">
                           <div className="text-end">
                             <button type="submit" className="btn btn-primary" onClick={RegisterEmployee}>
                               Create

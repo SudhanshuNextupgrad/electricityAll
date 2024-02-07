@@ -63,9 +63,11 @@
     border: none;
     padding: 7px 0 7px 35px;
     width: 100%;
+   
 }
 .innersearch {
     position: relative;
+    margin: 5px 0;
 }
 .innersearch svg {
     color: #6c6c68;

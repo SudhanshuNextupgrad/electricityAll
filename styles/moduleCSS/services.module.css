@@ -158,6 +158,9 @@
         height: auto;
         max-width: fit-content;
     }
+    .section2{
+        padding:50px;
+    }
 }
 @media only screen and (max-width:500px){
     .section3_designs_shift{

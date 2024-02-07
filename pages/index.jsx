@@ -56,7 +56,7 @@ export default function Home() {
 
   const getServices = async () => {
     const resp = await getData("/GetService")
-    const filteredServices = resp ?. data.filter((item) => item.service_status == 1)
+    const filteredServices = resp?.data?.filter((item) => item.service_status == 1)
     setSliderServices(filteredServices)
 
     try {

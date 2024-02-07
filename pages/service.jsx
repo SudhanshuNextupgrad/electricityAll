@@ -34,8 +34,9 @@ const Services = () => {
         const resp = await getData("/GetService")
         console.log("get_services", resp)
         // return resp;
-        setGetService(resp?.data);
-        console.log("GetService", getService)
+        const filteredService = resp?.data?.filter((item)=>item.service_status==1)
+        setGetService(filteredService);
+        console.log("GetService", filteredService)
     }
 
 
@@ -68,7 +69,7 @@ const Services = () => {
                         {getService
                             ?//conditional operator
                             getService?.map((t, index) => (
-                                <div className="col-xxl-4 col-xl-4 col-lg-4" key={index}>
+                                <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4" key={index}>
                                     
                                    
                                     

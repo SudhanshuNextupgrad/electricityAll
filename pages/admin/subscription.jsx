@@ -448,10 +448,10 @@ const Subscription = () => {
                 <h4>Create Plan :</h4>
                 <div className="container p-0">
                   <div className="d-flex  mt-2 mb-2">
-                    <form className="d-flex">
+                    <form className="row">
                       <input
                         value={serviceName}
-                        className="mx-1 form-control"
+                        className="mx-1 form-control col-sm-3 col-12 mt-1"
                         type="text"
                         placeholder="Name"
                         onChange={(e) => setserviceName(e?.target?.value)}
@@ -459,7 +459,7 @@ const Subscription = () => {
                       />
                       <input
                         value={serviceDescription}
-                        className="mx-1 form-control"
+                        className="mx-1 form-control col-sm-3 col-12 mt-1"
                         type="text"
                         placeholder="Description"
                         onChange={(e) => setserviceDescription(e?.target?.value)}
@@ -467,13 +467,13 @@ const Subscription = () => {
                       />
                       <input
                         value={amount}
-                        className="mx-1 form-control"
+                        className="mx-1 form-control col-sm-3 col-12 mt-1"
                         type="number"
                         placeholder="Amount"
                         onChange={(e) => setamount(e?.target?.value)}
                         required={true}
                       />
-                      <button onClick={handleServiceSave} className="btn btn-primary w-25">Save</button>
+                      <button onClick={handleServiceSave} className="btn btn-primary w-50 col-sm-2 col-12 mt-1 ml-1">Save</button>
 
                     </form>
                   </div>
@@ -482,7 +482,7 @@ const Subscription = () => {
                   <h4 className="mt-3">Select Service :</h4>
 
                   {Services?.length > 0 ? (
-                    <Form className="locationsList d-flex">
+                    <Form className="locationsList d-flex row">
                       {Services?.map((location, index) => (
                         <Form.Check
                           key={index}
