@@ -14,6 +14,8 @@ import { FiCheck } from 'react-icons/fi';
 
 import { getData, postData } from "@/helpers/services";
 import { Toaster, toast } from 'sonner'
+import { useRouter } from 'next/router';
+import { verifyIsLoggedIn } from '@/helpers/helper';
 
 const Plan = () => {
 
@@ -26,7 +28,11 @@ const Plan = () => {
   const [empty_plan3, setEmpty_plan3] = useState('');
   const [userID, setUserID] = useState();
 
-
+  const route = useRouter();
+  useEffect(() => {
+    verifyIsLoggedIn(route)
+   }, []);
+   
 
   const getPlan = async () => {
     setisSubmitingLoader(true)

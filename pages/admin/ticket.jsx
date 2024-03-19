@@ -5,11 +5,14 @@ import { deleteData, getData, putData } from '@/helpers/services';
 import { useEffect, useState } from 'react';
 import { Toaster, toast } from "sonner";
 
-import { getFormatedDate } from '@/helpers/helper';
+import { getFormatedDate, verifyIsLoggedIn } from '@/helpers/helper';
 import AdminLayout from '@/layouts/AdminLayout';
+import { useRouter } from 'next/router';
 
 
 const Ticket = () => {
+
+  const route = useRouter();
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
   const [ticketList, setTickedList] = useState('');
   const [allServices, setAllServices] = useState([]);
@@ -22,6 +25,7 @@ const Ticket = () => {
 
   useEffect(() => {
     getTicket();
+    verifyIsLoggedIn(route)
   }, [Refresh]);
 
   const getTicket = async () => {

@@ -12,7 +12,7 @@ import CommonFooter from "@/components/commomfooter";
 import Subescribe from "@/components/subscribe";
 import { useEffect, useState } from "react";
 import { postData, getData } from "@/helpers/services";
-import { getFormatedDate } from "@/helpers/helper";
+import { getFormatedDate, verifyIsLoggedIn } from "@/helpers/helper";
 import { Toaster, toast } from 'sonner';
 import { useRouter } from "next/navigation";
 import Head from 'next/head';
@@ -41,6 +41,7 @@ const Checkout = () => {
     // console.log("finalSelect", finalSelect)
 
     useEffect(() => {
+        verifyIsLoggedIn(route)
         def_values()
     }, [refresh]);
     const def_values = () => {

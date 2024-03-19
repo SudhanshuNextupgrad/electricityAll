@@ -1,9 +1,19 @@
 import moment from "moment";
+import { toast } from "sonner";
 export function verifyIsLoggedIn(router) {
-  const token = localStorage.getItem("Etoken");
-  if (token) {
-    // router.push("/");
+  const token1 = localStorage.getItem('Etoken[A]') ;
+  const token2 = localStorage.getItem('Etoken[E]') ;
+  const token3 = localStorage.getItem('Etoken[C]') ;
+  
+  if (!(token1 || token2 || token3)) {
+    router.push("/login");
   }
+
+  // if(!localStorage.getItem('Etoken[A]')){
+  //   // toast.error("Please login first!")
+  //   // router.push("/login")
+  // }
+
 }
 export const getFormatedDate = (date, format = "") => {
   if (format != "") {

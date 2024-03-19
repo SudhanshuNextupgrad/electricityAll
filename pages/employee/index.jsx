@@ -1,8 +1,18 @@
 import EmployeeLayout from "@/layouts/EmployeeLayout";
 import {FaStar } from "react-icons/fa6";
 import Head from 'next/head';
+import { useEffect } from "react";
+import { verifyIsLoggedIn } from "@/helpers/helper";
+import { useRouter } from "next/router";
+
+
+
 
 const EmployeeHomepage = () => {
+  const route = useRouter();
+  useEffect(() => {
+    verifyIsLoggedIn(route);
+  }, []);
   return (
     <EmployeeLayout>
       <Head>

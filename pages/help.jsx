@@ -23,17 +23,22 @@ import Comp5 from "@/components/HelpComponents/comp5"
 import Comp6 from "@/components/HelpComponents/comp6"
 import Comp7 from "@/components/HelpComponents/comp7"
 import { useState, useEffect } from "react";
+import { verifyIsLoggedIn } from '@/helpers/helper';
+import { useRouter } from 'next/router';
 
 
 const Help = () => {
 
+    const route = useRouter();
     const [comp, setComp] = useState(6);
     const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
 
 
-    // useEffect(() => {
 
-    // }, []);
+    useEffect(() => {
+        verifyIsLoggedIn(route)
+       }, []);
+    
 
 
 

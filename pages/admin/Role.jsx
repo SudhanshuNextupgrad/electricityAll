@@ -5,16 +5,19 @@ import { deleteData, getData } from '@/helpers/services';
 import { FaTrashAlt } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 import { Toaster, toast } from "sonner";
-import { getFormatedDate } from '@/helpers/helper';
+import { getFormatedDate, verifyIsLoggedIn } from '@/helpers/helper';
+import { useRouter } from 'next/router';
 
 const Role = () => {
 
+  const route = useRouter();
   const [NewsLetterList, setNewsLetterList] = useState();
   const [refresh, setRefresh] = useState();
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
 
   useEffect(() => {
     get_newsletter();
+    verifyIsLoggedIn(route)
   }, [refresh]);
 
   const get_newsletter = async () => {

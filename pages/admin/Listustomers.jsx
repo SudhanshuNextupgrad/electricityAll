@@ -8,14 +8,19 @@ import { useEffect, useState } from 'react';
 import AdminLayout from '@/layouts/AdminLayout';
 
 import { Toaster, toast } from "sonner";
+import { verifyIsLoggedIn } from '@/helpers/helper';
+import { useRouter } from 'next/router';
 
 const Listustomers = () => {
+
+  const route = useRouter();
   const [totalCustomers, setTotalCustomers] = useState('');
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
   const [refresh, setRefresh] = useState();
 
   useEffect(() => {
     getCustomer();
+    verifyIsLoggedIn(route)
   }, [refresh]);
 
   const getCustomer = async () => {

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-// import { verifyIsLoggedIn } from "@/helper/helper";
 import { verifyIsLoggedIn } from "@/helpers/helper";
 import { Toaster, toast } from "sonner";
 // import { getData } from "@/services/services";
@@ -11,19 +10,17 @@ import Footer from "@/components/AdminPanel/Footer";
 import Sidebar from "@/components/AdminPanel/sidebar";
 import AdminLayout from "@/layouts/AdminLayout";
 import Head from 'next/head';
+import { usePathname } from "next/navigation";
 
 
 
-
+ 
 const Index = () => {
   const router = useRouter();
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
 
-
-
   useEffect(() => {
-    verifyIsLoggedIn(router);
-
+   verifyIsLoggedIn(router)
   }, []);
 
 

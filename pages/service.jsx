@@ -25,8 +25,9 @@ const Services = () => {
 
     useEffect(() => {
         get_services()
-
+        verifyIsLoggedIn(route)
     }, []);
+   
 
     // const logo_array = ["/services/icon1.png", "/services/icon2.png", "/services/icon3.png", "/services/icon4.png", "/services/icon5.png", "/services/icon6.png"];
 

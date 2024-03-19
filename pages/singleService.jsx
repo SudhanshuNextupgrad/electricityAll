@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import { useParams } from 'next/navigation';
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { verifyIsLoggedIn } from "@/helpers/helper";
 
 
 const ACservices = () => {
@@ -37,6 +38,7 @@ const ACservices = () => {
     // console.log("date", serv_date)
     useEffect(() => {
         getServices();
+        verifyIsLoggedIn(route)
 
     }, []);
 

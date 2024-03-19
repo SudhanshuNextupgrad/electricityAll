@@ -5,12 +5,14 @@ import { deleteData, getData,putData } from '@/helpers/services';
 import { useEffect, useState } from 'react';
 import { Toaster, toast } from "sonner";
 
-import { getFormatedDate } from '@/helpers/helper';
+import { getFormatedDate, verifyIsLoggedIn } from '@/helpers/helper';
 import AdminLayout from '@/layouts/AdminLayout';
+import { useRouter } from 'next/router';
 
 getFormatedDate
 const Servicerequest = () => {
 
+  const route = useRouter();
   const [ServiceBooked, setServiceBooked] = useState('');
   const [employee, setEmployee] = useState([]);
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
@@ -23,6 +25,7 @@ const Servicerequest = () => {
 
   useEffect(() => {
     getServiceData();
+    verifyIsLoggedIn(route)
   }, [Refresh]);
 
 

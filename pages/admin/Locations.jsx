@@ -15,6 +15,7 @@ import Link from "next/link";
 
 import Modal from "react-bootstrap/Modal";
 import AdminLayout from "@/layouts/AdminLayout";
+import { verifyIsLoggedIn } from "@/helpers/helper";
 
 const Location = () => {
   const [formData, setFormData] = useState({
@@ -38,6 +39,8 @@ const Location = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const route = useRouter();
+
   //states for second model - sub service
   const [showNew, setShowNew] = useState(false);
   const [newServiceName, setnewServiceName] = useState("");
@@ -47,6 +50,8 @@ const Location = () => {
 
   const handleOpenNew = () => setShowNew(true);
   const handleCloseNew = () => setShowNew(false);
+
+  
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -61,6 +66,7 @@ const Location = () => {
   useEffect(() => {
     getLocation();
     getSubService();
+    verifyIsLoggedIn(route)
   }, []);
   //function to post location
   const handleSubmit = async (event) => {
