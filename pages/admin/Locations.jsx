@@ -99,7 +99,6 @@ const Location = () => {
     try {
       const result = await getData("/GetServiceLocation");
       if (result?.status) {
-        console.log("==>", result);
         setlocations(result?.data);
       } else {
         toast.error("Failed to get Locations");

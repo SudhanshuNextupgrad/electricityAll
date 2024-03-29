@@ -203,9 +203,9 @@ const Navbar = () => {
   const def_data = async () => {
     try {
       if (typeof window !== 'undefined') {
-        // const localUserId =  JSON.parse(localStorage.getItem("ElectricityId"))
+      
         setUserId(JSON.parse(localStorage.getItem("UserId[C]")))
-        // setUserName(JSON.parse(localStorage.getItem("userName")))
+       
       }
       const resp = await getData(`/GetAllUser?id=${JSON.parse(localStorage.getItem("UserId[C]"))}`)
       
@@ -274,6 +274,7 @@ const Navbar = () => {
               width={200}
               className={style.logo}
               alt="logo"
+              priority
             />
           </Link>
         </div>
@@ -496,11 +497,7 @@ const Navbar = () => {
 
             <div>
               <div className={style.user}>
-
-                {/* <Image src={user_photo === null ? '/dummy.jpg' : `https://53c50cd527.nxcli.io/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} alt="img" /> */}
-                
-                <img src={user_photo === null ? '/dummy.jpg' : `https://nextupgrad.us/electricity/public/images/profile_photo/${user_photo}`} height={50} width={50} />
-                {/* <Image src='/dummy.jpg' height={50} width={50} alt="img" /> */}
+                <img src={user_photo === null ? '/dummy.jpg' : process.env.NEXT_PUBLIC_IMAGE_URL + user_photo} height={50} width={50} />
               </div>
               <Table >
 

@@ -26,10 +26,10 @@ const Listustomers = () => {
   const getCustomer = async () => {
     setisSubmitingLoader(true)
     const resp = await getData("/GetAllUser")
-    console.log("total users", resp?.data)
 
-    const filterCustomer = resp?.data?.filter((e) => e.user_type == "Customer" )
-    console.log("filterCustomer", filterCustomer)
+
+    const filterCustomer = resp?.data?.filter((e) => e.user_type == "Customer")
+
     setTotalCustomers(filterCustomer)
     setisSubmitingLoader(false)
   }
@@ -51,9 +51,9 @@ const Listustomers = () => {
   return (
     <AdminLayout>
       <>
-      <Head>
-        <title>Customer's List</title>
-      </Head>
+        <Head>
+          <title>Customer's List</title>
+        </Head>
         {isSubmitingLoader ? (
           <div className="overlay">
             <div className="spinner-container">
@@ -86,10 +86,8 @@ const Listustomers = () => {
             <div className="row">
               <div className="col-xl-12 col-lg-12 col-md-12">
                 <div className="card">
-
                   <div className="card-body">
                     <div className="table-responsive">
-
                       <table className="table card-table table-bordered table-vcenter text-nowrap table-primary">
                         <thead className="bg-primary text-white">
                           <tr>
@@ -104,290 +102,40 @@ const Listustomers = () => {
                             <th className="text-white">user status</th>
                             {/* <th className="text-white">Rating</th> */}
                             <th className="text-white">Action</th>
-
                           </tr>
                         </thead>
                         <tbody>
-                          {
-                            totalCustomers ? totalCustomers.map((item, index) => (
+                          {totalCustomers ? (
+                            totalCustomers.map((item, index) => (
                               <tr key={index}>
                                 <td>{index + 1}</td>
                                 <th scope="row">{item.id}</th>
-                                {/* {console.log("itemm",item)} */}
                                 <td>{item.name}</td>
                                 <td>{item.user_house_num ? item.user_house_num : ''} {item.user_locality ? item.user_locality : ''} {item.user_city ? item.user_city : ''} {item.user_state ? item.user_state : ''}</td>
-
-
-
                                 <td>{item.user_zipcode ? item.user_zipcode : <span></span>}</td>
                                 <td>{item.email}</td>
                                 <td>{item.user_phno ? item.user_phno : <span></span>}</td>
                                 <td>{item.user_type}</td>
                                 <td>
-                                {item.user_status == "1" ? (
+                                  {item.user_status === "1" ? (
                                     <>
                                       <span className="status-icon bg-success" />
                                       Active
                                     </>
                                   ) : (
                                     <>
-                                      {" "}
+                                      {/* {" "} */}
                                       <span className="status-icon bg-danger" />
                                       Inactive
                                     </>
                                   )}
                                 </td>
-                                {/* <td>
-                                  <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
-                                </td> */}
                                 <td className="text-center"><FaTrashAlt onClick={() => deleteCustomer(item.id)} style={{ cursor: "pointer" }} /></td>
                               </tr>
-                            )
-
-                            ) : ''
-                          }
-
-                          {/* <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-     <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr> 
-    <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr> 
-    <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-     <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr> 
-    <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-     <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-     <tr>
-      <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>      
-      <td>
-        <span className="unpaid">Unpaid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr>
-    <tr>
-    <th scope="row">Ser123</th>
-      <td>Joan Powell</td>
-      <td>Los Angeles</td>
-      <td>56584</td>
-      <td>Joan@gmail.com</td>    
-      <td>9876543210</td>   
-      <td>
-        <span className="paid">Paid</span>
-      </td>
-      <td>
-      <FaStar/> <FaStar/>
-      </td>
-    </tr> */}
+                            ))
+                          ) : ''}
                         </tbody>
                       </table>
-
                     </div>
                   </div>
                 </div>

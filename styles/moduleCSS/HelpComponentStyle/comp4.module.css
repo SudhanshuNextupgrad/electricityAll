@@ -16,7 +16,7 @@
 .message>div>div{
    
     display: flex;
-    align-items: end;
+    align-items: flex-end;
 }
 .ques{
     text-align: right;
@@ -75,7 +75,7 @@
 }
 .rply>div>span{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .ques>div>p{
     margin-bottom:10px;

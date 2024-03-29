@@ -24,7 +24,6 @@ const Role = () => {
     setisSubmitingLoader(true)
     try {
       const resp = await getData("/GetNewsLetter")
-      console.log(" News letter resp", resp)
       resp.data ? setNewsLetterList(resp.data) : setNewsLetterList([])
     } catch (error) {
       console.log("try-catch error", error)

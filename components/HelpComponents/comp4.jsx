@@ -4,7 +4,10 @@ import { CiImageOn } from "react-icons/ci";
 import style from "@/styles/moduleCSS/HelpComponentStyle/comp4.module.css"
 import Image from "next/image";
 import { GoDotFill } from "react-icons/go";
+import { useState } from "react";
 const Comp4 = () => {
+
+    const [inputmsg,setInputmsg] = useState('');
     return (
         <>
             <div className={style.message}>
@@ -63,7 +66,7 @@ const Comp4 = () => {
                         <p>Waiting for a customer support excutive</p>
                     </div>
                     <div className={style.msg_input}>
-                        <input type="text"  placeholder="Start typing your message"/>
+                        <input type="text"  placeholder="Start typing your message" value={inputmsg} onChange={(e)=>setInputmsg(e.target.value)}/>
                         <CiImageOn />
                     </div>
                 </div>

@@ -8,8 +8,8 @@ const AdminLayout = ({ children }) => {
 
     return (
         <div>
-            <div class="page">
-                <div class="page-main">
+            <div className="page">
+                <div className="page-main">
                     <Header />
                     <div>
                         <Sidebar />

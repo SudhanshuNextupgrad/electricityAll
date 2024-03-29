@@ -29,9 +29,7 @@ const Plan = () => {
   const [userID, setUserID] = useState();
 
   const route = useRouter();
-  useEffect(() => {
-    verifyIsLoggedIn(route)
-   }, []);
+ 
    
 
   const getPlan = async () => {
@@ -43,7 +41,7 @@ const Plan = () => {
       }
       // geting plans
       const resp = await getData("/GetSubscription");
-      console.log("plan resp", resp);
+      
       resp?.data[0] !== undefined ? setPlan1(resp?.data[0]) : setEmpty_plan1("d-none");
       resp?.data[1] !== undefined ? setPlan2(resp?.data[1]) : setEmpty_plan2("d-none");
       resp?.data[2] !== undefined ? setPlan3(resp?.data[2]) : setEmpty_plan3("d-none");
@@ -137,10 +135,7 @@ const Plan = () => {
                     <li key={index}><FiCheck />{t}</li>
 
                   )) : (<li><FiCheck />Lorem ipsum is Simply</li>)}
-
-
                 </ul>
-                {console.log("userid", userID)}
                 {userID ? (<><Link href="#" onClick={() => PlanPurchase(plan2.id)}>Start Now <FaChevronRight /></Link></>) : (<><Link href="/login">Login<FaChevronRight /></Link></>)}
               </div>
             </div>

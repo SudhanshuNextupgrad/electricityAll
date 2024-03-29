@@ -38,8 +38,6 @@ const ACservices = () => {
     // console.log("date", serv_date)
     useEffect(() => {
         getServices();
-        verifyIsLoggedIn(route)
-
     }, []);
 
     const getServices = async () => {

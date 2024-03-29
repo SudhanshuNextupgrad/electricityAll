@@ -125,7 +125,6 @@ const Subscription = () => {
     try {
       const result = await getData("/GetSubscription");
       setAllPlans(result?.data)
-      console.log("all plans", result?.data)
       const filterdPlans = result?.data?.filter((item) => item.subscription_status == 1)
       setFilterdPlans(filterdPlans)
       // if (result?.status) {
@@ -212,20 +211,10 @@ const Subscription = () => {
   const getService = async () => {
     try {
       const result = await getData("/GetService");
-      console.log("Services", result.data)
       const filterdServices = result?.data.filter((item) => item.service_status == 1)
-
       setServices(filterdServices)
       if (result?.status) {
-        // console.log("==>", result);
-        // const collator = new Intl.Collator(undefined, { sensitivity: "base" });
-        // const sortedList = [...result.data].sort((a, b) =>
-        //   collator.compare(a.subsc_list, b.subsc_list)
-        // );
         setisSubmitingLoader(false);
-        // setSubServices(result.data);
-        // Assuming setSubServices is a state update function
-        // setSubServices(sortedList);
       } else {
         toast.error("Failed to get Sub-services");
       }

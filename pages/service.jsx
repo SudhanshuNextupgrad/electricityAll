@@ -25,24 +25,17 @@ const Services = () => {
 
     useEffect(() => {
         get_services()
-        verifyIsLoggedIn(route)
+        
     }, []);
    
 
-    // const logo_array = ["/services/icon1.png", "/services/icon2.png", "/services/icon3.png", "/services/icon4.png", "/services/icon5.png", "/services/icon6.png"];
+   
 
     const get_services = async () => {
         const resp = await getData("/GetService")
-        console.log("get_services", resp)
-        // return resp;
         const filteredService = resp?.data?.filter((item)=>item.service_status==1)
         setGetService(filteredService);
-        console.log("GetService", filteredService)
     }
-
-
-
-
     return (
         <div >
             <Head>

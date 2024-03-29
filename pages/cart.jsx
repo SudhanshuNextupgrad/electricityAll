@@ -41,7 +41,7 @@ const Checkout = () => {
     // console.log("finalSelect", finalSelect)
 
     useEffect(() => {
-        verifyIsLoggedIn(route)
+     
         def_values()
     }, [refresh]);
     const def_values = () => {

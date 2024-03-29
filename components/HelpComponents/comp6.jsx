@@ -47,24 +47,18 @@ const Comp6 = () => {
 
                 const resp = await getData(`/GetAllUser?id=${user_id}`)
                 // resp.msg === 'No Data Found' ? toast.error("No user found..") : toast.success("Data Found..")
-                console.log("user data", resp);
+                
                 setUserId(user_id);
                 setName(resp?.data[0]?.name);
                 setEmail(resp?.data[0]?.email);
                 setPhone(resp?.data[0]?.user_phno);
-                // setAlt_phone(resp.data[0].user_alt_phno);
                 setCity(resp?.data[0]?.user_city);
                 setCountry(resp?.data[0]?.user_country);
-                // setLandmark(resp.data[0].user_landmark );
                 setLocality(resp?.data[0]?.user_locality);
                 setZip(resp?.data[0]?.user_zipcode);
                 setState(resp?.data[0]?.user_state);
-                // setHno(resp.data[0].user_house_num);
                 setUserType(resp?.data[0]?.user_type);
                 setCurrent_photo(resp?.data[0]?.user_profile_photo);
-                console.log("resp?.data[0]?.user_profile_photo", resp?.data[0]?.user_profile_photo)
-
-
             }
         } catch (error) {
             console.log("try-catch error", error)

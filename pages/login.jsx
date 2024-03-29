@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { Toaster, toast } from "sonner";
 import { postData } from "@/helpers/services";
 import { verifyIsLoggedIn } from "@/helpers/helper";
+import Cookies from 'js-cookie';
 
 export default function Home() {
   const [isSubmitingLoader, setisSubmitingLoader] = useState(false);
@@ -24,10 +25,7 @@ export default function Home() {
   const [pass, setPass] = useState("");
 
   useEffect(() => {
-    // verifyIsLoggedIn(router);
-
     defaultLogin();
-
   }, []);
 
   const defaultLogin = () => {
@@ -35,7 +33,8 @@ export default function Home() {
     if (localStorage.getItem("Etoken[A]")) { router.push("/admin") }
   }
 
-
+  // Cookies.set('language', "hindi");
+  // console.log("cookie",Cookies.get("language"));
 
 
 
@@ -160,9 +159,9 @@ export default function Home() {
                           >
                             Homepage
                           </Link>
-                          <p class=" mb-0">
+                          <p className=" mb-0">
                             Don't have account?
-                            <Link href="/register" class="text-primary ml-1">
+                            <Link href="/register" className="text-primary ml-1">
                               Sign Up
                             </Link>
                           </p>

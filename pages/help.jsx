@@ -36,11 +36,12 @@ const Help = () => {
 
 
     useEffect(() => {
-        verifyIsLoggedIn(route)
+        
+        
        }, []);
     
 
-
+       
 
     return (
         < div >
