@@ -81,9 +81,9 @@ export default function Home() {
 
   return (
     <>
-    <Head>
-                <title>Register</title>
-            </Head>
+      <Head>
+        <title>Register</title>
+      </Head>
       {isSubmitingLoader ? (
         <div className="overlay">
           <div className="spinner-container">
